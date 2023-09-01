@@ -1,5 +1,6 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 import { useEffect } from "react";
 
 type UserMenuProps = {
@@ -46,7 +47,9 @@ const UserMenu = ({ closeUserModal, openAuthModal }: UserMenuProps) => {
                   <span className="font-medium w-fit cursor-pointer">
                     Trips
                   </span>
-                  <span className="w-fit cursor-pointer">Account</span>
+                  <Link href={"/account"} className="w-fit cursor-pointer">
+                    Account
+                  </Link>
                   <div className="w-full h-[1px] bg-gray-300 absolute left-0 bottom-[5.5rem]" />
                   <span className="mt-3 w-fit">Airbnb your home</span>
                   <button onClick={() => signOut()} className="w-fit">

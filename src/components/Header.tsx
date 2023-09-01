@@ -8,6 +8,7 @@ import UserMenu from "./UserMenu";
 import AuthModal from "./AuthModal";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -36,11 +37,11 @@ const Header = () => {
     <>
       <nav className="md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white">
         <div className="container hidden md:flex items-center justify-between">
-          <div className="flex gap-2 text-primary">
+          <Link href={"/"} className="flex gap-2 text-primary">
             <Logo />
             <span className="text-2xl font-bold hidden lg:block">airbnb</span>
-          </div>
-          <div className="flex gap-4 border-2 border-gray-200 pl-4 pr-2 py-2 rounded-full items-center shadow-sm ml-0 lg:ml-28 tracking-tight text-[.9rem]">
+          </Link>
+          <div className="flex gap-4 border-2 border-gray-200 pl-4 pr-2 py-2 rounded-full items-center shadow-md hover:shadow-lg duration-200 ml-0 lg:ml-28 tracking-tight text-[.9rem]">
             <div className="font-medium">Anywhere</div>
             <div className="w-[1px] h-6 bg-gray-200" />
             <div className="font-medium">Any week</div>
@@ -67,7 +68,7 @@ const Header = () => {
                   )}
                 {session?.status === "authenticated" && (
                   <Image
-                    src={session?.data?.user?.image}
+                    src={session?.data?.user?.image as string}
                     alt="user"
                     width={32}
                     height={32}
