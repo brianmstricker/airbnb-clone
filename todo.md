@@ -1,1 +1,2 @@
 -create mobile searchbar on top and bottom navigation bar on md and below devices
+-disable scroll when modal is open
