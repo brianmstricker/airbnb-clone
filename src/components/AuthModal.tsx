@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import { signIn } from "next-auth/react";
 
 type AuthModalProps = {
   closeAuthModal: () => void;
@@ -65,7 +66,10 @@ const AuthModal = ({ closeAuthModal }: AuthModalProps) => {
               <FcGoogle className="absolute left-3" size={22} />
               Continue with Google
             </button>
-            <button className="bg-white w-full rounded-md p-3 text-black border border-black mt-4 text-sm font-medium flex items-center justify-center relative">
+            <button
+              className="bg-white w-full rounded-md p-3 text-black border border-black mt-4 text-sm font-medium flex items-center justify-center relative"
+              onClick={() => signIn("github", { redirect: false })}
+            >
               <FaGithub className="absolute left-3" size={22} />
               Continue with Github
             </button>

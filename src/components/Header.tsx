@@ -6,10 +6,13 @@ import { HiMenu } from "react-icons/hi";
 import { useState, useEffect } from "react";
 import UserMenu from "./UserMenu";
 import AuthModal from "./AuthModal";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Header = () => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const session = useSession();
   function openAuthModal() {
     setShowAuthModal((prev) => !prev);
   }
@@ -54,8 +57,23 @@ const Header = () => {
               className="flex rounded-full py-1 px-3 border border-gray-300 gap-2 items-center"
             >
               <HiMenu size={18} />
-              <div className="bg-gray-500 text-white rounded-full p-[2px]">
-                <AiOutlineUser size={26} className="relative top-[2px]" />
+              <div className="bg-gray-500 text-white rounded-full p-[2px] overflow-hidden">
+                {session?.status === "loading" && (
+                  <div className="animate-pulse bg-white w-8 h-8 rounded-full" />
+                )}
+                {session?.status !== "authenticated" &&
+                  session?.status !== "loading" && (
+                    <AiOutlineUser size={26} className="relative top-[2px]" />
+                  )}
+                {session?.status === "authenticated" && (
+                  <Image
+                    src={session?.data?.user?.image}
+                    alt="user"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                  />
+                )}
               </div>
             </button>
           </div>
