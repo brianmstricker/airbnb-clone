@@ -1,13 +1,39 @@
+"use client";
 import InputWithLabel from "@/components/InputWithLabel";
-import PerkInput from "./PerkInput";
+import { useState } from "react";
+import Perks from "./Perks";
 
-const page = () => {
+const Page = () => {
+  const [form, setForm] = useState({
+    name: "",
+    address: "",
+    type: "",
+    beds: "",
+    baths: "",
+    description: "",
+    perks: [],
+    checkIn: "",
+    checkOut: "",
+    price: "",
+  } as any);
   return (
     <form className="max-w-4xl mx-auto">
       <h1 className="text-center text-xl mb-4">Add your place</h1>
       <div className="flex flex-col gap-3">
-        <InputWithLabel name="Name" label="name" />
-        <InputWithLabel name="Address" label="address" />
+        <InputWithLabel
+          name="Name"
+          label="name"
+          placeholder="Enter a catchy name for your place"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        <InputWithLabel
+          name="Address"
+          label="address"
+          placeholder="Austin, Texas, United States"
+          value={form.address}
+          onChange={(e) => setForm({ ...form, address: e.target.value })}
+        />
         <div className="lg:grid lg:grid-cols-[350px_272px_272px]">
           <div className="flex items-center justify-between lg:justify-normal gap-4">
             <label htmlFor="type" className="min-w-[85px] lg:min-w-fit">
@@ -16,8 +42,10 @@ const page = () => {
             <input
               type="text"
               id="type"
-              className="border border-gray-300 rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:max-w-[250px] lg:ml-12"
+              className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:max-w-[250px] lg:ml-12"
               placeholder="Lake house, Mini house, etc."
+              value={form.type}
+              onChange={(e) => setForm({ ...form, type: e.target.value })}
             />
           </div>
           <div className="flex items-center justify-between lg:justify-normal gap-4">
@@ -25,9 +53,12 @@ const page = () => {
               Beds
             </label>
             <input
-              type="text"
+              type="number"
               id="beds"
-              className="border border-gray-300 rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+              className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+              placeholder="1, 2, 3, etc."
+              value={form.beds}
+              onChange={(e) => setForm({ ...form, beds: e.target.value })}
             />
           </div>
           <div className="flex items-center justify-between lg:justify-normal gap-4">
@@ -38,9 +69,12 @@ const page = () => {
               Baths
             </label>
             <input
-              type="text"
+              type="number"
               id="baths"
-              className="border border-gray-300 rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+              className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+              placeholder="1, 2, 3, etc."
+              value={form.baths}
+              onChange={(e) => setForm({ ...form, baths: e.target.value })}
             />
           </div>
         </div>
@@ -49,25 +83,77 @@ const page = () => {
         </label>
         <textarea
           id="description"
-          className="border border-gray-300 rounded-md px-2 py-1 outline-none focus:ring-2 focus:ring-primary resize-none"
+          className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary resize-none"
           placeholder="Leave a description of your place"
           rows={5}
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
         />
         <h3 className="-mb-1">Perks</h3>
         <div className="border border-gray-300 px-4 py-2 rounded-md">
-          <div className="grid grid-cols-3">
-            <PerkInput name="Wifi" label="wifi" />
-            <PerkInput name="Kitchen" label="kitchen" />
-            <PerkInput name="Central AC" label="central AC" />
-            <PerkInput name="Parking" label="parking" />
-            <PerkInput name="Security Cameras" label="security" />
-            <PerkInput name="Balcony" label="balcony" />
-            <PerkInput name="Backyard" label="backyard" />
-            <PerkInput name="Private Entrance" label="private " />
+          <Perks
+            selected={form.perks}
+            onChange={(perks: string[]) => setForm({ ...form, perks })}
+          />
+        </div>
+        <h4>Things To Know</h4>
+        <div className="border border-gray-300 px-4 py-2 rounded-md">
+          <div className="xxs:grid xxs:grid-cols-2 gap-4">
+            <div className="flex items-center justify-between lg:justify-normal gap-2">
+              <label
+                htmlFor="checkIn"
+                className="min-w-[110px] lg:min-w-fit lg:ml-2"
+              >
+                Check in time
+              </label>
+              <input
+                type="text"
+                id="checkIn"
+                className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+                placeholder="1:00 PM, 2:00 PM, etc."
+                value={form.checkIn}
+                onChange={(e) => setForm({ ...form, checkIn: e.target.value })}
+              />
+            </div>
+            <div className="flex items-center justify-between lg:justify-normal gap-2">
+              <label
+                htmlFor="checkOut"
+                className="min-w-[110px] lg:min-w-fit lg:ml-2"
+              >
+                Check out time
+              </label>
+              <input
+                type="text"
+                id="checkOut"
+                className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+                placeholder="11:00 AM, 12:00 PM, etc."
+                value={form.checkOut}
+                onChange={(e) => setForm({ ...form, checkOut: e.target.value })}
+              />
+            </div>
+          </div>
+          <div className="flex items-center justify-between lg:justify-normal gap-2">
+            <label
+              htmlFor="price"
+              className="min-w-[110px] lg:min-w-fit lg:ml-2"
+            >
+              Price (per night)
+            </label>
+            <input
+              type="text"
+              id="price"
+              className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px]"
+              placeholder="$100, $200, etc."
+              value={form.price}
+              onChange={(e) => setForm({ ...form, price: e.target.value })}
+            />
           </div>
         </div>
+        <button className="bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400">
+          Add place
+        </button>
       </div>
     </form>
   );
 };
-export default page;
+export default Page;

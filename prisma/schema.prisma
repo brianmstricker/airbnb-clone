@@ -71,6 +71,8 @@ model Place {
   description  String
   perks        Perk[]
   thingsToKnow String
+  checkInTime  String
+  checkOutTime String
   price        String
   userId       String
   user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)

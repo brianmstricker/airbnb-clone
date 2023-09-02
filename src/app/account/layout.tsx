@@ -4,7 +4,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <AccountNav />
-      <div className="container max-w-6xl mx-auto px-4 mt-8">{children}</div>
+      <div className="container max-w-6xl mx-auto px-4 mt-8 pb-12">
+        {children}
+      </div>
     </>
   );
 };
