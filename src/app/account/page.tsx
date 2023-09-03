@@ -1,4 +1,4 @@
-const page = () => {
+const AccountPage = async () => {
   return <div>account page</div>;
 };
-export default page;
+export default AccountPage;

@@ -1,6 +1,12 @@
+import { redirect } from "next/navigation";
 import AccountNav from "./AccountNav";
+import { getAuthSession } from "@/utils/getAuthSession";
 
-const layout = ({ children }: { children: React.ReactNode }) => {
+const layout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await getAuthSession();
+  if (!session?.user) {
+    return redirect("/");
+  }
   return (
     <>
       <AccountNav />

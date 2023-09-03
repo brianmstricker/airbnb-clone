@@ -2,8 +2,11 @@
 import InputWithLabel from "@/components/InputWithLabel";
 import { useState } from "react";
 import Perks from "./Perks";
+import { placeSchema } from "@/utils/placeSchema";
+import { z } from "zod";
 
 const Page = () => {
+  type form = z.infer<typeof placeSchema>;
   const [form, setForm] = useState({
     name: "",
     address: "",
@@ -16,8 +19,12 @@ const Page = () => {
     checkOut: "",
     price: "",
   } as any);
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    console.log(form);
+  };
   return (
-    <form className="max-w-4xl mx-auto">
+    <form className="max-w-4xl mx-auto" onSubmit={handleSubmit}>
       <h1 className="text-center text-xl mb-4">Add your place</h1>
       <div className="flex flex-col gap-3">
         <InputWithLabel
@@ -102,14 +109,14 @@ const Page = () => {
             <div className="flex items-center justify-between lg:justify-normal gap-2">
               <label
                 htmlFor="checkIn"
-                className="min-w-[110px] lg:min-w-fit lg:ml-2"
+                className="min-w-[122px] lg:min-w-fit lg:ml-2"
               >
                 Check in time
               </label>
               <input
                 type="text"
                 id="checkIn"
-                className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+                className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:ml-[20px]"
                 placeholder="1:00 PM, 2:00 PM, etc."
                 value={form.checkIn}
                 onChange={(e) => setForm({ ...form, checkIn: e.target.value })}
@@ -118,14 +125,14 @@ const Page = () => {
             <div className="flex items-center justify-between lg:justify-normal gap-2">
               <label
                 htmlFor="checkOut"
-                className="min-w-[110px] lg:min-w-fit lg:ml-2"
+                className="min-w-[122px] lg:min-w-fit lg:ml-2"
               >
                 Check out time
               </label>
               <input
                 type="text"
                 id="checkOut"
-                className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+                className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px]"
                 placeholder="11:00 AM, 12:00 PM, etc."
                 value={form.checkOut}
                 onChange={(e) => setForm({ ...form, checkOut: e.target.value })}
@@ -135,7 +142,7 @@ const Page = () => {
           <div className="flex items-center justify-between lg:justify-normal gap-2">
             <label
               htmlFor="price"
-              className="min-w-[110px] lg:min-w-fit lg:ml-2"
+              className="min-w-[122px] lg:min-w-fit lg:ml-2"
             >
               Price (per night)
             </label>
