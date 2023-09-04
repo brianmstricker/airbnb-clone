@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { AiOutlineCar, AiOutlineWifi } from "react-icons/ai";
 import { GiCctvCamera, GiHomeGarage, GiFireplace } from "react-icons/gi";
@@ -5,28 +6,20 @@ import { MdBalcony, MdOutlineSoupKitchen, MdOutlineYard } from "react-icons/md";
 import { BsSnow } from "react-icons/bs";
 import { FaUmbrellaBeach } from "react-icons/fa";
 
-const Perks = ({
-  selected,
-  onChange,
-}: {
-  selected: [];
-  onChange: (perks: string[]) => void;
-}) => {
-  function handleCheck(e: React.ChangeEvent<HTMLInputElement>) {
-    const { checked, name } = e.target;
-    if (checked) {
-      onChange([...selected, name]);
-    } else {
-      onChange([...selected.filter((v: string) => v !== name)]);
-    }
-  }
+const Perks = ({ registerProp }: any) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
       <label
         htmlFor="wifi"
         className="flex items-center gap-2 sm:border border-gray-400 sm:px-4 py-2 w-full rounded-md cursor-pointer"
       >
-        <input type="checkbox" id="wifi" name="wifi" onChange={handleCheck} />
+        <input
+          type="checkbox"
+          id="wifi"
+          name="wifi"
+          value="wifi"
+          {...registerProp("perks")}
+        />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
             <AiOutlineWifi />
@@ -42,7 +35,8 @@ const Perks = ({
           type="checkbox"
           id="kitchen"
           name="kitchen"
-          onChange={handleCheck}
+          value="kitchen"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -59,7 +53,8 @@ const Perks = ({
           type="checkbox"
           id="centralAC"
           name="centralAC"
-          onChange={handleCheck}
+          value="centralAC"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -76,7 +71,8 @@ const Perks = ({
           type="checkbox"
           id="parking"
           name="parking"
-          onChange={handleCheck}
+          value="parking"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -93,7 +89,8 @@ const Perks = ({
           type="checkbox"
           id="security"
           name="security"
-          onChange={handleCheck}
+          value="security"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -110,7 +107,8 @@ const Perks = ({
           type="checkbox"
           id="balcony"
           name="balcony"
-          onChange={handleCheck}
+          value="balcony"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -127,7 +125,8 @@ const Perks = ({
           type="checkbox"
           id="backyard"
           name="backyard"
-          onChange={handleCheck}
+          value="backyard"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -144,7 +143,8 @@ const Perks = ({
           type="checkbox"
           id="private"
           name="private"
-          onChange={handleCheck}
+          value="private"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -161,7 +161,8 @@ const Perks = ({
           type="checkbox"
           id="fireplace"
           name="fireplace"
-          onChange={handleCheck}
+          value="fireplace"
+          {...registerProp("perks")}
         />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
@@ -174,7 +175,13 @@ const Perks = ({
         htmlFor="beach"
         className="flex items-center gap-2 sm:border border-gray-400 sm:px-4 py-2 w-full rounded-md cursor-pointer"
       >
-        <input type="checkbox" id="beach" name="beach" onChange={handleCheck} />
+        <input
+          type="checkbox"
+          id="beach"
+          name="beach"
+          value="beach"
+          {...registerProp("perks")}
+        />
         <div className="flex items-center gap-1 ">
           <span className="text-lg xxs:text-2xl shrink-0">
             <FaUmbrellaBeach />
