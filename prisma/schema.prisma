@@ -70,7 +70,6 @@ model Place {
   baths        Int
   description  String
   perks        Perk[]
-  // thingsToKnow String
   checkInTime  String
   checkOutTime String
   price        String

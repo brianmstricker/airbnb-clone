@@ -35,7 +35,7 @@ const Header = () => {
   }, [showAuthModal]);
   return (
     <>
-      <nav className="md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white">
+      <nav className="md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white z-10">
         <div className="container hidden md:flex items-center justify-between">
           <Link href={"/"} className="flex gap-2 text-primary">
             <Logo />

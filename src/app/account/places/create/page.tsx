@@ -4,8 +4,17 @@ import { placeSchema } from "@/utils/placeSchema";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { AiOutlineFileImage, AiOutlinePlus } from "react-icons/ai";
+import { useState } from "react";
+import Image from "next/image";
+import { v4 } from "uuid";
 
 const Page = () => {
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const router = useRouter();
   type Form = z.infer<typeof placeSchema>;
   const place = useForm<Form>({
     resolver: zodResolver(placeSchema),
@@ -16,6 +25,7 @@ const Page = () => {
       beds: 1,
       baths: 1,
       description: "",
+      photos: [],
       perks: [],
       checkInTime: "",
       checkOutTime: "",
@@ -27,8 +37,32 @@ const Page = () => {
     handleSubmit,
     formState: { errors },
   } = place;
-  const formSubmit = (data: Form) => {
-    console.log(data);
+  const { mutate: CreatePlace, isLoading } = useMutation({
+    mutationFn: async (data: Form) => {
+      const res = await axios.post("/api/places", data);
+      return res.data;
+    },
+  });
+  const formSubmit = async (data: Form) => {
+    try {
+      if (selectedImages && selectedImages.length > 0) {
+        //hit image upload route, then add to data.photos
+        const formData = new FormData();
+        selectedImages.forEach((image) => {
+          formData.append("images", image);
+        });
+        const res = await axios.post("/api/upload", formData);
+        data.photos = res.data;
+      }
+      CreatePlace(data, {
+        onSuccess: () => {
+          place.reset();
+          router.push("/account/places");
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <form className="max-w-4xl mx-auto" onSubmit={handleSubmit(formSubmit)}>
@@ -131,6 +165,45 @@ const Page = () => {
         {errors.description && (
           <span className="text-red-500">{errors.description.message}</span>
         )}
+        <h4>Photos</h4>
+        <div className="border border-gray-300 p-4 rounded-md min-h-[250px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="h-[230px] flex">
+            <label className="flex h-full w-full max-w-[300px] border border-black items-center justify-center cursor-pointer rounded-md mx-auto relative">
+              <input
+                type="file"
+                multiple
+                className="hidden"
+                onChange={(e) => {
+                  const files = Array.from(e.target.files || []);
+                  setSelectedImages([...selectedImages, ...files]);
+                }}
+              />
+              <AiOutlineFileImage size={70} />
+              <AiOutlinePlus
+                size={30}
+                className="fill-primary absolute ml-20"
+              />
+            </label>
+          </div>
+          {selectedImages && (
+            <>
+              {selectedImages.map((image, i) => (
+                <div
+                  className="h-[230px] border border-black cursor-pointer rounded-md overflow-hidden flex mx-auto"
+                  key={image.name + v4()}
+                >
+                  <Image
+                    src={URL.createObjectURL(selectedImages[i])}
+                    alt="photo of place"
+                    width={300}
+                    height={230}
+                    className="object-cover aspect-square"
+                  />
+                </div>
+              ))}
+            </>
+          )}
+        </div>
         <h3 className="-mb-1">Perks</h3>
         <div className="border border-gray-300 px-4 py-2 rounded-md">
           <Perks registerProp={register} />
