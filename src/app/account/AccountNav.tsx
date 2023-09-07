@@ -24,7 +24,7 @@ const activeStyling = "text-white bg-primary rounded-full";
 const AccountNav = () => {
   const pathname = usePathname();
   return (
-    <div className="max-w-sm mx-auto mt-10">
+    <div className="max-w-xs mx-auto mt-10 text-sm xxs:text-base p-4">
       <div className="flex justify-between">
         {NavLinks.map((link) => (
           <Link href={link.path} key={link.name}>

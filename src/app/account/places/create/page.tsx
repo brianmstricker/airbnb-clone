@@ -39,7 +39,7 @@ const Page = () => {
   } = place;
   const { mutate: CreatePlace, isLoading } = useMutation({
     mutationFn: async (data: Form) => {
-      const res = await axios.post("/api/places", data);
+      const res = await axios.post("/api/places/user", data);
       return res.data;
     },
   });

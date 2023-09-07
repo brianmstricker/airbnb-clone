@@ -10,7 +10,7 @@ export const placeSchema = z.object({
     .string()
     .max(25, { message: "Type must be 25 or less characters." })
     .nonempty({ message: "Type is required." }),
-  photos: z.array(z.string()).nonempty({ message: "Photos are required." }),
+  photos: z.array(z.string()),
   beds: z.number().int().positive(),
   baths: z.number().int().positive(),
   description: z

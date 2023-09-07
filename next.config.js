@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["avatars.githubusercontent.com"],
+    domains: [
+      "avatars.githubusercontent.com",
+      "airbnb-clone-storage-bucket.s3.amazonaws.com",
+    ],
   },
   webpack: (config, { webpack, isServer, nextRuntime }) => {
     // Avoid AWS SDK Node.js require issue

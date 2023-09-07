@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import AccountNav from "./AccountNav";
 import { getAuthSession } from "@/utils/getAuthSession";
+import Wrapper from "./Wrapper";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getAuthSession();
@@ -10,9 +11,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       <AccountNav />
-      <div className="container max-w-6xl mx-auto px-4 mt-8 pb-12">
-        {children}
-      </div>
+      <Wrapper>{children}</Wrapper>
     </>
   );
 };

@@ -13,11 +13,11 @@ const UserMenu = ({ closeUserModal, openAuthModal }: UserMenuProps) => {
   return (
     <>
       <div
-        className="w-full h-full bg-transparent inset-0 fixed"
+        className="w-full h-full bg-transparent inset-0 fixed z-50"
         onClick={closeUserModal}
       >
         <div className="relative" onClick={(e) => e.stopPropagation()}>
-          <div className="fixed shadow-sm shadow-gray-300 bg-[#F3F3F3] right-16 min-w-[240px] top-[4.4rem] z-10 rounded-xl">
+          <div className="fixed shadow-sm shadow-gray-300 bg-[#F3F3F3] right-16 min-w-[240px] top-[4.4rem] rounded-xl z-50 border">
             <div className="flex flex-col gap-5 px-4 py-3 text-sm">
               {session?.status === "unauthenticated" ? (
                 <>
