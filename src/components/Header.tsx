@@ -42,7 +42,7 @@ const Header = () => {
         <div
           className={
             "container hidden md:flex items-center justify-between" +
-            (placePage ? " max-w-5xl xxs:flex" : "")
+            (placePage ? " max-w-6xl xxs:flex" : "")
           }
         >
           <Link href={"/"} className="flex gap-2 text-primary">
@@ -103,6 +103,7 @@ const Header = () => {
         <UserMenu
           closeUserModal={closeUserModal}
           openAuthModal={openAuthModal}
+          placePage={placePage}
         />
       )}
       {showAuthModal && <AuthModal closeAuthModal={closeAuthModal} />}

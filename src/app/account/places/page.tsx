@@ -49,7 +49,7 @@ const PlacesPage = () => {
               key={place.id}
               className="border-2 p-2 xxs:p-4 flex flex-col xxs:flex-row gap-3"
             >
-              {place.photos && (
+              {place.photos && place.photos[0]?.url && (
                 <div className="relative xxs:w-[300px] w-full h-[175px] shrink-0 mx-auto xxs:mx-0">
                   <Image
                     src={place.photos[0].url}

@@ -14,6 +14,7 @@ import { v4 } from "uuid";
 
 const Page = () => {
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
+  const [imagesError, setImagesError] = useState(false);
   const router = useRouter();
   type Form = z.infer<typeof placeSchema>;
   const place = useForm<Form>({
@@ -45,8 +46,13 @@ const Page = () => {
   });
   const formSubmit = async (data: Form) => {
     try {
-      if (selectedImages && selectedImages.length > 0) {
-        //hit image upload route, then add to data.photos
+      if (selectedImages.length < 5) {
+        setImagesError(true);
+        return;
+      } else {
+        setImagesError(false);
+      }
+      if (selectedImages && selectedImages.length >= 5) {
         const formData = new FormData();
         selectedImages.forEach((image) => {
           formData.append("images", image);
@@ -204,6 +210,9 @@ const Page = () => {
             </>
           )}
         </div>
+        {imagesError && (
+          <span className="text-red-500">You need at least 5 photos.</span>
+        )}
         <h3 className="-mb-1">Perks</h3>
         <div className="border border-gray-300 px-4 py-2 rounded-md">
           <Perks registerProp={register} />
