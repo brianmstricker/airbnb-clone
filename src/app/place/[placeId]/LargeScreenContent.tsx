@@ -187,7 +187,11 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
          </>
         )}
        </div>
-       <Border />
+       {place.perks.length > 0 ? (
+        <Border />
+       ) : (
+        <div className="w-full h-[1px] bg-gray-300 mt-32 mb-10" />
+       )}
        <div>
         <div>
          <h3 className="font-bold text-2xl">Where you&apos;ll be</h3>
