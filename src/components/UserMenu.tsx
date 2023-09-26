@@ -63,6 +63,13 @@ const UserMenu = ({
           >
            Account
           </Link>
+          <Link
+           href={"/account/wishlist"}
+           onClick={closeUserModal}
+           className="w-fit cursor-pointer"
+          >
+           Wishlist
+          </Link>
           <div className="w-full h-[1px] bg-gray-300 absolute left-0 bottom-[5.5rem]" />
           <span className="mt-3 w-fit">Airbnb your home</span>
           <button onClick={() => signOut()} className="w-fit">

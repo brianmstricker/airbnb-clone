@@ -16,10 +16,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const urls = [];
   for (const imageInfo of formData) {
    const image = imageInfo[1];
-   const imageShortName = image.name.substring(0, 15);
+   const imageShortName = image.name.substring(0, 3);
    const imageType = image.type.split("/")[1];
    const name = imageShortName + shortv4 + "." + imageType;
-   console.log(name);
    const chunks = [];
    for await (const chunk of image.stream()) {
     chunks.push(chunk);

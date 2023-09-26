@@ -42,14 +42,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String     @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   places        Place[]
+  favorites     Favorite[]
 }
 
 model VerificationToken {
@@ -61,27 +62,29 @@ model VerificationToken {
 }
 
 model Place {
-  id           String  @id @default(cuid())
+  id           String     @id @default(cuid())
   name         String
   address      String
+  createdAt    DateTime   @default(now())
   type         String
   photos       Photo[]
   beds         Int
   baths        Int
-  description  String
+  description  String     @db.LongText
   perks        Perk[]
   checkInTime  String
   checkOutTime String
   price        String
+  favorites    Favorite[]
   userId       String
-  user         User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, name])
 }
 
 model Photo {
   id      String @id @default(cuid())
-  url     String
+  url     String @db.VarChar(512)
   placeId String
   place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
 
@@ -95,4 +98,15 @@ model Perk {
   place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
 
   @@unique([placeId, name])
+}
+
+model Favorite {
+  id        String @id @default(cuid())
+  userEmail String
+  placeId   String
+  user      User   @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+  place     Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+
+  @@unique([userEmail, placeId])
+  @@index([placeId])
 }
