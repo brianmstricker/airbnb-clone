@@ -5,7 +5,7 @@ import prisma from "@/app/lib/auth";
 export async function GET(req: NextRequest, res: NextResponse) {
  try {
   const places = await prisma.place.findMany({
-   include: { photos: true, favorites: true },
+   include: { photos: true },
   });
   return NextResponse.json(places);
  } catch (error) {

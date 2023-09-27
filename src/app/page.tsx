@@ -32,16 +32,7 @@ export default async function Home() {
    <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 3xl:grid-cols-6 gap-y-10 gap-x-6">
     {places.map((place: Place) => (
      <div key={place.id} className="relative">
-      <Favorite
-       placeId={place.id}
-       favorited={
-        !!place.favorites.find(
-         (favorite) =>
-          favorite.placeId === place.id &&
-          favorite.userEmail === session?.user?.email
-        )
-       }
-      />
+      <Favorite placeId={place.id} />
       <Link href={`/place/${place.id}`} className="mx-auto w-full">
        <div className="relative w-full h-[400px] sm:h-[250px]">
         <Image

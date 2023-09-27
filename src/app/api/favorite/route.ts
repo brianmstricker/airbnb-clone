@@ -55,41 +55,38 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
 
 export const GET = async (req: NextRequest, res: NextResponse) => {
  try {
-  // const session = await getAuthSession();
-  // if (!session?.user) {
-  //  return NextResponse.json(
-  //   { message: "Unauthorized - Log in" },
-  //   { status: 401 }
-  //  );
-  // } else if (session.user.email) {
-  //  const userDB = await prisma.user.findUnique({
-  //   where: {
-  //    email: session.user.email,
-  //   },
-  //  });
-  //  if (!userDB) {
-  //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  //  }
-  const userEmail = req.nextUrl.searchParams.get("userEmail");
-  if (!userEmail) {
-   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-  }
-  const favorites = await prisma.favorite.findMany({
-   where: {
-    userEmail: userEmail as string,
-   },
-   include: {
-    place: {
-     select: {
-      name: true,
-      id: true,
-      address: true,
-      photos: true,
+  const session = await getAuthSession();
+  if (!session?.user) {
+   return NextResponse.json(
+    { message: "Unauthorized - Log in" },
+    { status: 401 }
+   );
+  } else if (session.user.email) {
+   const userDB = await prisma.user.findUnique({
+    where: {
+     email: session.user.email,
+    },
+   });
+   if (!userDB) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+   }
+   const favorites = await prisma.favorite.findMany({
+    where: {
+     userEmail: userDB.email as string,
+    },
+    include: {
+     place: {
+      select: {
+       name: true,
+       id: true,
+       address: true,
+       photos: true,
+      },
      },
     },
-   },
-  });
-  return NextResponse.json(favorites, { status: 200 });
+   });
+   return NextResponse.json(favorites, { status: 200 });
+  }
  } catch (error) {
   console.log(error);
   return NextResponse.json(
