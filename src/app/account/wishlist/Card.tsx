@@ -15,10 +15,7 @@ type FavoriteType = {
 const Card = ({ favorite }: { favorite: FavoriteType }) => {
  return (
   <div className="relative">
-   <Favorite
-    placeId={favorite.placeId}
-    // favorited={!!favorite.id}
-   />
+   <Favorite placeId={favorite.placeId} />
    <Link href={`/place/${favorite.placeId}`} className="w-full relative">
     <div className="relative w-full h-[400px] sm:h-[350px]">
      <Image
