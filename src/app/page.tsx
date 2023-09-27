@@ -1,9 +1,9 @@
-import prisma from "@/app/lib/auth";
 import Favorite from "@/components/Favorite";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
 import { getAuthSession } from "@/utils/getAuthSession";
+import PlaceFilter from "@/components/placefilter/PlaceFilter";
 
 type Place = {
  id: string;
@@ -18,18 +18,19 @@ type Place = {
  checkInTime: string;
  checkOutTime: string;
  price: string;
+ favorites: { placeId: string; userEmail: string }[];
 };
 
 export default async function Home() {
  const session = await getAuthSession();
- const getPlaces = await prisma.place.findMany({
-  include: { photos: true, favorites: true },
- });
- const places = getPlaces.filter((place) => place.photos.length > 0);
+ const fetchPlaces = await fetch("http://localhost:3000/api/places");
+ const getPlaces = await fetchPlaces.json();
+ const places = getPlaces.filter((place: Place) => place.photos.length > 0);
  return (
-  <main className="max-w-screen-3xl mx-auto py-12 px-4">
+  <main className="max-w-screen-3xl mx-auto px-4">
+   <PlaceFilter />
    <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 3xl:grid-cols-6 gap-y-10 gap-x-6">
-    {places.map((place) => (
+    {places.map((place: Place) => (
      <div key={place.id} className="relative">
       <Favorite
        placeId={place.id}
