@@ -47,13 +47,13 @@ const Favorite = ({ placeId }: { placeId: string }) => {
   >
    {isFavorited ? (
     <>
-     <AiOutlineHeart className="absolute fill-white" size={30} />
-     <AiFillHeart className="fill-primary" size={30} />
+     <AiOutlineHeart className="absolute fill-white" size={26} />
+     <AiFillHeart className="fill-primary" size={26} />
     </>
    ) : (
     <>
-     <AiOutlineHeart className="absolute fill-white" size={30} />
-     <AiFillHeart className="fill-black/60" size={30} />
+     <AiOutlineHeart className="absolute fill-white" size={26} />
+     <AiFillHeart className="fill-black/60" size={26} />
     </>
    )}
   </div>
