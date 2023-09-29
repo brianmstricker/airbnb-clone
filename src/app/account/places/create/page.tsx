@@ -11,6 +11,7 @@ import { AiOutlineFileImage, AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import Image from "next/image";
 import { v4 } from "uuid";
+import { PlaceEnum } from "@/utils/placeSchema";
 
 const Page = () => {
  const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -22,7 +23,7 @@ const Page = () => {
   defaultValues: {
    name: "",
    address: "",
-   type: "",
+   type: undefined,
    beds: 1,
    baths: 1,
    description: "",
@@ -102,18 +103,23 @@ const Page = () => {
     {errors.address && (
      <span className="text-red-500">{errors.address.message}</span>
     )}
-    <div className="lg:grid lg:grid-cols-[350px_272px_272px]">
+    <div className="lg:grid lg:grid-cols-[315px_290px_290px]">
      <div className="flex items-center justify-between lg:justify-normal gap-4 relative">
       <label htmlFor="type" className="min-w-[85px] lg:min-w-fit">
        Type
       </label>
-      <input
-       type="text"
+      <select
        id="type"
-       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:max-w-[250px] lg:ml-12"
-       placeholder="Lake house, Mini house, etc."
+       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:ml-[3.1rem]"
        {...register("type")}
-      />
+      >
+       <option disabled>Select a type</option>
+       {Object.entries(PlaceEnum).map(([key, value]) => (
+        <option key={key} value={value}>
+         {value}
+        </option>
+       ))}
+      </select>
       {errors.type && (
        <span className="text-red-500 absolute -bottom-14 xxs:-bottom-10 lg:-bottom-8">
         {errors.type.message}

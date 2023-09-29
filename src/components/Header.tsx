@@ -38,10 +38,10 @@ const Header = () => {
  const placePage = pathname.includes("/place/");
  return (
   <>
-   <nav className="md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white z-10">
+   <nav className="md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white z-10 hidden md:block">
     <div
      className={
-      "container hidden md:flex items-center justify-between" +
+      "contain mx-auto flex items-center justify-between" +
       (placePage ? " max-w-6xl xxs:flex px-8" : "")
      }
     >

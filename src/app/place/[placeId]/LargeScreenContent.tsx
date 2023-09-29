@@ -10,17 +10,22 @@ import ReserveWidget from "./ReserveWidget";
 export type Place = {
  name: string;
  address: string;
- photos: { url: string }[];
+ createdAt: Date;
+ userId: string;
+ photos: { url: string; id: string; placeId: string }[];
  type: string;
  user: { name: string; image: string };
  beds: number;
  baths: number;
  description: string;
  id: string;
- perks: string[];
+ perks?: { name: string; id: string; placeId: string }[];
  checkInTime: string;
  checkOutTime: string;
  price: string;
+ trending: boolean;
+ view: boolean;
+ omg: boolean;
 };
 
 const LargeScreenContent = ({ place }: { place: Place }) => {
@@ -102,7 +107,8 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
         <div className="text-xl flex justify-between">
          <div>
           <p className="font-medium">
-           Entire {place.type} hosted by {place.user.name}
+           Entire <span className="capitalize">{place.type}</span> hosted by{" "}
+           {place.user.name}
           </p>
           <ol className="text-base mt-2 text-gray-800 flex gap-6 items-center">
            <li>
@@ -168,7 +174,7 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
         <div>
          <p>{place.description}</p>
         </div>
-        {place.perks.length > 0 && (
+        {place.perks && place.perks.length > 0 && (
          <>
           <Border />
           <div>
@@ -187,7 +193,7 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
          </>
         )}
        </div>
-       {place.perks.length > 0 ? (
+       {place.perks && place.perks.length > 0 ? (
         <Border />
        ) : (
         <div className="w-full h-[1px] bg-gray-300 mt-32 mb-10" />

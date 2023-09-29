@@ -17,13 +17,15 @@ const Card = ({ favorite }: { favorite: FavoriteType }) => {
   <div className="relative">
    <Favorite placeId={favorite.placeId} />
    <Link href={`/place/${favorite.placeId}`} className="w-full relative">
-    <div className="relative w-full h-[400px] sm:h-[350px]">
-     <Image
-      src={favorite.place.photos[0].url}
-      fill
-      alt="place"
-      className="rounded-xl object-cover"
-     />
+    <div className="relative w-full h-full aspect-square">
+     <div className="relative w-full h-full">
+      <Image
+       src={favorite.place.photos[0].url}
+       fill
+       alt="place"
+       className="rounded-xl object-cover"
+      />
+     </div>
     </div>
     <div>
      <div className="flex justify-between">

@@ -4,7 +4,7 @@ import Image from "next/image";
 const AccountPage = async () => {
  const session = await getAuthSession();
  return (
-  <div className="border border-gray-400 p-4 rounded-xl">
+  <div className="border border-gray-400 p-4 rounded-xl mt-3">
    <div className="flex flex-col items-center gap-8 mt-4">
     <Image
      src={session?.user?.image as string}

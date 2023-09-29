@@ -3,8 +3,30 @@
 @tailwind utilities;
 
 @layer base {
-  body,
-  html {
-    @apply h-full;
-  }
+ body,
+ html {
+  @apply h-full;
+ }
+}
+
+.contain {
+ margin: 0 auto;
+ padding-left: 24px;
+ padding-right: 24px;
+ max-width: 1800px;
+ @media screen and (min-width: 768px) {
+  padding-left: 40px;
+  padding-right: 40px;
+ }
+}
+
+.contain-filter {
+ margin: 0 auto;
+ padding-left: 0px;
+ padding-right: 0px;
+ max-width: 1800px;
+ @media screen and (min-width: 768px) {
+  padding-left: 40px;
+  padding-right: 40px;
+ }
 }

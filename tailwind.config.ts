@@ -16,8 +16,10 @@ const config: Config = {
     primary: "#ff385c",
    },
    screens: {
-    "3xl": "1800px",
+    xxxs: "550px",
     xxs: "600px",
+    mdlg: "950px",
+    "3xl": "1800px",
    },
   },
  },

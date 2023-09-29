@@ -77,6 +77,9 @@ model Place {
   price        String
   favorites    Favorite[]
   userId       String
+  trending     Boolean    @default(true)
+  view         Boolean    @default(false)
+  omg          Boolean    @default(false)
   user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, name])

@@ -16,7 +16,7 @@ interface PlaceType {
  checkOutTime: String;
  perks: Array<Object>;
  price: String;
- photos: Array<Object>;
+ photos: { url: string }[];
  type: String;
  userId: String;
 }
@@ -33,7 +33,7 @@ const PlacesPage = () => {
   <main>
    <Link
     href="/account/places/create"
-    className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-2 hover:bg-rose-400"
+    className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-3 hover:bg-rose-400"
    >
     Add A Place
    </Link>
@@ -47,10 +47,10 @@ const PlacesPage = () => {
       <Link
        href={`/place/${place.id}`}
        key={place.id}
-       className="border-2 p-2 xxs:p-4 flex flex-col xxs:flex-row gap-3"
+       className="border-2 p-4 flex flex-col md:flex-row gap-3"
       >
        {place.photos && place.photos[0]?.url && (
-        <div className="relative xxs:w-[300px] w-full h-[175px] shrink-0 mx-auto xxs:mx-0">
+        <div className="relative md:w-[300px] w-full h-[175px] shrink-0 mx-auto xxs:mx-0">
          <Image
           src={place.photos[0].url}
           alt={place.name as string}
@@ -69,7 +69,7 @@ const PlacesPage = () => {
         </div>
         <p className="text-gray-500">
          {place.description.length > 250
-          ? place.description.substring(0, 250)
+          ? place.description.substring(0, 250) + "..."
           : place.description}
         </p>
        </div>

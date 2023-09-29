@@ -1,2 +1,6 @@
--create mobile searchbar on top and bottom navigation bar on md and below devices
--fix homepage to update favorite component
+-loading state when uploading
+-rearrange images when uploading
+-single place page image features
+-search func
+-filter func
+-mobile header func
