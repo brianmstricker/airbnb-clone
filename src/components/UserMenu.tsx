@@ -1,7 +1,6 @@
 "use client";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { useEffect } from "react";
 
 type UserMenuProps = {
  closeUserModal: () => void;
@@ -50,7 +49,15 @@ const UserMenu = ({
           >
            Sign up
           </span>
-          <span className="mt-4 w-fit">Airbnb your home</span>
+          <span
+           className="mt-4 w-fit"
+           onClick={() => {
+            closeUserModal();
+            openAuthModal();
+           }}
+          >
+           Airbnb your home
+          </span>
           <div className="w-full h-[1px] bg-gray-300 absolute left-0 bottom-12" />
          </>
         ) : (
@@ -71,7 +78,13 @@ const UserMenu = ({
            Wishlist
           </Link>
           <div className="w-full h-[1px] bg-gray-300 absolute left-0 bottom-[5.5rem]" />
-          <span className="mt-3 w-fit">Airbnb your home</span>
+          <Link
+           href={"/account/places/create"}
+           className="mt-3 w-fit cursor-pointer"
+           onClick={closeUserModal}
+          >
+           Airbnb your home
+          </Link>
           <button onClick={() => signOut()} className="w-fit">
            Logout
           </button>

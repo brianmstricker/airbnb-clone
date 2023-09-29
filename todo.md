@@ -1,5 +1,5 @@
--loading state when uploading
--rearrange images when uploading
+-test loading state when uploading
+-rearrange images on create page
 -single place page image features
 -search func
 -filter func

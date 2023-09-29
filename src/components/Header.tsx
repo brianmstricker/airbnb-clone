@@ -35,6 +35,7 @@ const Header = () => {
   }
  }, [showAuthModal]);
  const pathname = usePathname();
+ if (!pathname) return null;
  const placePage = pathname.includes("/place/");
  return (
   <>
@@ -52,7 +53,7 @@ const Header = () => {
      <div
       className={
        "flex gap-4 border-2 border-gray-200 pl-4 pr-2 py-2 rounded-full items-center shadow-sm hover:shadow-md duration-200 ml-0 lg:ml-28 tracking-tight text-[.9rem]" +
-       (placePage ? " absolute left-16 lg:static" : "")
+       (placePage ? " absolute left-24 lg:static" : "")
       }
      >
       {placePage ? (

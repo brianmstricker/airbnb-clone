@@ -24,7 +24,7 @@ export default function RootLayout({
     <AuthContext>
      <Header />
      <MobileSearch />
-     <div className="pt-40 md:pt-24">{children}</div>
+     <div className="pt-24">{children}</div>
      <MobileHeader />
     </AuthContext>
    </body>

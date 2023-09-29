@@ -2,7 +2,7 @@
 import Perks from "./Perks";
 import { placeSchema } from "@/utils/placeSchema";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -12,10 +12,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { v4 } from "uuid";
 import { PlaceEnum } from "@/utils/placeSchema";
+import { CircleLoader } from "react-spinners";
 
 const Page = () => {
  const [selectedImages, setSelectedImages] = useState<File[]>([]);
  const [imagesError, setImagesError] = useState(false);
+ const [loading, setLoading] = useState(false);
  const router = useRouter();
  type Form = z.infer<typeof placeSchema>;
  const place = useForm<Form>({
@@ -54,6 +56,7 @@ const Page = () => {
     setImagesError(false);
    }
    if (selectedImages && selectedImages.length >= 5) {
+    setLoading(true);
     const formData = new FormData();
     selectedImages.forEach((file) => {
      formData.append("image", file);
@@ -64,16 +67,25 @@ const Page = () => {
    CreatePlace(data, {
     onSuccess: () => {
      place.reset();
+     setLoading(false);
      router.push("/account/places");
     },
    });
   } catch (error) {
    console.log(error);
+   setLoading(false);
   }
  };
  return (
   <form className="max-w-4xl mx-auto" onSubmit={handleSubmit(formSubmit)}>
-   <h1 className="text-center text-xl mb-4">Add your place</h1>
+   {loading && (
+    <div className="fixed w-screen h-screen bg-white/60 z-50 inset-0">
+     <div className="flex w-full h-full justify-center items-center">
+      <CircleLoader size={80} color="#ff385c" />
+     </div>
+    </div>
+   )}
+   <h1 className="text-center text-xl mb-4 mt-6">Add your place</h1>
    <div className="flex flex-col gap-3">
     <div className="flex gap-4 items-center justify-between">
      <label htmlFor="name" className="min-w-[85px]">

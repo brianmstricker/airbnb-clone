@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Key } from "react";
 import Image from "next/image";
+import { CircleLoader } from "react-spinners";
+import { BsTrash } from "react-icons/bs";
 
 interface PlaceType {
  id: Key;
@@ -39,41 +41,55 @@ const PlacesPage = () => {
    </Link>
    <div className="mt-8 flex flex-col gap-4">
     {isLoading ? (
-     <span>Loading...</span>
+     <div className="flex items-center w-full justify-center relative top-48">
+      <CircleLoader size={80} color="#ff385c" />
+     </div>
     ) : error ? (
      <span>Something went wrong.</span>
     ) : (
      data?.map((place: PlaceType) => (
-      <Link
-       href={`/place/${place.id}`}
-       key={place.id}
-       className="border-2 p-4 flex flex-col md:flex-row gap-3"
-      >
-       {place.photos && place.photos[0]?.url && (
-        <div className="relative md:w-[300px] w-full h-[175px] shrink-0 mx-auto xxs:mx-0">
-         <Image
-          src={place.photos[0].url}
-          alt={place.name as string}
-          fill
-          className="rounded-md object-cover"
-         />
-        </div>
-       )}
-       <div className="flex flex-col justify-between">
-        <div>
-         <h2 className="text-2xl font-medium capitalize">{place.name}</h2>
-         <p className="capitalize text-gray-600">{place.address}</p>
-         <div className="mt-4">
-          <span className="font-bold">${place.price}</span> per night
+      <div key={place.id} className="relative">
+       <button className="absolute -top-2 -right-2 hover:scale-110 duration-150">
+        <BsTrash size={24} className="fill-gray-600" />
+       </button>
+       <Link
+        href={`/place/${place.id}`}
+        key={place.id}
+        className="border-2 rounded-md p-4 flex flex-col md:flex-row gap-3 items-center"
+       >
+        {place.photos && place.photos[0]?.url && (
+         <div className="relative md:w-[300px] w-full shrink-0 mx-auto xxs:mx-0 aspect-square h-full max-h-[230px] lg:max-h-[200px]">
+          <Image
+           src={place.photos[0].url}
+           alt={place.name as string}
+           fill
+           className="rounded-md object-cover"
+          />
+         </div>
+        )}
+        <div className="flex flex-col justify-between w-full overflow-hidden">
+         <div>
+          <h2 className="text-2xl font-medium capitalize">{place.name}</h2>
+          <p className="capitalize text-gray-600">{place.address}</p>
+          <div className="mt-4">
+           <span className="font-bold">${place.price}</span> per night
+          </div>
+         </div>
+         <div className="overflow-hidden">
+          <p className="text-gray-500 hidden md:block">
+           {place.description.length > 250
+            ? place.description.substring(0, 250) + "..."
+            : place.description}
+          </p>
+          <p className="text-gray-500 md:hidden block">
+           {place.description.length > 100
+            ? place.description.substring(0, 100) + "..."
+            : place.description}
+          </p>
          </div>
         </div>
-        <p className="text-gray-500">
-         {place.description.length > 250
-          ? place.description.substring(0, 250) + "..."
-          : place.description}
-        </p>
-       </div>
-      </Link>
+       </Link>
+      </div>
      ))
     )}
    </div>

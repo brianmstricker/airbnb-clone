@@ -29,7 +29,7 @@ const Wishlist = () => {
   <div className="mt-3">
    {loading && <div className="text-center">Loading...</div>}
    {favorites.length > 0 && !loading && (
-    <div className="grid grid-cols-1 xxxs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-3">
+    <div className="grid grid-cols-1 xxxs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12 sm:gap-y-3">
      {favorites.map((favorite: FavoriteInterface) => (
       <Card favorite={favorite} key={favorite.id} />
      ))}

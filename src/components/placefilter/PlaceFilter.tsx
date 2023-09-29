@@ -24,7 +24,7 @@ import { useEffect, useRef, useState } from "react";
 const PlaceFilter = () => {
  const sliderRef = useRef(null);
  const [sliderPosition, setSliderPosition] = useState(getSliderPosition());
- const [maxScroll, setMaxScroll] = useState(1000);
+ const [isRightButtonDisabled, setIsRightButtonDisabled] = useState(false);
  function getScrollAmount() {
   const screenWidth = window.innerWidth;
   if (screenWidth >= 1000) {
@@ -38,6 +38,7 @@ const PlaceFilter = () => {
  const slideLeft = () => {
   const slider = sliderRef.current;
   if (slider) {
+   setIsRightButtonDisabled(false);
    slider.scrollLeft -= getScrollAmount();
   }
   if (!slider) return;
@@ -46,6 +47,9 @@ const PlaceFilter = () => {
   const slider = sliderRef.current;
   if (slider) {
    slider.scrollLeft += getScrollAmount();
+   setIsRightButtonDisabled(
+    slider.scrollLeft + slider.clientWidth === slider.scrollWidth
+   );
   }
   if (!slider) return;
  };
@@ -59,27 +63,18 @@ const PlaceFilter = () => {
  }
  useEffect(() => {
   const slider = sliderRef.current;
-  function computeMaxScroll() {
-   if (slider) {
-    const max = slider.scrollWidth - slider.clientWidth;
-    setMaxScroll(max);
-   }
-  }
   function handleSliderScroll() {
    setSliderPosition(getSliderPosition());
-  }
-  function handleResize() {
-   computeMaxScroll();
+   setIsRightButtonDisabled(
+    slider.scrollLeft + slider.clientWidth === slider.scrollWidth
+   );
   }
   if (slider) {
    slider.addEventListener("scroll", handleSliderScroll);
-   computeMaxScroll();
-   window.addEventListener("resize", handleResize);
   }
   return () => {
    if (slider) {
     slider.removeEventListener("scroll", handleSliderScroll);
-    window.removeEventListener("resize", handleResize);
    }
   };
  }, []);
@@ -136,15 +131,13 @@ const PlaceFilter = () => {
      <div
       className={
        "absolute w-14 h-14 bg-gradient-to-r from-transparent via-white/50 to-white top-0 -left-14 pointer-events-none" +
-       (maxScroll - sliderPosition <= 0 ? " opacity-0" : "")
+       (isRightButtonDisabled ? " opacity-0" : "")
       }
      />
      <button
       className={
        "items-center text-black flex relative" +
-       (maxScroll - sliderPosition <= 0
-        ? " opacity-40 cursor-default"
-        : " group")
+       (isRightButtonDisabled ? " opacity-40 cursor-default" : " group")
       }
       onClick={slideRight}
      >
