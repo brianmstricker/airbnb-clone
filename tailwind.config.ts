@@ -20,6 +20,7 @@ const config: Config = {
     xxs: "600px",
     mdlg: "950px",
     "3xl": "1800px",
+    betterhover: { raw: "(hover: hover)" },
    },
   },
  },

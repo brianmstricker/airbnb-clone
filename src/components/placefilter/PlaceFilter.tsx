@@ -80,27 +80,22 @@ const PlaceFilter = () => {
  }, []);
  return (
   <div>
-   <div
-    className={
-     "md:pt-3 md:pb-10 text-xs text-gray-500 flex justify-between items-center md:relative border-b md:border-b-0 fixed top-[84px] md:top-auto z-30 md:z-auto bg-white md:bg-inherit left-0 right-0 md:left-auto md:right-auto" +
-     (sliderPosition === 0 ? " lg:-left-[18px] lg:w-[101.5%]" : "")
-    }
-   >
-    <div className="hidden md:block">
+   <div className="md:pt-3 md:pb-10 text-xs text-gray-500 flex justify-between items-center md:relative border-b md:border-b-0 fixed top-[84px] md:top-auto z-30 md:z-auto bg-white md:bg-inherit left-0 right-0 md:left-auto md:right-auto">
+    <div className="hidden md:block absolute">
      <div
       className={
-       "absolute w-16 h-16 bg-gradient-to-r from-white via-white/50 to-transparent top-2 left-[26px] z-10 pointer-events-none" +
+       "absolute w-12 h-16 bg-gradient-to-r from-white via-white to-transparent -top-4 z-10 pointer-events-none" +
        (sliderPosition === 0 ? " hidden" : "")
       }
      />
      <button
       className={
-       "items-center text-black flex relative group" +
+       "items-center text-black flex relative group z-20" +
        (sliderPosition === 0 ? " hidden" : "")
       }
       onClick={slideLeft}
      >
-      <div className="p-3 border rounded-full border-gray-400 group-hover:scale-110 duration-100 z-10" />
+      <div className="p-3 border rounded-full border-gray-400 group-hover:scale-110 duration-100" />
       <FaChevronLeft className="absolute left-1/2 right-1/2 -translate-x-1/2" />
      </button>
     </div>

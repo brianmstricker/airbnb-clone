@@ -1,178 +1,139 @@
 import { Place } from "./LargeScreenContent";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
 import { FiShare } from "react-icons/fi";
 import Image from "next/image";
 import { BsDoorClosed } from "react-icons/bs";
 import { PiMedalMilitary } from "react-icons/pi";
 import { LuCalendarX } from "react-icons/lu";
 import Border from "./Border";
+import { FaChevronLeft } from "react-icons/fa";
+import { GoShare } from "react-icons/go";
+import Link from "next/link";
 import ReserveWidget from "./ReserveWidget";
 
 const SmallScreenContent = ({ place }: { place: Place }) => {
  return (
   <div className="md:hidden mx-auto pb-12">
    {place && (
-    <div className="flex flex-col justify-center px-8 pb-8 relative">
-     <h2 className="text-2xl font-semibold mt-4 capitalize">{place.name}</h2>
-     <div className="mt-2 text-sm flex justify-between items-center">
-      <a
-       href={`https://www.google.com/maps/place/${place.address}`}
-       target="_blank"
-       className="underline font-medium"
-      >
-       {place.address}
-      </a>
-      <div className="flex gap-4">
-       <div className="flex items-center gap-2">
-        <FiShare size={18} /> <span className="underline">Share</span>
-       </div>
-       <div className="flex items-center gap-2">
-        <AiOutlineHeart size={18} /> <span className="underline">Save</span>
-       </div>
+    <div>
+     <div className="px-4 py-6 text-sm flex items-center justify-between">
+      <Link href="/" className="flex items-center gap-3">
+       <FaChevronLeft />
+       Homes
+      </Link>
+      <div className="flex items-center pr-2 gap-4">
+       <GoShare size={20} />
+       <AiOutlineHeart size={20} />
       </div>
      </div>
-     <div className="mt-6 flex">
-      {place.photos && place.photos[0]?.url && (
-       <div className="w-full relative h-[50vh] lg:h-[52vh]">
+     {place.photos && place.photos[0]?.url && (
+      <div className="w-full relative h-full aspect-[13/9]">
+       <Image
+        src={place.photos[0].url}
+        alt="photo of place"
+        fill
+        className="object-cover"
+       />
+      </div>
+     )}
+     <div className="flex flex-col justify-center px-8 pb-8 relative">
+      <h2 className="text-2xl font-semibold mt-4 capitalize">{place.name}</h2>
+      <div className="mt-4 text-base font-semibold">
+       Entire {place.type} in {place.address.split(",", 2).join(",")}
+      </div>
+      <div className="relative">
+       <ol className="text-sm text-gray-800 flex gap-3 items-center mt-[2px]">
+        <li>
+         <span>{place.beds * 2} Guests</span>
+        </li>
+        <li className="flex items-center relative rounded-full">
+         <div className="w-[2px] h-[2px] bg-gray-800 absolute -left-[6px]" />
+         <span>
+          {place.beds} {place.beds === 1 ? "Bed" : "Beds"}
+         </span>
+        </li>
+        <li className="flex items-center relative rounded-full">
+         <div className="w-[2px] h-[2px] bg-gray-800 absolute -left-[6px]" />
+         <span>
+          {place.baths} {place.baths === 1 ? "Bath" : "Baths"}
+         </span>
+        </li>
+       </ol>
+       <div className="flex gap-4 items-center text-sm mt-1">
+        <div className="flex items-center gap-1 relative">
+         <AiFillStar size={16} />
+         <span className="font-bold">4.90</span>
+         <div className="absolute w-[2px] h-[2px] bg-black -right-[10px] rounded-full" />
+        </div>
+        <span className="underline font-medium tracking-tight">
+         553 reviews
+        </span>
+       </div>
+       <Border small />
+       <div className="flex items-start gap-3">
         <Image
-         src={place.photos[0].url}
-         alt="photo of place"
-         fill
-         className="rounded-l-xl object-cover"
+         src={place.user.image as string}
+         alt="user"
+         width={40}
+         height={40}
+         className="rounded-full"
         />
-       </div>
-      )}
-      {place.photos && (
-       <div className="ml-2 w-full">
-        <div className="grid grid-cols-2 w-full h-full gap-2">
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[1]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover"
-          />
-         </div>
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[2]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover rounded-tr-xl"
-          />
-         </div>
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[3]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover"
-          />
-         </div>
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[4]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover rounded-br-xl"
-          />
-         </div>
-        </div>
-       </div>
-      )}
-     </div>
-     <div className="relative">
-      <div className="mt-10">
-       <div className="max-w-sm lg:max-w-xl">
-        <div className="text-xl flex justify-between">
-         <div>
-          <p className="font-medium">
-           Entire <span className="capitalize">{place.type}</span> hosted by{" "}
-           {place.user.name}
-          </p>
-          <ol className="text-base mt-2 text-gray-800 flex gap-6 items-center">
-           <li>
-            <span>{place.beds * 2} Guests</span>
-           </li>
-           <li className="flex items-center relative rounded-full">
-            <div className="w-[2px] h-[2px] bg-black absolute -left-3" />
-            <span>
-             {place.beds} {place.beds === 1 ? "Bed" : "Beds"}
-            </span>
-           </li>
-           <li className="flex items-center relative rounded-full">
-            <div className="w-[2px] h-[2px] bg-black absolute -left-3" />
-            <span>
-             {place.baths} {place.baths === 1 ? "Bath" : "Baths"}
-            </span>
-           </li>
-          </ol>
-         </div>
-         <div>
-          <Image
-           src={place.user.image as string}
-           alt="user"
-           width={60}
-           height={60}
-           className="rounded-full"
-          />
-         </div>
-        </div>
-        <Border />
-        <div className="flex gap-4">
-         <BsDoorClosed size={28} />
-         <p>
-          <span className="font-semibold">Self check-in</span>
-          <br />
-          <span className="text-sm text-gray-500">
-           Check yourself in with the keypad.
-          </span>
-         </p>
-        </div>
-        <div className="mt-6 flex gap-4">
-         <PiMedalMilitary size={28} />
-         <p>
-          <span className="font-semibold">
-           {place.user.name} is a Superhost
-          </span>
-          <br />
-          <span className="text-sm text-gray-500">
-           Superhosts are experienced, highly rated hosts who are committed to
-           providing great stays for guests.
-          </span>
-         </p>
-        </div>
-        <div className="mt-6 flex items-center gap-4">
-         <LuCalendarX size={28} />
-         <p>
-          <span className="font-semibold">
-           Free cancellation before Oct 20.
-          </span>
-         </p>
-        </div>
-        <Border />
         <div>
-         <p>{place.description}</p>
+         <div className="font-semibold">
+          Hosted by {place.user.name.split(" ")[0]}
+         </div>
+         <div className="text-sm text-gray-500">New to hosting</div>
         </div>
-        {place.perks && place.perks.length > 0 && (
-         <>
-          <Border />
-          <div>
-           <h3 className="font-bold text-2xl">What this place offers</h3>
-           <div className="mt-4 grid grid-cols-2">
-            {place.perks.map((perk) => (
-             <ul
-              key={perk.name}
-              className="text-gray-600 capitalize list-disc ml-4"
-             >
-              <li className="mt-2">{perk.name}</li>
-             </ul>
-            ))}
-           </div>
-          </div>
-         </>
-        )}
        </div>
+       <Border small />
+       <div className="flex gap-4">
+        <BsDoorClosed size={28} />
+        <p>
+         <span className="font-semibold">Self check-in</span>
+         <br />
+         <span className="text-sm text-gray-500">
+          Check yourself in with the keypad.
+         </span>
+        </p>
+       </div>
+       <div className="mt-6 flex gap-4">
+        <PiMedalMilitary size={28} />
+        <p>
+         <span className="font-semibold">{place.user.name} is a Superhost</span>
+         <br />
+         <span className="text-sm text-gray-500">
+          Superhosts are experienced, highly rated hosts.
+         </span>
+        </p>
+       </div>
+       <div className="mt-6 flex items-center gap-4">
+        <LuCalendarX size={28} />
+        <p>
+         <span className="font-semibold">Free cancellation before Oct 20.</span>
+        </p>
+       </div>
+       <Border />
+       <div>
+        <p>{place.description}</p>
+       </div>
+       {place.perks && place.perks.length > 0 && (
+        <>
+         <Border />
+         <div>
+          <h3 className="font-bold text-2xl">What this place offers</h3>
+          <div className="mt-4 grid grid-cols-2">
+           {place.perks.map((perk) => (
+            <ul
+             key={perk.name}
+             className="text-gray-600 capitalize list-disc ml-4"
+            >
+             <li className="mt-2">{perk.name}</li>
+            </ul>
+           ))}
+          </div>
+         </div>
+        </>
+       )}
        {place.perks && place.perks.length > 0 ? (
         <Border />
        ) : (
@@ -185,43 +146,49 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
         </div>
         <Border />
         <div>
-         <h3 className="font-bold text-2xl">Things to know</h3>
-         <div className="mt-4 flex justify-between items-start">
-          <div>
-           <h4 className="font-semibold">House rules</h4>
-           <span className="block mt-4">Check-in: {place.checkInTime}</span>
-           <span className="block mt-4">
+         <div className="mt-4 flex flex-col">
+          <div className="text-gray-500 text-sm">
+           <h4 className="font-semibold text-2xl text-black">
+            Cancellation policy
+           </h4>
+           <span className="block mt-2">
+            Free cancellation before 4:00 PM on Sep 11.
+           </span>
+           <span className="block mt-2">
+            Review the Host&apos;s full cancellation policy which applies even
+            if you cancel for illness or disruptions caused by COVID-19.
+           </span>
+          </div>
+          <Border small />
+          <div className="text-gray-500 text-sm">
+           <h4 className="font-semibold text-2xl text-black">House rules</h4>
+           <span className="block mt-2">Check-in: {place.checkInTime}</span>
+           <span className="block mt-2">
             Check out before {place.checkOutTime}
            </span>
-           <span className="block mt-4">No parties or events</span>
-           <span className="block mt-4"></span>
+           <span className="block mt-2">No parties or events</span>
+           <span className="block mt-2"></span>
           </div>
-          <div>
-           <h4 className="font-semibold">Safety & Property</h4>
-           <span className="block mt-4">Security camera/recording device</span>
-           <span className="block mt-4">
+          <Border small />
+          <div className="text-gray-500 text-sm">
+           <h4 className="font-semibold text-2xl text-black">
+            Safety & Property
+           </h4>
+           <span className="block mt-2">Security camera/recording device</span>
+           <span className="block mt-2">
             Pool/hot tub without a gate or lock
            </span>
-           <span className="block mt-4">
+           <span className="block mt-2">
             Nearby lake, river, other body of water
            </span>
           </div>
-          <div>
-           <h4 className="font-semibold">Cancellation policy</h4>
-           <span className="block mt-4">
-            Free cancellation before 4:00 PM on Sep 11.
-           </span>
-           <span className="block mt-4 max-w-[400px]">
-            Review the Host’s full cancellation policy which applies even if you
-            cancel for illness or disruptions caused by COVID-19.
-           </span>
-          </div>
+          <Border small />
          </div>
         </div>
        </div>
       </div>
-      <ReserveWidget price={place.price} />
      </div>
+     <ReserveWidget price={place.price} smallScreen />
     </div>
    )}
   </div>

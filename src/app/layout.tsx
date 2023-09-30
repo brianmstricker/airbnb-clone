@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import AuthContext from "./context/AuthContext";
 import MobileHeader from "@/components/MobileHeader";
 import MobileSearch from "@/components/MobileSearch";
+import PaddingTop from "@/components/PaddingTop";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,7 @@ export default function RootLayout({
     <AuthContext>
      <Header />
      <MobileSearch />
-     <div className="pt-24">{children}</div>
+     <PaddingTop>{children}</PaddingTop>
      <MobileHeader />
     </AuthContext>
    </body>
