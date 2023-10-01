@@ -43,7 +43,7 @@ const ReserveWidget = ({
   Number(checkOutValue.split("-").join("")) -
   Number(checkInValue.split("-").join(""));
  return (
-  <div>
+  <>
    {!smallScreen ? (
     <div className="border border-gray-300 rounded-lg mt-10 absolute top-0 right-0 w-[45%] lg:w-[35%]">
      <div className="rounded-lg shadow-lg py-6 px-4">
@@ -142,36 +142,36 @@ const ReserveWidget = ({
      </div>
     </div>
    ) : (
-    <div className="fixed bottom-0 bg-white w-full px-6 py-5 border-t border-t-gray-300 flex justify-between items-center">
-     <div className="flex flex-col text-sm">
-      <div className="block">
-       <span className="font-bold">${price}</span> night
-      </div>
-      <div className="flex w-fit relative font-medium">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-50 px-6 py-4">
+     <div className="flex justify-between items-center">
+      <div className="flex flex-col text-sm">
        <div>
-        {format(new Date(checkInValue), "MMM-dd").split("-").join(" ")}
+        <span className="font-bold">${price}</span> night
        </div>
-       <div>
-        {checkInValue.slice(5, 7) === checkOutValue.slice(5, 7) ? (
-         <div>
-          <span className="px-1">-</span>
-          {checkOutValue.slice(8, 10)}
-         </div>
-        ) : (
-         <div>{format(new Date(checkOutValue), "MMM-dd")}</div>
-        )}
+       <div className="flex w-fit relative font-medium">
+        <div>
+         {format(new Date(checkInValue), "MMM-dd").split("-").join(" ")}
+        </div>
+        <div>
+         {checkInValue.slice(5, 7) === checkOutValue.slice(5, 7) ? (
+          <div>
+           <span className="px-1">-</span>
+           {checkOutValue.slice(8, 10)}
+          </div>
+         ) : (
+          <div>{format(new Date(checkOutValue), "MMM-dd")}</div>
+         )}
+        </div>
+        <div className="w-full h-[1px] bg-gray-700 absolute bottom-[3px]" />
        </div>
-       <div className="w-full h-[1px] bg-gray-700 absolute bottom-[3px]" />
       </div>
-     </div>
-     <div>
       <button className="bg-gradient-to-r from-primary via-rose-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5">
        Reserve
       </button>
      </div>
     </div>
    )}
-  </div>
+  </>
  );
 };
 export default ReserveWidget;

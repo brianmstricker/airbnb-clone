@@ -25,7 +25,7 @@ export default async function Home() {
  const getPlaces = await fetchPlaces.json();
  const places = getPlaces.filter((place: Place) => place.photos.length > 0);
  return (
-  <main className="pt-20 md:pt-0">
+  <main className="pt-20 md:pt-0 pb-52">
    <div className="contain-filter">
     <PlaceFilter />
    </div>

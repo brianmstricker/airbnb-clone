@@ -30,3 +30,13 @@
   padding-right: 40px;
  }
 }
+
+.custom-fraction-current {
+ @apply absolute bottom-1 right-[34px] text-white px-4 py-1 rounded-xl tracking-widest text-xs font-bold z-10;
+}
+.custom-fraction-separator {
+ @apply absolute bottom-1 right-[26px] text-white px-4 py-1 rounded-md tracking-widest text-xs font-bold bg-gray-900/60;
+}
+.custom-fraction-total {
+ @apply absolute bottom-1 right-[14px] text-white px-4 py-1 rounded-xl tracking-widest text-xs font-bold z-10;
+}

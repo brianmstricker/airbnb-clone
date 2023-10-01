@@ -1,6 +1,5 @@
 import { Place } from "./LargeScreenContent";
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
-import { FiShare } from "react-icons/fi";
 import Image from "next/image";
 import { BsDoorClosed } from "react-icons/bs";
 import { PiMedalMilitary } from "react-icons/pi";
@@ -10,6 +9,7 @@ import { FaChevronLeft } from "react-icons/fa";
 import { GoShare } from "react-icons/go";
 import Link from "next/link";
 import ReserveWidget from "./ReserveWidget";
+import ImageCarousel from "./ImageCarousel";
 
 const SmallScreenContent = ({ place }: { place: Place }) => {
  return (
@@ -32,18 +32,8 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
        </div>
       </div>
      </div>
-     {place.photos && place.photos[0]?.url && (
-      <div className="w-full relative h-full aspect-[13/9]">
-       <Image
-        src={place.photos[0].url}
-        alt="photo of place"
-        fill
-        className="object-cover"
-       />
-       <div className="absolute bottom-4 right-4 text-white px-3 py-1 bg-gray-900/60 rounded-xl tracking-widest text-xs font-bold">
-        1/{place.photos.length}
-       </div>
-      </div>
+     {place.photos && place.photos.length > 0 && (
+      <ImageCarousel photoUrls={place.photos.map((p) => p.url)} />
      )}
      <div className="flex flex-col justify-center px-8 pb-8 relative">
       <h2 className="text-2xl font-semibold mt-4 capitalize">{place.name}</h2>
