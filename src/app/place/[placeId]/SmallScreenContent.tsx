@@ -13,17 +13,23 @@ import ReserveWidget from "./ReserveWidget";
 
 const SmallScreenContent = ({ place }: { place: Place }) => {
  return (
-  <div className="md:hidden mx-auto pb-12">
+  <div className="md:hidden mx-auto pb-20">
    {place && (
     <div>
-     <div className="px-4 py-6 text-sm flex items-center justify-between">
-      <Link href="/" className="flex items-center gap-3">
-       <FaChevronLeft />
-       Homes
+     <div className="px-4 py-4 text-sm flex items-center justify-between absolute z-10 w-full">
+      <Link
+       href="/"
+       className="flex items-center gap-3 bg-white p-2 rounded-full"
+      >
+       <FaChevronLeft size={20} />
       </Link>
       <div className="flex items-center pr-2 gap-4">
-       <GoShare size={20} />
-       <AiOutlineHeart size={20} />
+       <div className="bg-white p-2 rounded-full">
+        <GoShare size={20} />
+       </div>
+       <div className="bg-white p-2 rounded-full">
+        <AiOutlineHeart size={20} />
+       </div>
       </div>
      </div>
      {place.photos && place.photos[0]?.url && (
@@ -34,6 +40,9 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
         fill
         className="object-cover"
        />
+       <div className="absolute bottom-4 right-4 text-white px-3 py-1 bg-gray-900/60 rounded-xl tracking-widest text-xs font-bold">
+        1/{place.photos.length}
+       </div>
       </div>
      )}
      <div className="flex flex-col justify-center px-8 pb-8 relative">
@@ -182,7 +191,6 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
             Nearby lake, river, other body of water
            </span>
           </div>
-          <Border small />
          </div>
         </div>
        </div>

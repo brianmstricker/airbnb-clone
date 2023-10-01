@@ -1,6 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
 import Border from "./Border";
+import { format } from "date-fns";
 
 type ReserveWidgetForm = {
  checkIn: string;
@@ -141,15 +142,32 @@ const ReserveWidget = ({
      </div>
     </div>
    ) : (
-    <div className="fixed bottom-0 bg-white w-full px-4 py-5 border-t border-t-gray-300">
+    <div className="fixed bottom-0 bg-white w-full px-6 py-5 border-t border-t-gray-300 flex justify-between items-center">
      <div className="flex flex-col text-sm">
       <div className="block">
        <span className="font-bold">${price}</span> night
       </div>
-      <div className="flex gap-4">
-       <div>{checkInValue}</div>
-       <div>{checkOutValue}</div>
+      <div className="flex w-fit relative font-medium">
+       <div>
+        {format(new Date(checkInValue), "MMM-dd").split("-").join(" ")}
+       </div>
+       <div>
+        {checkInValue.slice(5, 7) === checkOutValue.slice(5, 7) ? (
+         <div>
+          <span className="px-1">-</span>
+          {checkOutValue.slice(8, 10)}
+         </div>
+        ) : (
+         <div>{format(new Date(checkOutValue), "MMM-dd")}</div>
+        )}
+       </div>
+       <div className="w-full h-[1px] bg-gray-700 absolute bottom-[3px]" />
       </div>
+     </div>
+     <div>
+      <button className="bg-gradient-to-r from-primary via-rose-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5">
+       Reserve
+      </button>
      </div>
     </div>
    )}
