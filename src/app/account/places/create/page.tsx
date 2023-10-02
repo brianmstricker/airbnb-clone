@@ -2,17 +2,18 @@
 import Perks from "./Perks";
 import { placeSchema } from "@/utils/placeSchema";
 import { z } from "zod";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { AiOutlineFileImage, AiOutlinePlus } from "react-icons/ai";
+import { AiFillStar, AiOutlineFileImage, AiOutlinePlus } from "react-icons/ai";
 import { useState } from "react";
 import Image from "next/image";
 import { v4 } from "uuid";
 import { PlaceEnum } from "@/utils/placeSchema";
 import { CircleLoader } from "react-spinners";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const Page = () => {
  const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -186,7 +187,7 @@ const Page = () => {
     )}
     <h4>Photos</h4>
     <div className="border border-gray-300 p-4 rounded-md min-h-[250px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-     <div className="h-[230px] flex">
+     <div className="h-[230px] w-full aspect-square flex">
       <label className="flex h-full w-full max-w-[300px] border border-black items-center justify-center cursor-pointer rounded-md mx-auto relative">
        <input
         type="file"
@@ -205,15 +206,29 @@ const Page = () => {
       <>
        {selectedImages.map((image, i) => (
         <div
-         className="h-[230px] border border-black cursor-pointer rounded-md overflow-hidden flex mx-auto"
          key={image.name + v4()}
+         className="h-[230px] border border-black cursor-pointer rounded-md overflow-hidden flex mx-auto relative aspect-square w-full"
         >
+         <div
+          className="absolute top-0 left-0 bg-black/70 text-white p-[1px] pb-[4px] px-2 rounded-bl-md rounded-br-md z-10"
+          onClick={() => {
+           const newImages = [...selectedImages];
+           newImages.splice(i, 1);
+           setSelectedImages(newImages);
+          }}
+         >
+          <span className="text-xs">Remove</span>
+         </div>
+         {i === 0 && (
+          <div className="absolute top-0 right-0 bg-black/70 p-[2px] pb-[4px] px-1 rounded-bl-md rounded-br-md z-10">
+           <AiFillStar className="fill-yellow-200" size={20} />
+          </div>
+         )}
          <Image
           src={URL.createObjectURL(selectedImages[i])}
           alt="photo of place"
-          width={300}
-          height={230}
-          className="object-cover aspect-square"
+          fill
+          className="object-cover"
          />
         </div>
        ))}

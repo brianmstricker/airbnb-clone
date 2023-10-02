@@ -36,5 +36,8 @@ export const placeSchema = z.object({
  perks: z.array(z.string()).optional(),
  checkInTime: z.string().nonempty({ message: "Check in time is required." }),
  checkOutTime: z.string().nonempty({ message: "Check out time is required." }),
- price: z.string().nonempty({ message: "Price is required." }),
+ price: z
+  .string()
+  .nonempty({ message: "Price is required." })
+  .regex(/^\d+$/, "Price must be a number."),
 });
