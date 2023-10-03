@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Key } from "react";
+import { Key, useState } from "react";
 import Image from "next/image";
 import { CircleLoader } from "react-spinners";
 import { BsTrash } from "react-icons/bs";
@@ -24,13 +24,23 @@ interface PlaceType {
 }
 
 const PlacesPage = () => {
+ const [places, setPlaces] = useState<PlaceType[]>([]);
  const { data, isLoading, error } = useQuery({
   queryKey: ["places"],
   queryFn: async () => {
    const { data } = await axios.get("/api/places/user");
+   setPlaces(data);
    return data;
   },
  });
+ async function handleDelete(id: Key) {
+  try {
+   await axios.delete(`/api/places/user?id=${id}`);
+   setPlaces((places) => places.filter((place) => place.id !== id));
+  } catch (error) {
+   console.log(error);
+  }
+ }
  return (
   <main>
    <Link
@@ -47,9 +57,12 @@ const PlacesPage = () => {
     ) : error ? (
      <span>Something went wrong.</span>
     ) : (
-     data?.map((place: PlaceType) => (
+     places?.map((place: PlaceType) => (
       <div key={place.id} className="relative">
-       <button className="absolute -top-2 -right-2 hover:scale-110 duration-150">
+       <button
+        className="absolute -top-2 -right-2 hover:scale-110 duration-150"
+        onClick={() => handleDelete(place.id)}
+       >
         <BsTrash size={24} className="fill-gray-600" />
        </button>
        <Link
