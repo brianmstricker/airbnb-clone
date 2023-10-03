@@ -1,6 +1,6 @@
--test loading state when uploading
--rearrange images on create page\*\*\*
 -single place page image features
+-add regex to check that time has am/pm added
+-delete functionality from account/places
 -search func
 -filter func
 -mobile header func

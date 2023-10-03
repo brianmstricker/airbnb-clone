@@ -8,12 +8,11 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { AiFillStar, AiOutlineFileImage, AiOutlinePlus } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { v4 } from "uuid";
 import { PlaceEnum } from "@/utils/placeSchema";
 import { CircleLoader } from "react-spinners";
-import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 const Page = () => {
  const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -48,28 +47,27 @@ const Page = () => {
    return res.data;
   },
  });
+ useEffect(() => {
+  if (selectedImages.length < 5) {
+   setImagesError(true);
+  } else {
+   setImagesError(false);
+  }
+ }, [selectedImages]);
  const formSubmit = async (data: Form) => {
   try {
-   if (selectedImages.length < 5) {
-    setImagesError(true);
-    return;
-   } else {
-    setImagesError(false);
-   }
-   if (selectedImages && selectedImages.length >= 5) {
-    setLoading(true);
-    const formData = new FormData();
-    selectedImages.forEach((file) => {
-     formData.append("image", file);
-    });
-    const res = await axios.post("/api/upload", formData);
-    data.photos = res.data;
-   }
+   setLoading(true);
+   const formData = new FormData();
+   selectedImages.forEach((file) => {
+    formData.append("image", file);
+   });
+   const res = await axios.post("/api/upload", formData);
+   data.photos = res.data;
    CreatePlace(data, {
     onSuccess: () => {
      place.reset();
-     setLoading(false);
      router.push("/account/places");
+     setLoading(false);
     },
    });
   } catch (error) {
@@ -77,6 +75,15 @@ const Page = () => {
    setLoading(false);
   }
  };
+ const dragItem = useRef<number | null>(null);
+ const dragOverItem = useRef<number | null>(null);
+ function handleSort() {
+  const newImages = [...selectedImages];
+  const dragItemContent = newImages[dragItem.current!];
+  newImages.splice(dragItem.current!, 1);
+  newImages.splice(dragOverItem.current!, 0, dragItemContent);
+  setSelectedImages(newImages);
+ }
  return (
   <form className="max-w-4xl mx-auto" onSubmit={handleSubmit(formSubmit)}>
    {loading && (
@@ -191,6 +198,7 @@ const Page = () => {
       <label className="flex h-full w-full max-w-[300px] border border-black items-center justify-center cursor-pointer rounded-md mx-auto relative">
        <input
         type="file"
+        accept="image/*"
         multiple
         className="hidden"
         onChange={(e) => {
@@ -208,6 +216,11 @@ const Page = () => {
         <div
          key={image.name + v4()}
          className="h-[230px] border border-black cursor-pointer rounded-md overflow-hidden flex mx-auto relative aspect-square w-full"
+         draggable
+         onDragStart={() => (dragItem.current = i)}
+         onDragEnter={() => (dragOverItem.current = i)}
+         onDragEnd={handleSort}
+         onDragOver={(e) => e.preventDefault()}
         >
          <div
           className="absolute top-0 left-0 bg-black/70 text-white p-[1px] pb-[4px] px-2 rounded-bl-md rounded-br-md z-10"
