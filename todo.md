@@ -1,3 +1,5 @@
+# todo
+
 -single place page image features
 -add regex to check that time has am/pm added
 -search func
@@ -7,3 +9,4 @@
 -icons when displaying perks
 -add ratings
 -mobile reserve page
+-slight modal bug on close + share/save buttons

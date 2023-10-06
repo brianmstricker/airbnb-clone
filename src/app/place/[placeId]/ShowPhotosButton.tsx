@@ -36,39 +36,49 @@ const ShowPhotosButton = ({
    {modalShown && (
     <div
      id="placeModalOpen"
-     className="inset-0 w-screen h-screen fixed bg-white z-[150] overflow-y-auto animate-fade-in-up py-16"
+     className={
+      "inset-0 w-screen h-screen fixed bg-white z-[150] animate-fade-in-up pt-16 px-1 flex" +
+      (modalShown ? "" : " hidden")
+     }
     >
-     <div
-      onClick={() => {
-       document
-        .getElementById("placeModalOpen")
-        ?.classList.add("animate-fade-out-down");
-       setTimeout(() => {
-        router.push(pathname);
-       }, 200);
-      }}
-      className="text-2xl top-3 left-4 fixed z-[999] cursor-pointer"
-     >
-      <BiChevronLeft size={35} className="border-black rounded-full border-2" />
+     <div className="fixed z-[999] top-3 w-screen px-10 flex items-center justify-between">
+      <div
+       onClick={() => {
+        document
+         .getElementById("placeModalOpen")
+         ?.classList.add("animate-fade-out-down");
+        setTimeout(() => {
+         router.push(pathname);
+        }, 400);
+       }}
+       className="text-2xl cursor-pointer"
+      >
+       <BiChevronLeft
+        size={35}
+        className="border-black rounded-full border-2"
+       />
+      </div>
+      <div className="flex gap-3 pr-5">
+       <span>share</span>
+       <span>save</span>
+      </div>
      </div>
-     <div className="top-3 right-4 absolute z-[999] flex gap-3">
-      <span>share</span>
-      <span>save</span>
-     </div>
-     <div className="flex flex-wrap gap-2 items-center max-w-3xl mx-auto">
-      {photos.map((photo, idx) => (
-       <div
-        key={photo.id}
-        className="relative w-[49.48%] h-full [&:nth-child(3n+1)]:w-full aspect-video"
-       >
-        <Image
-         src={photo.url}
-         alt="photo of place"
-         fill
-         className="object-cover"
-        />
-       </div>
-      ))}
+     <div className="overflow-y-scroll w-full pb-20">
+      <div className="flex flex-wrap gap-2 items-center max-w-3xl mx-auto">
+       {photos.map((photo) => (
+        <div
+         key={photo.id}
+         className="relative w-[49.47%] h-full [&:nth-child(3n+1)]:w-full aspect-video"
+        >
+         <Image
+          src={photo.url}
+          alt="photo of place"
+          fill
+          className="object-cover"
+         />
+        </div>
+       ))}
+      </div>
      </div>
     </div>
    )}
