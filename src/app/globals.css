@@ -40,3 +40,6 @@
 .custom-fraction-total {
  @apply absolute bottom-1 right-[14px] text-white px-4 py-1 rounded-xl tracking-widest text-xs font-bold z-10;
 }
+.swiper-button-disabled {
+ @apply !opacity-0 !pointer-events-none;
+}
