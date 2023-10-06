@@ -1,7 +1,11 @@
 import Image from "next/image";
 import ShowPhotosButton from "./ShowPhotosButton";
 
-const LargeImageContent = ({ photos }) => {
+const LargeImageContent = ({
+ photos,
+}: {
+ photos: { url: string; id: string; placeId: string }[];
+}) => {
  if (!photos)
   return (
    <div className="ml-2 w-full">

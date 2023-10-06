@@ -46,7 +46,7 @@ const config: Config = {
    },
    animation: {
     "fade-in-up": "fade-in-up .5s ease-out",
-    "fade-out-down": "fade-out-down .5s ease-out",
+    "fade-out-down": "fade-out-down 1s ease-out",
    },
   },
  },
