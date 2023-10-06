@@ -43,10 +43,16 @@ const Header = () => {
     <div
      className={
       "contain mx-auto flex items-center justify-between" +
-      (placePage ? " max-w-6xl xxs:flex px-8" : "")
+      (placePage ? " !max-w-6xl xxs:flex px-8" : "")
      }
     >
-     <Link href={"/"} className="flex gap-2 text-primary">
+     <Link
+      href={"/"}
+      className={
+       "flex gap-2 text-primary" +
+       (placePage ? " relative -left-2 lg:-left-3 3xl:-left-5" : "")
+      }
+     >
       <Logo />
       <span className="text-2xl font-bold hidden lg:block">airbnb</span>
      </Link>

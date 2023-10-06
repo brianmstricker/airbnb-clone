@@ -20,6 +20,7 @@ import { CgGames } from "react-icons/cg";
 import { FaChevronLeft, FaChevronRight, FaSkiing } from "react-icons/fa";
 import { IoEarth } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
+import { BsBorderAll } from "react-icons/bs";
 
 const PlaceFilter = () => {
  const sliderRef = useRef(null);
@@ -104,6 +105,7 @@ const PlaceFilter = () => {
      id="slider"
      ref={sliderRef}
     >
+     <FilterItem icon={<BsBorderAll />} text="All Places" />
      <FilterItem icon={<HiOutlineHome />} text="Tiny homes" />
      <FilterItem icon={<PiCastleTurretBold />} text="Castles" />
      <FilterItem icon={<MdCabin />} text="Cabins" />

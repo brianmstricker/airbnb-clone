@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
+import { CircleLoader } from "react-spinners";
 
 interface FavoriteInterface {
  id: string;
@@ -15,30 +16,42 @@ interface FavoriteInterface {
 
 const Wishlist = () => {
  const [favorites, setFavorites] = useState<FavoriteInterface[]>([]);
- const [loading, setLoading] = useState(false);
+ const [loading, setLoading] = useState(true);
  useEffect(() => {
   fetchWishlist();
  }, []);
  async function fetchWishlist() {
-  setLoading(true);
-  const data = await axios.get(`/api/favorite`);
-  setFavorites(data.data);
-  setLoading(false);
+  try {
+   const data = await axios.get(`/api/favorite`);
+   setFavorites(data.data);
+   setLoading(false);
+  } catch (error) {
+   console.log(error);
+   setLoading(false);
+  }
  }
- return (
-  <div className="mt-3">
-   {loading && <div className="text-center">Loading...</div>}
-   {favorites.length > 0 && !loading && (
-    <div className="grid grid-cols-1 xxxs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12 sm:gap-y-3">
-     {favorites.map((favorite: FavoriteInterface) => (
-      <Card favorite={favorite} key={favorite.id} />
-     ))}
-    </div>
-   )}
-   {favorites.length === 0 && !loading && (
-    <div className="text-center">No favorites yet :(</div>
-   )}
-  </div>
- );
+ if (loading)
+  return (
+   <div className="flex justify-center mt-36">
+    <CircleLoader size={80} color="#ff385c" />
+   </div>
+  );
+ if (!loading)
+  return (
+   <div className="mt-3 pb-24">
+    {favorites.length > 0 && !loading && (
+     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
+      {favorites.map((favorite: FavoriteInterface) => (
+       <Card favorite={favorite} key={favorite.id} />
+      ))}
+     </div>
+    )}
+    {!loading && favorites && favorites.length === 0 && (
+     <div className="text-center mt-36 text-4xl text-gray-600">
+      No favorites yet :(
+     </div>
+    )}
+   </div>
+  );
 };
 export default Wishlist;

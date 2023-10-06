@@ -1,19 +1,19 @@
-import prisma from "@/app/lib/auth";
 import LargeScreenContent from "./LargeScreenContent";
 import SmallScreenContent from "./SmallScreenContent";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
  const { placeId } = params;
- const place = await prisma.place.findUnique({
-  where: { id: placeId },
-  include: {
-   perks: true,
-   photos: true,
-   user: {
-    select: { name: true, image: true },
-   },
-  },
- });
+ const placeJSON = await fetch(
+  `http://localhost:3000/api/place/?placeId=${placeId}`
+ );
+ const place = await placeJSON.json();
+ if (!place) {
+  return (
+   <div className="pb-24 w-full h-screen flex flex-col items-center justify-center">
+    <span className="mb-4">Place not found</span>
+   </div>
+  );
+ }
  return (
   <div>
    <LargeScreenContent place={place} />

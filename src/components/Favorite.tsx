@@ -3,8 +3,10 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Favorite = ({ placeId }: { placeId: string }) => {
+ const session = useSession();
  const path = usePathname();
  const wishlist = path === "/account/wishlist";
  const [loading, setLoading] = useState(wishlist ? false : true);
@@ -12,6 +14,9 @@ const Favorite = ({ placeId }: { placeId: string }) => {
  useEffect(() => {
   async function fetchFavorite() {
    try {
+    if (!session.data?.user) {
+     return;
+    }
     const favorites = await axios.get("/api/favorite");
     const fav = favorites.data.find(
      (favorite: { placeId: string }) => favorite.placeId === placeId
@@ -26,7 +31,7 @@ const Favorite = ({ placeId }: { placeId: string }) => {
    }
   }
   fetchFavorite();
- }, [placeId]);
+ }, [placeId, session.data?.user]);
  async function handleFavorite() {
   try {
    const fav = await axios.post("/api/favorite", { placeId });
@@ -40,6 +45,7 @@ const Favorite = ({ placeId }: { placeId: string }) => {
  if (loading) {
   return null;
  }
+ if (!session.data) return null;
  return (
   <div
    className="absolute right-2 top-2 z-10 cursor-pointer"

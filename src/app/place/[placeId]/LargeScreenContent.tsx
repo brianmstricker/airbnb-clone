@@ -6,6 +6,7 @@ import { PiMedalMilitary } from "react-icons/pi";
 import { LuCalendarX } from "react-icons/lu";
 import Border from "./Border";
 import ReserveWidget from "./ReserveWidget";
+import LargeImageContent from "./LargeImageContent";
 
 export type Place = {
  name: string;
@@ -30,10 +31,10 @@ export type Place = {
 
 const LargeScreenContent = ({ place }: { place: Place }) => {
  return (
-  <div className="hidden md:block max-w-6xl mx-auto pb-12">
+  <div className="hidden md:block max-w-6xl mx-auto pb-12 pt-28">
    {place && (
     <div className="flex flex-col justify-center px-8 pb-8 relative">
-     <h2 className="text-2xl font-semibold mt-4 capitalize">{place.name}</h2>
+     <h2 className="text-2xl font-semibold capitalize">{place.name}</h2>
      <div className="mt-2 text-sm flex justify-between items-center">
       <a
        href={`https://www.google.com/maps/place/${place.address}`}
@@ -62,43 +63,8 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
         />
        </div>
       )}
-      {place.photos && (
-       <div className="ml-2 w-full">
-        <div className="grid grid-cols-2 w-full h-full gap-2">
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[1]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover"
-          />
-         </div>
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[2]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover rounded-tr-xl"
-          />
-         </div>
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[3]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover"
-          />
-         </div>
-         <div className="flex w-full relative">
-          <Image
-           src={place.photos[4]?.url}
-           fill
-           alt="photo of place"
-           className="object-cover rounded-br-xl"
-          />
-         </div>
-        </div>
-       </div>
+      {place.photos && place.photos.length >= 5 && (
+       <LargeImageContent photos={place.photos} />
       )}
      </div>
      <div className="relative">
