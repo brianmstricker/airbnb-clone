@@ -20,8 +20,14 @@ type Place = {
  favorites: { placeId: string; userEmail: string }[];
 };
 
-export default async function Home() {
- const fetchPlaces = await fetch("http://localhost:3000/api/places");
+export default async function Home({ searchParams }: { searchParams?: any }) {
+ const searchFilter = searchParams?.search_type;
+ const fetchPlaces = await fetch(
+  `http://localhost:3000/api/places?search_type=${searchFilter}`,
+  {
+   cache: "no-cache",
+  }
+ );
  const getPlaces = await fetchPlaces.json();
  const places = getPlaces.filter((place: Place) => place.photos.length > 0);
  return (

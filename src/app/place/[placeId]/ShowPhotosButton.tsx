@@ -15,7 +15,6 @@ const ShowPhotosButton = ({
  const searchParams = useSearchParams();
  const getModal = searchParams.get("modal" || "");
  const modalShown = getModal === "PHOTO_TOUR_SCROLLABLE";
- const animateDownClass = "animate-fade-out-down";
  useEffect(() => {
   if (modalShown) {
    const html = document.querySelector("html");
