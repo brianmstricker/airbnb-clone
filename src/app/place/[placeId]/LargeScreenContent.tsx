@@ -18,6 +18,7 @@ export type Place = {
  user: { name: string; image: string };
  beds: number;
  baths: number;
+ guests: number;
  description: string;
  id: string;
  perks?: { name: string; id: string; placeId: string }[];
@@ -78,7 +79,7 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
           </p>
           <ol className="text-base mt-2 text-gray-800 flex gap-6 items-center">
            <li>
-            <span>{place.beds * 2} Guests</span>
+            <span>{place.guests} Guests</span>
            </li>
            <li className="flex items-center relative rounded-full">
             <div className="w-[2px] h-[2px] bg-black absolute -left-3" />

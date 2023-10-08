@@ -29,6 +29,7 @@ export const placeSchema = z.object({
  photos: z.array(z.string()),
  beds: z.number().int().positive(),
  baths: z.number().int().positive(),
+ guests: z.number().int().positive(),
  description: z
   .string()
   .min(25, { message: "Description must be over 25 characters." })

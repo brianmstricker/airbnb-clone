@@ -17,7 +17,7 @@ const UserMenu = ({
  return (
   <>
    <div
-    className="w-full h-full bg-transparent inset-0 fixed z-50"
+    className="w-full h-full bg-transparent inset-0 fixed z-[101]"
     onClick={closeUserModal}
    >
     <div className="bg-transparent" onClick={(e) => e.stopPropagation()}>

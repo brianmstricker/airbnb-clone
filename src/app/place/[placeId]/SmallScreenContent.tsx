@@ -43,7 +43,7 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
       <div className="relative">
        <ol className="text-sm text-gray-800 flex gap-3 items-center mt-[2px]">
         <li>
-         <span>{place.beds * 2} Guests</span>
+         <span>{place.guests} Guests</span>
         </li>
         <li className="flex items-center relative rounded-full">
          <div className="w-[2px] h-[2px] bg-gray-800 absolute -left-[6px]" />

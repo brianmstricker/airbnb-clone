@@ -8,9 +8,7 @@ type FilterItemProps = {
 
 const FilterItem = ({ icon, text }: FilterItemProps) => {
  const searchParams = useSearchParams();
- console.log(searchParams);
  const getSearchType = searchParams.get("search_type" || "");
- console.log(getSearchType);
  return (
   <Link
    className={

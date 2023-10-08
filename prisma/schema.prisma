@@ -70,6 +70,7 @@ model Place {
   photos       Photo[]
   beds         Int
   baths        Int
+  guests       Int        @default(1)
   description  String     @db.LongText
   perks        Perk[]
   checkInTime  String
