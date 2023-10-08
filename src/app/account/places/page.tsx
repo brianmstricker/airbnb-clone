@@ -33,6 +33,12 @@ const PlacesPage = () => {
    return data;
   },
  });
+ function confirmDelete(id: Key, name: String) {
+  if (confirm(`Are you sure you want to delete ${name}?`)) {
+   handleDelete(id);
+  }
+  return;
+ }
  async function handleDelete(id: Key) {
   try {
    await axios.delete(`/api/places/user?id=${id}`);
@@ -45,7 +51,7 @@ const PlacesPage = () => {
   <main>
    <Link
     href="/account/places/create"
-    className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-3 hover:bg-rose-400"
+    className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-6 hover:bg-rose-400"
    >
     Add A Place
    </Link>
@@ -61,7 +67,7 @@ const PlacesPage = () => {
       <div key={place.id} className="relative">
        <button
         className="absolute -top-2 -right-2 hover:scale-110 duration-150"
-        onClick={() => handleDelete(place.id)}
+        onClick={() => confirmDelete(place.id, place.name)}
        >
         <BsTrash size={24} className="fill-gray-600" />
        </button>

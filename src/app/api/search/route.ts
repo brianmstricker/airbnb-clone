@@ -5,11 +5,14 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
  try {
   const body = await req.json();
   const { location, guests } = body;
-  console.log(location, guests);
   const places = await prisma.place.findMany({
    where: {
-    address: location,
-    beds: guests,
+    address: {
+     contains: location,
+    },
+    guests: {
+     gte: parseInt(guests || 1),
+    },
    },
    include: {
     photos: true,
@@ -21,6 +24,7 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
   });
   return NextResponse.json(places, { status: 200 });
  } catch (error) {
+  console.log(error);
   return NextResponse.json(
    { message: "Something went wrong" },
    { status: 500 }

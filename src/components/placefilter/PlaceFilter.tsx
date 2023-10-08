@@ -29,7 +29,7 @@ const PlaceFilter = () => {
  function getScrollAmount() {
   const screenWidth = window.innerWidth;
   if (screenWidth >= 1000) {
-   return 400;
+   return 700;
   } else if (screenWidth >= 768) {
    return 250;
   } else {

@@ -26,8 +26,9 @@ const Page = () => {
    name: "",
    address: "",
    type: undefined,
-   beds: 1,
-   baths: 1,
+   beds: undefined,
+   baths: undefined,
+   guests: undefined,
    description: "",
    photos: [],
    perks: [],
@@ -48,7 +49,7 @@ const Page = () => {
   },
  });
  useEffect(() => {
-  if (selectedImages.length < 5) {
+  if (selectedImages.length < 5 && selectedImages.length > 0) {
    setImagesError(true);
   } else {
    setImagesError(false);
@@ -84,8 +85,24 @@ const Page = () => {
   newImages.splice(dragOverItem.current!, 0, dragItemContent);
   setSelectedImages(newImages);
  }
+ function buttonDisabled() {
+  return (
+   selectedImages.length < 5 ||
+   errors.name ||
+   errors.address ||
+   errors.type ||
+   errors.description ||
+   errors.checkInTime ||
+   errors.checkOutTime ||
+   errors.price ||
+   isLoading
+  );
+ }
  return (
-  <form className="max-w-4xl mx-auto" onSubmit={handleSubmit(formSubmit)}>
+  <form
+   className="max-w-4xl mx-auto pb-16 lg:pb-4"
+   onSubmit={handleSubmit(formSubmit)}
+  >
    {loading && (
     <div className="fixed w-screen h-screen bg-white/60 z-50 inset-0">
      <div className="flex w-full h-full justify-center items-center">
@@ -123,7 +140,7 @@ const Page = () => {
     {errors.address && (
      <span className="text-red-500">{errors.address.message}</span>
     )}
-    <div className="lg:grid lg:grid-cols-[315px_290px_290px]">
+    <div className="lg:grid lg:grid-cols-2">
      <div className="flex items-center justify-between lg:justify-normal gap-4 relative">
       <label htmlFor="type" className="min-w-[85px] lg:min-w-fit">
        Type
@@ -147,18 +164,29 @@ const Page = () => {
       )}
      </div>
      <div
-      className={
-       "flex items-center justify-between lg:justify-normal gap-4" +
-       (errors.type ? " mt-16 lg:mt-0" : "")
-      }
+      className={"flex items-center justify-between lg:justify-normal gap-4"}
      >
-      <label htmlFor="beds" className="min-w-[85px] lg:min-w-fit lg:ml-2">
+      <label htmlFor="guests" className="min-w-[85px] lg:min-w-fit lg:ml-2">
+       Guests
+      </label>
+      <input
+       type="number"
+       id="guests"
+       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px]"
+       placeholder="1, 2, 3, etc."
+       {...register("guests", { valueAsNumber: true })}
+      />
+     </div>
+     <div
+      className={"flex items-center justify-between lg:justify-normal gap-4"}
+     >
+      <label htmlFor="beds" className="min-w-[85px] lg:min-w-fit">
        Beds
       </label>
       <input
        type="number"
        id="beds"
-       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px]"
+       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:ml-[3.1rem]"
        placeholder="1, 2, 3, etc."
        {...register("beds", { valueAsNumber: true })}
       />
@@ -170,18 +198,30 @@ const Page = () => {
       <input
        type="number"
        id="baths"
-       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] "
+       className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px] lg:ml-2"
        placeholder="1, 2, 3, etc."
        {...register("baths", { valueAsNumber: true })}
       />
      </div>
     </div>
-    <label
-     htmlFor="description"
-     className={"-mb-1" + (errors.type ? " lg:mt-8" : "")}
-    >
-     Description
-    </label>
+    <div className="flex flex-col">
+     {errors.guests && (
+      <span className="text-red-500">
+       Guests: {errors.guests.message?.split(",")[0]}
+      </span>
+     )}
+     {errors.beds && (
+      <span className="text-red-500">
+       Beds: {errors.beds.message?.split(",")[0]}
+      </span>
+     )}
+     {errors.baths && (
+      <span className="text-red-500">
+       Baths: {errors.baths.message?.split(",")[0]}
+      </span>
+     )}
+    </div>
+    <label htmlFor="description">Description</label>
     <textarea
      id="description"
      className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary resize-none"
@@ -308,8 +348,12 @@ const Page = () => {
      )}
     </div>
     <button
-     className="bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400"
+     className={
+      "bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400" +
+      (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
+     }
      type="submit"
+     disabled={buttonDisabled() as boolean}
     >
      Add place
     </button>

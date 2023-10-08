@@ -38,7 +38,7 @@ const Wishlist = () => {
   );
  if (!loading)
   return (
-   <div className="mt-3 pb-24">
+   <div className="mt-6 pb-24">
     {favorites.length > 0 && !loading && (
      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
       {favorites.map((favorite: FavoriteInterface) => (

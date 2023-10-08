@@ -99,7 +99,7 @@ const Header = () => {
    {showSearchMenu && (
     <div
      onClick={() => setShowSearchMenu(false)}
-     className="bg-black/25 inset-0 w-screen h-screen fixed z-[99]"
+     className="hidden md:block bg-black/25 inset-0 w-screen h-screen fixed z-[99]"
     />
    )}
    {showUserMenu && (
