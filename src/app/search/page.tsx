@@ -1,5 +1,6 @@
 import Favorite from "@/components/Favorite";
 import HomeImageComponent from "@/components/HomeImageComponent";
+import HomePriceComponent from "@/components/HomePriceComponent";
 import PlaceFilter from "@/components/placefilter/PlaceFilter";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
@@ -66,7 +67,7 @@ const Search = async ({ searchParams }: { searchParams?: any }) => {
            </div>
           </div>
           <div>
-           <span className="font-semibold">${place.price}</span> night
+           <HomePriceComponent price={place.price} />
           </div>
          </div>
         </Link>

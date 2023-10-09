@@ -214,7 +214,7 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
      )}
      {total && prevSearchParams && (
       <Link
-       href={`?${prevSearchParams.split("&")[0]}`}
+       href={`?${prevSearchParams.slice(0, prevSearchParams.length - 1)}`}
        className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2"
        onClick={() => animateBall()}
       >

@@ -16,9 +16,12 @@ const HomePriceComponent = ({ price }: { price: string }) => {
      <span className="font-semibold">${price}</span> night
     </div>
    ) : (
-    <div className="underline">
-     <span className="font-semibold">${parseInt(price) * 5}</span> total before
-     taxes
+    <div>
+     <span className="text-gray-500/95">5 nights</span>
+     <div className="underline">
+      <span className="font-semibold">${parseInt(price) * 5}</span> total before
+      taxes
+     </div>
     </div>
    )}
   </div>
