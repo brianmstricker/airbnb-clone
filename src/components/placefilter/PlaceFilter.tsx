@@ -20,9 +20,9 @@ import { CgGames } from "react-icons/cg";
 import { FaChevronLeft, FaChevronRight, FaSkiing } from "react-icons/fa";
 import { IoEarth } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import { BsBorderAll } from "react-icons/bs";
+import { BsBorderAll, BsSearch } from "react-icons/bs";
 
-const PlaceFilter = () => {
+const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
  const sliderRef = useRef(null);
  const [sliderPosition, setSliderPosition] = useState(getSliderPosition());
  const [isRightButtonDisabled, setIsRightButtonDisabled] = useState(false);
@@ -105,6 +105,12 @@ const PlaceFilter = () => {
      id="slider"
      ref={sliderRef}
     >
+     {searchPage && (
+      <>
+       <FilterItem icon={<BsSearch />} text="Your Search" />
+       <div className="h-full w-[1px] bg-black mr-3 relative -top-4" />
+      </>
+     )}
      <FilterItem icon={<BsBorderAll />} text="All Places" />
      <FilterItem icon={<HiOutlineHome />} text="Tiny homes" />
      <FilterItem icon={<PiCastleTurretBold />} text="Castles" />

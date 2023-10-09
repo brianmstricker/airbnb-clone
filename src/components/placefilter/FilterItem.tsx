@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -9,6 +10,8 @@ type FilterItemProps = {
 const FilterItem = ({ icon, text }: FilterItemProps) => {
  const searchParams = useSearchParams();
  const getSearchType = searchParams.get("search_type" || "");
+ const searchPage =
+  (searchParams.get("location") && searchParams.get("guests")) || false;
  return (
   <Link
    className={
@@ -34,7 +37,12 @@ const FilterItem = ({ icon, text }: FilterItemProps) => {
      {text}
     </span>
     {getSearchType === text.toLowerCase() ||
-    (text.toLowerCase() === "all places" && getSearchType === null) ? (
+    (text.toLowerCase() === "all places" &&
+     getSearchType === null &&
+     !searchPage) ||
+    (text.toLowerCase() === "your search" &&
+     getSearchType === null &&
+     searchPage) ? (
      <div className="h-[2px] bg-black z-10 mt-3 mx-auto duration-150 relative md:-top-[4px]" />
     ) : (
      <div className="opacity-0 h-[2px] bg-black md:bg-gray-300 z-10 mt-3 mx-auto duration-150 relative md:-top-[4px] betterhover:group-hover:opacity-100" />

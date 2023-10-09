@@ -1,10 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { ImSearch } from "react-icons/im";
-import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const LargeSearchBar = ({
  placePage,
@@ -15,47 +13,15 @@ const LargeSearchBar = ({
  showSearchMenu: boolean;
  setShowSearchMenu: (arg: boolean) => void;
 }) => {
- const [placeText, setPlaceText] = useState("Anywhere");
- const [guestCount, setGuestCount] = useState("Add guests");
- const router = useRouter();
- const searchForm = useForm({
-  defaultValues: {
-   location: "",
-   guests: "",
-   // checkIn: "",
-   // checkOut: "",
-  },
- });
- const { register, handleSubmit } = searchForm;
- const { mutateAsync: Search, isLoading } = useMutation({
-  mutationFn: async (data: any) => {
-   const res = await axios.post("/api/search", data);
-   return res.data;
-  },
- });
- function updateStates(data: any) {
-  setPlaceText(data.location);
-  setGuestCount(data.guests);
- }
- async function handleSearch(data: any) {
-  try {
-   await Search(data, {
-    onSuccess: (results) => {
-     updateStates(data);
-     console.log(results);
-     router.push(
-      "/search?location=" +
-       encodeURIComponent(data.location) +
-       "&guests=" +
-       (data.guests || 1)
-     );
-     setShowSearchMenu(false);
-    },
-   });
-  } catch (error) {
-   console.log(error);
-  }
- }
+ const searchParams = useSearchParams();
+ const [placeText, setPlaceText] = useState(searchParams.get("location") || "");
+ const [guestCount, setGuestCount] = useState(
+  searchParams.get("guests")?.split(" ")[0] || ""
+ );
+ useEffect(() => {
+  searchParams.get("location") === null ? setPlaceText("") : null;
+  searchParams.get("guests") === null ? setGuestCount("") : null;
+ }, [searchParams]);
  useEffect(() => {
   if (showSearchMenu) {
    const html = document.querySelector("html");
@@ -71,7 +37,7 @@ const LargeSearchBar = ({
     <div
      onClick={() => setShowSearchMenu(true)}
      className={
-      "flex gap-4 border-2 border-gray-200 pl-4 pr-2 py-2 rounded-full items-center shadow-sm shadow-gray-200 hover:shadow-gray-800/25 duration-200 ml-0 lg:ml-28 tracking-tight text-[.9rem] cursor-pointer" +
+      "flex gap-4 border-2 border-gray-200 pl-5 pr-2 py-2 rounded-full items-center shadow-sm shadow-gray-200 hover:shadow-gray-800/25 duration-200 ml-0 lg:ml-28 tracking-tight text-[.9rem] cursor-pointer" +
       (placePage ? " absolute left-24 lg:static" : "")
      }
     >
@@ -79,14 +45,18 @@ const LargeSearchBar = ({
       <div className="font-medium pr-24">Start your search</div>
      ) : (
       <>
-       <div className="font-medium">
+       <div className="font-medium capitalize">
         {placeText !== "" ? placeText : "Anywhere"}
        </div>
        <div className="w-[1px] h-6 bg-gray-200" />
        <div className="font-medium">Any week</div>
        <div className="w-[1px] h-6 bg-gray-200" />
        <div className="text-gray-400">
-        {guestCount !== "" ? guestCount : "Add guests"}
+        {guestCount === ""
+         ? "Add guests"
+         : parseInt(guestCount) === 1
+         ? "1 guest"
+         : guestCount + " guests"}
        </div>
       </>
      )}
@@ -102,7 +72,7 @@ const LargeSearchBar = ({
       <div className="w-full h-[2px] bg-black rounded-full" />
      </div>
      <form
-      onSubmit={handleSubmit(handleSearch)}
+      onSubmit={() => {}}
       className="flex items-center border border-gray-300 rounded-full absolute top-14 left-0 right-[5.5rem] w-fit mx-auto bg-gray-200/60"
      >
       <label
@@ -119,39 +89,14 @@ const LargeSearchBar = ({
       >
        <span className="font-semibold text-xs">Where</span>
        <input
-        className="text-sm outline-none border-none bg-transparent placeholder:text-black/60"
+        className="text-sm outline-none border-none bg-transparent placeholder:text-black/60 capitalize"
         type="text"
         placeholder="Search destinations"
         id="location"
-        {...register("location")}
+        value={placeText}
+        onChange={(e) => setPlaceText(e.target.value)}
        />
       </label>
-      {/* <label
-       className="flex flex-col w-full h-full py-3 px-2 items-center hover:bg-gray-300/50 rounded-full"
-       htmlFor="checkIn"
-      >
-       <span className="font-semibold text-xs">Check in</span>
-       <input
-        className="text-sm outline-none border-none bg-transparent max-w-[100px] pl-[25px]  placeholder:text-black/60"
-        type="text"
-        placeholder="Add dates"
-        id="checkIn"
-        {...register("checkIn")}
-       />
-      </label>
-      <label
-       className="flex flex-col w-full h-full py-3 px-2 items-center hover:bg-gray-300/50 rounded-full"
-       htmlFor="checkOut"
-      >
-       <span className="font-semibold text-xs">Check out</span>
-       <input
-        className="text-sm outline-none border-none bg-transparent max-w-[100px] pl-[20px]  placeholder:text-black/60"
-        type="text"
-        placeholder="Add dates"
-        id="checkOut"
-        {...register("checkOut")}
-       />
-      </label> */}
       <div className="w-[1px] h-10 bg-gray-300" id="divSeparator" />
       <div
        className="flex items-center pr-2 rounded-full relative hover:bg-gray-300/50"
@@ -175,10 +120,18 @@ const LargeSearchBar = ({
          type="number"
          placeholder={"Add guests"}
          id="guests"
-         {...register("guests")}
+         value={guestCount}
+         onChange={(e) => setGuestCount(e.target.value)}
         />
        </label>
-       <button
+       <Link
+        href={
+         "/search?location=" +
+         encodeURIComponent(placeText) +
+         "&guests=" +
+         (guestCount || 1)
+        }
+        onClick={() => setShowSearchMenu(false)}
         id="LargeSearchSubmitButton"
         className="bg-primary flex w-full h-full rounded-full p-4 text-white z-10"
         onMouseOver={() => {
@@ -193,7 +146,7 @@ const LargeSearchBar = ({
         }}
        >
         <ImSearch size={16} />
-       </button>
+       </Link>
       </div>
       <div className="bg-transparent absolute w-12 h-16 right-0" />
      </form>
