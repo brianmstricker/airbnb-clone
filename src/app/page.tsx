@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
 import PlaceFilter from "@/components/placefilter/PlaceFilter";
 import HomeImageComponent from "@/components/HomeImageComponent";
+import HomePriceComponent from "@/components/HomePriceComponent";
 
 type Place = {
  id: string;
@@ -52,9 +53,7 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
            <span className="font-light">4.82</span>
           </div>
          </div>
-         <div>
-          <span className="font-semibold">${place.price}</span> night
-         </div>
+         <HomePriceComponent price={place.price} />
         </div>
        </Link>
       </div>

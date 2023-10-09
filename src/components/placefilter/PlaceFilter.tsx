@@ -20,9 +20,21 @@ import { CgGames } from "react-icons/cg";
 import { FaChevronLeft, FaChevronRight, FaSkiing } from "react-icons/fa";
 import { IoEarth } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import { BsSearch } from "react-icons/bs";
+import { BsCheckLg, BsSearch } from "react-icons/bs";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
+ const searchParams = useSearchParams();
+ const total = searchParams.get("total");
+ const [url, setUrl] = useState<null | string>(null);
+ const [prevSearchParams, setPrevSearchParams] = useState<null | string>(null);
+ useEffect(() => {
+  setUrl(window.location.href);
+  let searchParamsMinusTotal = searchParams.toString();
+  searchParamsMinusTotal = searchParamsMinusTotal.replace("total=true", "");
+  setPrevSearchParams(searchParamsMinusTotal);
+ }, [searchParams]);
  const sliderRef = useRef(null);
  const [sliderPosition, setSliderPosition] = useState(getSliderPosition());
  const [isRightButtonDisabled, setIsRightButtonDisabled] = useState(false);
@@ -79,6 +91,17 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
    }
   };
  }, []);
+ function animateBall() {
+  const ball = document.querySelector(".ball");
+  if (ball) {
+   ball.classList.add("animate-pulse");
+   ball.classList.add("duration-500");
+   setTimeout(() => {
+    ball.classList.remove("animate-pulse");
+    ball.classList.remove("duration-500");
+   }, 500);
+  }
+ }
  return (
   <div>
    <div className="md:pt-3 md:pb-10 text-xs text-gray-500 flex justify-between items-center md:relative border-b md:border-b-0 fixed top-[84px] md:top-auto z-30 md:z-auto bg-white md:bg-inherit left-0 right-0 md:left-auto md:right-auto">
@@ -151,12 +174,58 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
       <TbAdjustmentsHorizontal size={20} />
       <span>Filters</span>
      </button>
-     <button className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2">
-      <span className="w-max">Display total before taxes</span>
-      <div className="bg-gray-400 w-10 h-6 rounded-full hover:bg-gray-600/90">
-       <div className="bg-white w-5 h-5 rounded-full mx-[2px] relative top-[2px]" />
-      </div>
-     </button>
+     {!total && !prevSearchParams && (
+      <Link
+       href={`?${new URLSearchParams({ total: "true" })}`}
+       className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2"
+       onClick={() => animateBall()}
+      >
+       <span className="w-max">Display total before taxes</span>
+       <div className="bg-gray-400 w-10 h-6 rounded-full hover:bg-gray-600/90 relative">
+        <div className="bg-white w-5 h-5 rounded-full mx-[2px] absolute top-[2px] left-0 ball" />
+       </div>
+      </Link>
+     )}
+     {!total && prevSearchParams && (
+      <Link
+       href={`${url}&${new URLSearchParams({ total: "true" })}`}
+       className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2"
+       onClick={() => animateBall()}
+      >
+       <span className="w-max">Display total before taxes</span>
+       <div className="bg-gray-400 w-10 h-6 rounded-full hover:bg-gray-600/90 relative">
+        <div className="bg-white w-5 h-5 rounded-full mx-[2px] absolute top-[2px] left-0 ball" />
+       </div>
+      </Link>
+     )}
+     {total && !prevSearchParams && (
+      <Link
+       href={`/`}
+       className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2"
+       onClick={() => animateBall()}
+      >
+       <span className="w-max">Display total before taxes</span>
+       <div className="bg-black w-10 h-6 rounded-full relative">
+        <div className="bg-white w-5 h-5 rounded-full mx-[2px] absolute top-[2px] right-0 flex items-center justify-center ball">
+         <BsCheckLg size={16} />
+        </div>
+       </div>
+      </Link>
+     )}
+     {total && prevSearchParams && (
+      <Link
+       href={`?${prevSearchParams.split("&")[0]}`}
+       className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2"
+       onClick={() => animateBall()}
+      >
+       <span className="w-max">Display total before taxes</span>
+       <div className="bg-black w-10 h-6 rounded-full relative">
+        <div className="bg-white w-5 h-5 rounded-full mx-[2px] absolute top-[2px] right-0 flex items-center justify-center ball">
+         <BsCheckLg size={16} />
+        </div>
+       </div>
+      </Link>
+     )}
     </div>
    </div>
   </div>
