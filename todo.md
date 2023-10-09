@@ -9,3 +9,4 @@
 -slight modal bug on close?maybe fixed + share/save buttons
 -filters button/display totals before taxes(5 nights \* price)
 -can add filter functionality on search page
+-mobile search

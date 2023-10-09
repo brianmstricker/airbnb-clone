@@ -17,11 +17,20 @@ const FilterItem = ({ icon, text }: FilterItemProps) => {
    className={
     "flex flex-col items-center gap-1 relative min-w-[56px] px-[2.5rem] lg:px-[3.03rem] group betterhover:hover:text-gray-900 lg:-left-[14px]" +
     (getSearchType === text.toLowerCase() ||
-    (text.toLowerCase() === "all places" && getSearchType === null)
+    (text.toLowerCase() === "all places" &&
+     getSearchType === null &&
+     !searchPage) ||
+    (text.toLowerCase() === "your search" &&
+     getSearchType === null &&
+     searchPage)
      ? " cursor-default"
      : " cursor-pointer")
    }
-   href={`?${new URLSearchParams({ search_type: text.toLowerCase() })}`}
+   href={
+    !searchPage
+     ? `?${new URLSearchParams({ search_type: text.toLowerCase() })}`
+     : `/?${new URLSearchParams({ search_type: text.toLowerCase() })}`
+   }
   >
    <div className="text-[28px]">{icon}</div>
    <div className="whitespace-nowrap relative">
@@ -29,7 +38,12 @@ const FilterItem = ({ icon, text }: FilterItemProps) => {
      className={
       "font-medium tracking-tight text-[12px]" +
       (getSearchType === text.toLowerCase() ||
-      (text.toLowerCase() === "all places" && getSearchType === null)
+      (text.toLowerCase() === "all places" &&
+       getSearchType === null &&
+       !searchPage) ||
+      (text.toLowerCase() === "your search" &&
+       getSearchType === null &&
+       searchPage)
        ? " cursor-default"
        : " cursor-pointer")
      }

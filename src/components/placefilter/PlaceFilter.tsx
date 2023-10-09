@@ -7,7 +7,7 @@ import {
  MdOutlineDirectionsBoatFilled,
  MdOutlineLocalFireDepartment,
 } from "react-icons/md";
-import { PiCastleTurretBold, PiLighthouse } from "react-icons/pi";
+import { PiCastleTurretBold, PiGridFour, PiLighthouse } from "react-icons/pi";
 import {
  GiCampingTent,
  GiTreehouse,
@@ -20,7 +20,7 @@ import { CgGames } from "react-icons/cg";
 import { FaChevronLeft, FaChevronRight, FaSkiing } from "react-icons/fa";
 import { IoEarth } from "react-icons/io5";
 import { useEffect, useRef, useState } from "react";
-import { BsBorderAll, BsSearch } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 
 const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
  const sliderRef = useRef(null);
@@ -111,7 +111,7 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
        <div className="h-full w-[1px] bg-black mr-3 relative -top-4" />
       </>
      )}
-     <FilterItem icon={<BsBorderAll />} text="All Places" />
+     <FilterItem icon={<PiGridFour />} text="All Places" />
      <FilterItem icon={<HiOutlineHome />} text="Tiny homes" />
      <FilterItem icon={<PiCastleTurretBold />} text="Castles" />
      <FilterItem icon={<MdCabin />} text="Cabins" />
@@ -153,7 +153,7 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
      </button>
      <button className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2">
       <span className="w-max">Display total before taxes</span>
-      <div className="bg-gray-400 w-10 h-6 rounded-full">
+      <div className="bg-gray-400 w-10 h-6 rounded-full hover:bg-gray-600/90">
        <div className="bg-white w-5 h-5 rounded-full mx-[2px] relative top-[2px]" />
       </div>
      </button>

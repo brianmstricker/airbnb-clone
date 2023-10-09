@@ -19,8 +19,12 @@ const LargeSearchBar = ({
   searchParams.get("guests")?.split(" ")[0] || ""
  );
  useEffect(() => {
-  searchParams.get("location") === null ? setPlaceText("") : null;
-  searchParams.get("guests") === null ? setGuestCount("") : null;
+  searchParams.get("location") === null
+   ? setPlaceText("")
+   : setPlaceText(searchParams.get("location") as string);
+  searchParams.get("guests") === null
+   ? setGuestCount("")
+   : setGuestCount(searchParams.get("guests")?.split(" ")[0] as string);
  }, [searchParams]);
  useEffect(() => {
   if (showSearchMenu) {

@@ -5,6 +5,11 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
  try {
   const location = req.nextUrl.searchParams.get("location");
   const guests = req.nextUrl.searchParams.get("guests");
+  if (!location)
+   return NextResponse.json(
+    { message: "Location is required" },
+    { status: 400 }
+   );
   const places = await prisma.place.findMany({
    where: {
     address: {
