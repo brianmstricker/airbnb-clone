@@ -38,8 +38,8 @@ const Search = async ({ searchParams }: { searchParams?: any }) => {
    </div>
    <div className="contain">
     <div className="text-sm relative -top-3">
-     <span className="font-bold">{searchResults.length}</span> places to stay in{" "}
-     <span className="font-bold capitalize">{location}</span>
+     <span className="font-bold">{searchResults.length}</span> place(s) to stay
+     in <span className="font-bold capitalize">{location}</span>
     </div>
     {searchResults.length === 0 && (
      <div className="text-center mt-10">
