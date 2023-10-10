@@ -156,13 +156,13 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
     <div className="hidden md:flex items-center gap-5 relative">
      <div
       className={
-       "absolute w-14 h-14 bg-gradient-to-r from-transparent via-white/50 to-white top-0 -left-14 pointer-events-none" +
+       "absolute w-16 h-14 bg-gradient-to-r from-transparent via-white/50 to-white top-0 -left-16 pointer-events-none" +
        (isRightButtonDisabled ? " opacity-0" : "")
       }
      />
      <button
       className={
-       "items-center text-black flex relative" +
+       "items-center text-black flex relative -left-4" +
        (isRightButtonDisabled ? " opacity-40 cursor-default" : " group")
       }
       onClick={slideRight}
@@ -170,10 +170,10 @@ const PlaceFilter = ({ searchPage }: { searchPage?: boolean }) => {
       <div className="p-3 border rounded-full border-gray-400 group-hover:scale-110 duration-100 z-10" />
       <FaChevronRight className="absolute left-1/2 right-1/2 -translate-x-1/2" />
      </button>
-     <button className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2">
+     {/* <button className="p-4 flex items-center text-black border rounded-xl border-gray-300 gap-2">
       <TbAdjustmentsHorizontal size={20} />
       <span>Filters</span>
-     </button>
+     </button> */}
      {!total && !prevSearchParams && (
       <Link
        href={`?${new URLSearchParams({ total: "true" })}`}
