@@ -10,6 +10,7 @@ import { GoShare } from "react-icons/go";
 import Link from "next/link";
 import ReserveWidget from "./ReserveWidget";
 import ImageCarousel from "./ImageCarousel";
+import MobileReserveWidget from "./MobileReserveWidget";
 
 const SmallScreenContent = ({ place }: { place: Place }) => {
  return (
@@ -186,7 +187,7 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
        </div>
       </div>
      </div>
-     <ReserveWidget price={place.price} smallScreen />
+     <MobileReserveWidget price={place.price} />
     </div>
    )}
   </div>
