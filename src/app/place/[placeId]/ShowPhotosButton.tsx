@@ -28,10 +28,10 @@ const ShowPhotosButton = ({
   <>
    <Link
     href={`?${new URLSearchParams({ modal: "PHOTO_TOUR_SCROLLABLE" })}`}
-    className="absolute bottom-6 right-7 z-10 text-black bg-white px-2 py-2 flex items-center text-sm gap-2 rounded-lg border border-black"
+    className="absolute bottom-6 right-7 z-10 text-black bg-white px-2 py-2 flex items-center text-xs lg:text-sm gap-2 rounded-lg border border-black"
    >
     <BiSolidGrid size={20} />
-    <span className="font-medium">Show all photos</span>
+    <span className="font-medium w-fit">Show all photos</span>
    </Link>
    {modalShown && (
     <div

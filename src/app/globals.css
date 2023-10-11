@@ -43,3 +43,14 @@
 .swiper-button-disabled {
  @apply !opacity-0 !pointer-events-none;
 }
+
+.rdrDefinedRangesWrapper {
+ @apply hidden;
+}
+.rdrDateRangePickerWrapper {
+ @apply w-full;
+}
+.rdrCalendarWrapper,
+.rdrMonth {
+ @apply !w-full;
+}

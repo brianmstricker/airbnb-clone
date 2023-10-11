@@ -6,6 +6,6 @@
 -icons when displaying perks
 -add ratings
 -mobile reserve page
--slight modal bug on close?maybe fixed + share/save buttons
+-share/save buttons
 -add filter functionality on search page
--mobile search
+-edit place
