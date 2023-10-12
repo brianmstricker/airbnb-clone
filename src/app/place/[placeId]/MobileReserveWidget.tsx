@@ -4,7 +4,9 @@ import "react-date-range/dist/theme/default.css";
 import { useState } from "react";
 import { DateRangePicker } from "react-date-range";
 import { useForm } from "react-hook-form";
-import { format } from "date-fns";
+import { format, intervalToDuration } from "date-fns";
+import { AiFillStar } from "react-icons/ai";
+import Link from "next/link";
 
 type ReserveWidgetForm = {
  checkIn: string;
@@ -12,7 +14,19 @@ type ReserveWidgetForm = {
  guests: number;
 };
 
-const MobileReserveWidget = ({ price }: { price: String }) => {
+const MobileReserveWidget = ({
+ price,
+ placeId,
+ placeName,
+ placeImg,
+ placeType,
+}: {
+ price: string;
+ placeId: string;
+ placeName: string;
+ placeImg: string;
+ placeType: string;
+}) => {
  const [showCalendar, setShowCalendar] = useState(false);
  const inDate = new Date();
  const outDate = new Date();
@@ -37,9 +51,6 @@ const MobileReserveWidget = ({ price }: { price: String }) => {
  } = reserve;
  const checkInValue = watch("checkIn");
  const checkOutValue = watch("checkOut");
- const amountNights =
-  Number(checkOutValue.split("-").join("")) -
-  Number(checkInValue.split("-").join(""));
  const selectionRange = {
   startDate: new Date(checkInValue),
   endDate: new Date(checkOutValue),
@@ -55,6 +66,10 @@ const MobileReserveWidget = ({ price }: { price: String }) => {
    ranges.selection.endDate.toLocaleDateString("en-US")
   );
  };
+ const amountNights = intervalToDuration({
+  start: new Date(checkInValue),
+  end: new Date(checkOutValue),
+ });
  return (
   <>
    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-50 px-6 py-4">
@@ -68,14 +83,14 @@ const MobileReserveWidget = ({ price }: { price: String }) => {
        className="flex w-fit relative font-medium"
       >
        <div>
-        {format(new Date(checkInValue), "MMM-dd").split("-")[0]}{" "}
-        {checkInValue.split("/")[1] || checkInValue.split("-")[2]}
+        {format(new Date(checkInValue), "MMM").split("/")[0]}{" "}
+        {checkInValue.split("/")[1]}
        </div>
        <div>
-        {checkInValue.slice(5, 7) === checkOutValue.slice(5, 7) ? (
+        {checkInValue.split("/")[0] === checkOutValue.split("/")[0] ? (
          <div>
           <span className="px-1">-</span>
-          {checkOutValue.split("/")[1] || checkOutValue.split("-")[2]}
+          {checkOutValue.split("/")[1]}
          </div>
         ) : (
          <div>
@@ -87,9 +102,12 @@ const MobileReserveWidget = ({ price }: { price: String }) => {
        <div className="w-full h-[1px] bg-gray-700 absolute bottom-[3px]" />
       </div>
      </div>
-     <button className="bg-gradient-to-r from-primary via-rose-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5">
+     <Link
+      href={`/place/reserve/${placeId}?placeId=${placeId}&checkIn=${checkInValue}&checkOut=${checkOutValue}&placeName=${placeName}&placeImg=${placeImg}&placeType=${placeType}&placePrice=${price}&nights=${amountNights?.days}`}
+      className="bg-gradient-to-r from-primary via-rose-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5"
+     >
       Reserve
-     </button>
+     </Link>
     </div>
    </div>
    {showCalendar && (
@@ -102,12 +120,29 @@ const MobileReserveWidget = ({ price }: { price: String }) => {
        >
         x
        </span>
-       <span className="text-sm underline">Clear dates</span>
+       <span
+        onClick={() => {
+         reserve.setValue("checkIn", inDateValue);
+         reserve.setValue("checkOut", outDateValue);
+        }}
+        className="text-sm underline"
+       >
+        Reset dates
+       </span>
       </div>
       <div className="my-6 flex flex-col gap-2">
-       <span className="text-2xl font-medium">5 nights</span>
+       <div className="text-2xl font-medium">
+        {(amountNights?.years as number) > 0 && (
+         <span>{amountNights.years} year(s)</span>
+        )}{" "}
+        {(amountNights?.months as number) > 0 && (
+         <span>{amountNights.months} month(s)</span>
+        )}{" "}
+        <span>{amountNights?.days} night(s)</span>
+       </div>
        <span className="text-sm text-gray-500">
-        Oct 12, 2023 - Oct 17, 2023
+        {format(new Date(checkInValue), "PP")} -{" "}
+        {format(new Date(checkOutValue), "PP")}
        </span>
       </div>
       <DateRangePicker
@@ -116,6 +151,24 @@ const MobileReserveWidget = ({ price }: { price: String }) => {
        minDate={inDate}
        rangeColors={["#FD5B61"]}
       />
+     </div>
+     <div className="flex justify-between items-center absolute bottom-0 w-full px-6 py-4 border-t border-t-gray-300/90">
+      <div className="flex flex-col gap-[2px]">
+       <div>
+        <span className="font-bold tracking-wide">${price}</span>{" "}
+        <span className="text-sm">night</span>
+       </div>
+       <div className="flex items-center text-xs font-medium gap-1">
+        <AiFillStar />
+        4.92
+       </div>
+      </div>
+      <button
+       className="bg-black/90 text-white px-6 py-3 font-bold rounded-lg"
+       onClick={() => setShowCalendar(false)}
+      >
+       Save
+      </button>
      </div>
     </div>
    )}

@@ -68,7 +68,9 @@ const Header = () => {
       setShowSearchMenu={setShowSearchMenu}
      />
      <div className={"flex gap-6 items-center"}>
-      <span className="font-medium w-fit">Airbnb your home</span>
+      <Link href="/account/places/create" className="font-medium w-fit">
+       Airbnb your home
+      </Link>
       <button
        onClick={handleUserMenuButtonClick}
        className="flex rounded-full py-1 px-3 border border-gray-300 gap-2 items-center shrink-0"

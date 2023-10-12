@@ -24,6 +24,9 @@ const Card = ({ favorite }: { favorite: FavoriteType }) => {
        fill
        alt="place"
        className="rounded-xl object-cover"
+       sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+       placeholder="blur"
+       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
       />
      </div>
     </div>

@@ -61,6 +61,9 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
          alt="photo of place"
          fill
          className="rounded-l-xl object-cover"
+         sizes="(max-width: 768px) 90vw, (max-width: 1600px) 45vw, 35vw"
+         placeholder="blur"
+         blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
         />
        </div>
       )}

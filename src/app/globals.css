@@ -48,9 +48,18 @@
  @apply hidden;
 }
 .rdrDateRangePickerWrapper {
- @apply w-full;
+ @apply w-full mt-10;
 }
 .rdrCalendarWrapper,
 .rdrMonth {
  @apply !w-full;
+}
+div.rdrDays {
+ font-size: 5vw;
+ @media screen and (min-width: 500px) {
+  font-size: 3vw;
+ }
+ @media screen and (min-width: 600px) {
+  font-size: 2.5vw;
+ }
 }

@@ -282,6 +282,9 @@ const Page = () => {
           alt="photo of place"
           fill
           className="object-cover"
+          sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+          placeholder="blur"
+          blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
          />
         </div>
        ))}

@@ -187,7 +187,14 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
        </div>
       </div>
      </div>
-     <MobileReserveWidget price={place.price} />
+     <MobileReserveWidget
+      price={place.price}
+      placeId={place.id}
+      placeName={place.name}
+      placeImg={place.photos[0].url}
+      placeType={place.type}
+      // placeRating={place.rating}
+     />
     </div>
    )}
   </div>

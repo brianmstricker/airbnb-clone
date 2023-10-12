@@ -30,6 +30,9 @@ const ImageCarousel = ({ photoUrls }: { photoUrls: Array<string> }) => {
        alt="photo of place"
        fill
        className="object-cover block w-full h-full"
+       sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+       placeholder="blur"
+       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
       />
      </SwiperSlide>
     ))}
