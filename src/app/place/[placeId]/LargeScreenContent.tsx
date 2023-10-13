@@ -210,7 +210,13 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
         </div>
        </div>
       </div>
-      <ReserveWidget price={place.price} />
+      <ReserveWidget
+       price={place.price}
+       placeId={place.id}
+       placeName={place.name}
+       placeImg={place.photos[0].url}
+       placeType={place.type}
+      />
      </div>
     </div>
    )}

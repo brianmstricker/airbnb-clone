@@ -3,6 +3,7 @@
 import { useForm } from "react-hook-form";
 import Border from "./Border";
 import { format } from "date-fns";
+import Link from "next/link";
 
 type ReserveWidgetForm = {
  checkIn: string;
@@ -10,7 +11,19 @@ type ReserveWidgetForm = {
  guests: number;
 };
 
-const ReserveWidget = ({ price }: { price: String }) => {
+const ReserveWidget = ({
+ price,
+ placeId,
+ placeName,
+ placeImg,
+ placeType,
+}: {
+ price: string;
+ placeId: string;
+ placeName: string;
+ placeImg: string;
+ placeType: string;
+}) => {
  const inDate = new Date();
  const outDate = new Date();
  const checkInDate = inDate.getDate() + 5;
@@ -74,9 +87,14 @@ const ReserveWidget = ({ price }: { price: String }) => {
      </div>
     </div>
     <div className="flex justify-between items-center mt-4 mx-1">
-     <button className="bg-gradient-to-r from-rose-600 via-rose-500 to-primary text-white w-full rounded-lg py-3 font-medium">
+     <Link
+      href={`/place/reserve/${placeId}?placeId=${placeId}&checkIn=${checkInValue}&checkOut=${checkOutValue}&placeName=${placeName}&placeImg=${placeImg}&placeType=${placeType}&placePrice=${price}&nights=${amountNights}&guests=${reserve.getValues(
+       "guests"
+      )}`}
+      className="bg-gradient-to-r from-rose-600 via-rose-500 to-primary text-white w-full rounded-lg py-3 font-medium text-center"
+     >
       Reserve
-     </button>
+     </Link>
     </div>
     <span className="block text-center mt-3 text-gray-700 text-sm">
      You won&apos;t be charged yet
