@@ -89,6 +89,7 @@ model Place {
 model Photo {
   id      String @id @default(cuid())
   url     String @db.VarChar(512)
+  index   Int    @default(0) @map("index") @db.Int
   placeId String
   place   Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
 

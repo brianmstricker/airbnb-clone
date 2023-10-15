@@ -95,7 +95,8 @@ const Page = () => {
    errors.checkInTime ||
    errors.checkOutTime ||
    errors.price ||
-   isLoading
+   isLoading ||
+   loading
   );
  }
  return (
@@ -104,7 +105,7 @@ const Page = () => {
    onSubmit={handleSubmit(formSubmit)}
   >
    {loading && (
-    <div className="fixed w-screen h-screen bg-white/60 z-50 inset-0">
+    <div className="fixed w-screen h-screen bg-white z-[101] inset-0">
      <div className="flex w-full h-full justify-center items-center">
       <CircleLoader size={80} color="#ff385c" />
      </div>
@@ -285,6 +286,7 @@ const Page = () => {
           sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
           placeholder="blur"
           blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
+          loading="eager"
          />
         </div>
        ))}

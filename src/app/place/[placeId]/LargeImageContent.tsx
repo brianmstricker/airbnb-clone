@@ -35,7 +35,7 @@ const LargeImageContent = ({
       fill
       alt="photo of place"
       className="object-cover"
-      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 45vw, 35vw"
       placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
      />
@@ -46,7 +46,7 @@ const LargeImageContent = ({
       fill
       alt="photo of place"
       className="object-cover rounded-tr-xl"
-      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 45vw, 35vw"
       placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
      />
@@ -57,7 +57,7 @@ const LargeImageContent = ({
       fill
       alt="photo of place"
       className="object-cover"
-      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 45vw, 35vw"
       placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
      />
@@ -68,7 +68,7 @@ const LargeImageContent = ({
       fill
       alt="photo of place"
       className="object-cover rounded-br-xl"
-      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 40vw, 25vw"
+      sizes="(max-width: 768px) 90vw, (max-width: 1600px) 45vw, 35vw"
       placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
      />

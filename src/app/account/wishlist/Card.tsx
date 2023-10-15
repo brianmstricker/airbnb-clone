@@ -33,7 +33,10 @@ const Card = ({ favorite }: { favorite: FavoriteType }) => {
     <div>
      <div className="flex justify-between">
       <p className="capitalize font-semibold">
-       Home in {favorite.place.address.split(",")[1]}
+       Home in{" "}
+       {favorite.place.address.includes(",")
+        ? favorite.place.address.split(",")[1]
+        : favorite.place.address}
       </p>
       <p className="font-light">4.82</p>
      </div>

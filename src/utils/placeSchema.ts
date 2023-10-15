@@ -26,7 +26,17 @@ export const placeSchema = z.object({
   .max(100, { message: "Name must be 100 or less characters." }),
  address: z.string().nonempty({ message: "Address is required." }),
  type: z.nativeEnum(PlaceEnum),
- photos: z.array(z.string()),
+ photos: z.array(
+  z.union([
+   z.string(),
+   z.object({
+    url: z.string(),
+    id: z.string(),
+    placeId: z.string(),
+    index: z.number(),
+   }),
+  ])
+ ),
  beds: z.number().int().positive(),
  baths: z.number().int().positive(),
  guests: z.number().int().positive(),
@@ -34,7 +44,11 @@ export const placeSchema = z.object({
   .string()
   .min(25, { message: "Description must be over 25 characters." })
   .max(500, { message: "Description must be 500 or less characters." }),
- perks: z.array(z.string()).optional(),
+ perks: z
+  .array(
+   z.union([z.string(), z.object({ name: z.string(), placeId: z.string() })])
+  )
+  .optional(),
  checkInTime: z.string().nonempty({ message: "Check in time is required." }),
  checkOutTime: z.string().nonempty({ message: "Check out time is required." }),
  price: z

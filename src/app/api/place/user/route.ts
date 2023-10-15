@@ -4,9 +4,11 @@ import prisma from "@/app/lib/auth";
 import { ZodError } from "zod";
 import { placeSchema } from "@/utils/placeSchema";
 
-// GET /api/places/user - places for a user
 export const GET = async (req: NextRequest, res: NextResponse) => {
  try {
+  const placeId = req.nextUrl.searchParams.get("placeId");
+  if (!placeId)
+   return NextResponse.json({ message: "Place id missing." }, { status: 401 });
   const session = await getAuthSession();
   if (!session?.user) {
    return NextResponse.json(
@@ -22,28 +24,31 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
    if (!userDB) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
    }
-   const places = await prisma.place.findMany({
+   const place = await prisma.place.findUnique({
     where: {
+     id: placeId,
      userId: userDB.id,
     },
     include: {
-     photos: true,
+     photos: {
+      select: { id: true, url: true, placeId: true, index: true },
+      orderBy: { index: "asc" },
+     },
      perks: true,
     },
-    orderBy: {
-     createdAt: "desc",
-    },
    });
-   return NextResponse.json(places, { status: 200 });
+   return NextResponse.json(place, { status: 200 });
   }
  } catch {
   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
  }
 };
 
-// POST /api/places/user
-export const POST = async (req: NextRequest, res: NextResponse) => {
+export const PUT = async (req: NextRequest, res: NextResponse) => {
  try {
+  const placeId = req.nextUrl.searchParams.get("placeId");
+  if (!placeId)
+   return NextResponse.json({ message: "Place id missing." }, { status: 401 });
   const session = await getAuthSession();
   if (!session?.user) {
    return NextResponse.json(
@@ -62,36 +67,69 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
    const body = await req.json();
    const placeData = placeSchema.parse(body);
    const { perks, photos, ...rest } = placeData;
-   const newPlace = await prisma.place.create({
-    data: {
-     ...rest,
+   const editedPlace = await prisma.place.update({
+    where: {
+     id: placeId,
      userId: userDB.id,
     },
+    include: {
+     photos: {
+      select: { id: true, url: true, placeId: true, index: true },
+      orderBy: { index: "asc" },
+     },
+     perks: true,
+    },
+    data: {
+     ...rest,
+    },
    });
-   if (newPlace && perks && perks.length > 0) {
-    const perksData = perks.map((perkName) => {
-     return {
-      name: perkName,
-      placeId: newPlace.id,
-     };
+   // if (editedPlace && perks && perks.length > 0) {
+   //  const perksData = perks.map((perkName) => {
+   //   return {
+   //    name: perkName,
+   //    placeId: editedPlace.id,
+   //   };
+   //  });
+   //  await prisma.perk.createMany({
+   //   data: perksData,
+   //  });
+   // }
+   // still need to remove old photos that aren't in array, and rearrange the order if it's changed
+   if (editedPlace && photos && photos.length > 0) {
+    const oldPhotos = photos.filter((photo) => photo.url);
+    const newPhotos = photos.filter((photo) => !photo.url);
+    // console.log("old", oldPhotos);
+    // console.log("new", newPhotos);
+    const photoIdToIndexMap = new Map();
+    oldPhotos.forEach((photo, index) => {
+     photoIdToIndexMap.set(photo.id, index);
     });
-    await prisma.perk.createMany({
-     data: perksData,
-    });
+    for (const photo of oldPhotos) {
+     const originalIndex = photoIdToIndexMap.get(photo.id);
+     await prisma.photo.update({
+      where: { placeId: editedPlace.id, id: photo.id },
+      data: { index: originalIndex },
+     });
+    }
+    if (newPhotos.length > 0) {
+     const photosData = newPhotos.map((photo) => {
+      return {
+       url: photo,
+       placeId: editedPlace.id,
+       index: oldPhotos.length + photos.indexOf(photo),
+      };
+     });
+     await prisma.photo.createMany({
+      data: photosData,
+     });
+    }
    }
-   if (newPlace && photos && photos.length > 0) {
-    const photosData = photos.map((photo) => {
-     return {
-      url: photo,
-      placeId: newPlace.id,
-      index: photos.indexOf(photo),
-     };
-    });
-    await prisma.photo.createMany({
-     data: photosData,
-    });
-   }
-   return NextResponse.json(newPlace, { status: 201 });
+   if (!editedPlace)
+    return NextResponse.json(
+     { message: "Something went wrong" },
+     { status: 500 }
+    );
+   return NextResponse.json(editedPlace, { status: 200 });
   }
  } catch (error) {
   console.log(error);

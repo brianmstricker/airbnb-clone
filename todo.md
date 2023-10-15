@@ -6,7 +6,7 @@
 -icons when displaying perks
 -add ratings
 -mobile reserve page
--share/save buttons
+-share button
 -add filter functionality on search page
 -edit place
 -reserve functionality

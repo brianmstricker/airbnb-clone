@@ -5,7 +5,13 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
 
-const Favorite = ({ placeId }: { placeId: string }) => {
+const Favorite = ({
+ placeId,
+ placePage,
+}: {
+ placeId: string;
+ placePage?: boolean;
+}) => {
  const session = useSession();
  const path = usePathname();
  const wishlist = path === "/account/wishlist";
@@ -47,22 +53,43 @@ const Favorite = ({ placeId }: { placeId: string }) => {
  }
  if (!session.data) return null;
  return (
-  <div
-   className="absolute right-2 top-2 z-10 cursor-pointer"
-   onClick={handleFavorite}
-  >
-   {isFavorited ? (
-    <>
-     <AiOutlineHeart className="absolute fill-white" size={26} />
-     <AiFillHeart className="fill-primary" size={26} />
-    </>
-   ) : (
-    <>
-     <AiOutlineHeart className="absolute fill-white" size={26} />
-     <AiFillHeart className="fill-black/60" size={26} />
-    </>
+  <>
+   {!placePage && (
+    <div
+     className="absolute right-2 top-2 z-10 cursor-pointer"
+     onClick={handleFavorite}
+    >
+     {isFavorited ? (
+      <>
+       <AiOutlineHeart className="absolute fill-white" size={26} />
+       <AiFillHeart className="fill-primary" size={26} />
+      </>
+     ) : (
+      <>
+       <AiOutlineHeart className="absolute fill-white" size={26} />
+       <AiFillHeart className="fill-black/60" size={26} />
+      </>
+     )}
+    </div>
    )}
-  </div>
+   {placePage && (
+    <div onClick={handleFavorite}>
+     {isFavorited ? (
+      <div className="flex items-center gap-2 cursor-pointer">
+       <AiOutlineHeart className="absolute fill-white" size={26} />
+       <AiFillHeart className="fill-primary" size={26} />
+       <span className="underline">Saved</span>
+      </div>
+     ) : (
+      <div className="flex items-center gap-2 cursor-pointer">
+       <AiOutlineHeart className="absolute fill-white" size={26} />
+       <AiFillHeart className="fill-black/60" size={26} />
+       <span className="underline">Save</span>
+      </div>
+     )}
+    </div>
+   )}
+  </>
  );
 };
 export default Favorite;

@@ -1,5 +1,3 @@
-import { AiOutlineHeart } from "react-icons/ai";
-import { FiShare } from "react-icons/fi";
 import Image from "next/image";
 import { BsDoorClosed } from "react-icons/bs";
 import { PiMedalMilitary } from "react-icons/pi";
@@ -7,6 +5,10 @@ import { LuCalendarX } from "react-icons/lu";
 import Border from "./Border";
 import ReserveWidget from "./ReserveWidget";
 import LargeImageContent from "./LargeImageContent";
+import Favorite from "@/components/Favorite";
+import Share from "@/components/Share";
+import { getAuthSession } from "@/utils/getAuthSession";
+import Link from "next/link";
 
 export type Place = {
  name: string;
@@ -15,7 +17,7 @@ export type Place = {
  userId: string;
  photos: { url: string; id: string; placeId: string }[];
  type: string;
- user: { name: string; image: string };
+ user: { name: string; image: string; email: string };
  beds: number;
  baths: number;
  guests: number;
@@ -30,7 +32,9 @@ export type Place = {
  omg: boolean;
 };
 
-const LargeScreenContent = ({ place }: { place: Place }) => {
+const LargeScreenContent = async ({ place }: { place: Place }) => {
+ const session = await getAuthSession();
+ const user = session?.user;
  return (
   <div className="hidden md:block max-w-6xl mx-auto pb-12 pt-28">
    {place && (
@@ -38,19 +42,17 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
      <h2 className="text-2xl font-semibold capitalize">{place.name}</h2>
      <div className="mt-2 text-sm flex justify-between items-center">
       <a
-       href={`https://www.google.com/maps/place/${place.address}`}
+       href={`https://www.google.com/maps/place/${encodeURIComponent(
+        place.address
+       )}`}
        target="_blank"
        className="underline font-medium"
       >
        {place.address}
       </a>
       <div className="flex gap-4">
-       <div className="flex items-center gap-2">
-        <FiShare size={18} /> <span className="underline">Share</span>
-       </div>
-       <div className="flex items-center gap-2">
-        <AiOutlineHeart size={18} /> <span className="underline">Save</span>
-       </div>
+       <Share />
+       <Favorite placeId={place.id} placePage />
       </div>
      </div>
      <div className="mt-6 flex">
@@ -61,7 +63,7 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
          alt="photo of place"
          fill
          className="rounded-l-xl object-cover"
-         sizes="(max-width: 768px) 90vw, (max-width: 1600px) 45vw, 35vw"
+         sizes="(max-width: 768px) 90vw, 70vw"
          placeholder="blur"
          blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
         />
@@ -82,7 +84,9 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
           </p>
           <ol className="text-base mt-2 text-gray-800 flex gap-6 items-center">
            <li>
-            <span>{place.guests} Guests</span>
+            <span>
+             {place.guests} {place.guests === 1 ? "Guest" : "Guests"}
+            </span>
            </li>
            <li className="flex items-center relative rounded-full">
             <div className="w-[2px] h-[2px] bg-black absolute -left-3" />
@@ -97,6 +101,16 @@ const LargeScreenContent = ({ place }: { place: Place }) => {
             </span>
            </li>
           </ol>
+          {user && user.email === place.user.email && (
+           <div className="mt-8">
+            <Link
+             href={`/place/edit?placeId=${place.id}`}
+             className="mt-8 bg-gray-300 px-4 py-2 rounded-lg text-gray-800 font-medium"
+            >
+             Edit
+            </Link>
+           </div>
+          )}
          </div>
          <div>
           <Image

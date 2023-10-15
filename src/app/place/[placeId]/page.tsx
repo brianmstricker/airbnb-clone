@@ -3,11 +3,9 @@ import SmallScreenContent from "./SmallScreenContent";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
  const { placeId } = params;
- const placeJSON = await fetch(
-  `http://localhost:3000/api/place/?placeId=${placeId}`
- );
+ const placeJSON = await fetch(`http://localhost:3000/api/place/${placeId}`);
  const place = await placeJSON.json();
- if (!place) {
+ if (!place.id) {
   return (
    <div className="pb-24 w-full h-screen flex flex-col items-center justify-center">
     <span className="mb-4">Place not found</span>
