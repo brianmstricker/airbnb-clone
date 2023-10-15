@@ -111,7 +111,7 @@ const EditPage = () => {
      router.push(`/place/${getPlaceId}`);
      setTimeout(() => {
       setLoading(false);
-     }, 1000);
+     }, 10000);
     },
    });
    setLoading(false);
@@ -439,7 +439,6 @@ const EditPage = () => {
         (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
        }
        type="submit"
-       onClick={() => formSubmit(place.getValues())}
        disabled={buttonDisabled() as boolean}
       >
        Save Changes

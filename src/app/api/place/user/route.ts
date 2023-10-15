@@ -83,26 +83,36 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
      ...rest,
     },
    });
-   // if (editedPlace && perks && perks.length > 0) {
-   //  const perksData = perks.map((perkName) => {
-   //   return {
-   //    name: perkName,
-   //    placeId: editedPlace.id,
-   //   };
-   //  });
-   //  await prisma.perk.createMany({
-   //   data: perksData,
-   //  });
-   // }
-   // still need to remove old photos that aren't in array, and rearrange the order if it's changed
+   if (editedPlace && perks && perks.length > 0) {
+    await prisma.perk.deleteMany({
+     where: {
+      placeId: editedPlace.id,
+     },
+    });
+    const perksData = perks.map((perkName) => {
+     return {
+      name: perkName,
+      placeId: editedPlace.id,
+     };
+    });
+    await prisma.perk.createMany({
+     data: perksData,
+    });
+   }
    if (editedPlace && photos && photos.length > 0) {
     const oldPhotos = photos.filter((photo) => photo.url);
     const newPhotos = photos.filter((photo) => !photo.url);
     // console.log("old", oldPhotos);
     // console.log("new", newPhotos);
     const photoIdToIndexMap = new Map();
-    oldPhotos.forEach((photo, index) => {
+    oldPhotos.forEach(async (photo, index) => {
      photoIdToIndexMap.set(photo.id, index);
+     await prisma.photo.deleteMany({
+      where: {
+       placeId: editedPlace.id,
+       id: { notIn: oldPhotos.map((photo) => photo.id) },
+      },
+     });
     });
     for (const photo of oldPhotos) {
      const originalIndex = photoIdToIndexMap.get(photo.id);
