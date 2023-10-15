@@ -85,7 +85,9 @@ const EditPage = () => {
  } = place;
  const { mutate: EditPlace, isLoading } = useMutation({
   mutationFn: async (data: Form) => {
+   setLoading(true);
    const res = await axios.put(`/api/place/user?placeId=${getPlaceId}`, data);
+   setLoading(false);
    return res.data;
   },
  });
@@ -114,7 +116,6 @@ const EditPage = () => {
      }, 10000);
     },
    });
-   setLoading(false);
   } catch (error) {
    console.log(error);
    setLoading(false);

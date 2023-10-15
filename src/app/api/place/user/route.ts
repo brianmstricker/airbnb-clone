@@ -83,21 +83,26 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
      ...rest,
     },
    });
-   if (editedPlace && perks && perks.length > 0) {
+   if (editedPlace && perks) {
     await prisma.perk.deleteMany({
      where: {
       placeId: editedPlace.id,
      },
     });
-    const perksData = perks.map((perkName) => {
-     return {
-      name: perkName,
-      placeId: editedPlace.id,
-     };
-    });
-    await prisma.perk.createMany({
-     data: perksData,
-    });
+    console.log(placeData.perks);
+    if (placeData.perks && placeData.perks.length > 0) {
+     const newPerks = placeData.perks.map((perkName) => {
+      return {
+       name: perkName,
+       placeId: editedPlace.id,
+      };
+     });
+     if (newPerks.length > 0) {
+      await prisma.perk.createMany({
+       data: newPerks,
+      });
+     }
+    }
    }
    if (editedPlace && photos && photos.length > 0) {
     const oldPhotos = photos.filter((photo) => photo.url);
