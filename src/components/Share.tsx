@@ -3,7 +3,7 @@
 import { FiShare } from "react-icons/fi";
 import { toast } from "react-toastify";
 
-const Share = () => {
+const Share = ({ smallPlacePage }: { smallPlacePage?: boolean }) => {
  return (
   <div
    onClick={() => {
@@ -19,7 +19,8 @@ const Share = () => {
    }}
    className="flex items-center gap-2 cursor-pointer"
   >
-   <FiShare size={18} /> <span className="underline">Share</span>
+   <FiShare size={18} />{" "}
+   {!smallPlacePage && <span className="underline">Share</span>}
   </div>
  );
 };

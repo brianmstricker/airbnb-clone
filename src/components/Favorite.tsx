@@ -8,9 +8,11 @@ import { useSession } from "next-auth/react";
 const Favorite = ({
  placeId,
  placePage,
+ smallPlacePage,
 }: {
  placeId: string;
  placePage?: boolean;
+ smallPlacePage?: boolean;
 }) => {
  const session = useSession();
  const path = usePathname();
@@ -78,13 +80,13 @@ const Favorite = ({
       <div className="flex items-center gap-2 cursor-pointer">
        <AiOutlineHeart className="absolute fill-white" size={26} />
        <AiFillHeart className="fill-primary" size={26} />
-       <span className="underline">Saved</span>
+       {!smallPlacePage && <span className="underline">Saved</span>}
       </div>
      ) : (
       <div className="flex items-center gap-2 cursor-pointer">
        <AiOutlineHeart className="absolute fill-white" size={26} />
        <AiFillHeart className="fill-black/60" size={26} />
-       <span className="underline">Save</span>
+       {!smallPlacePage && <span className="underline">Save</span>}
       </div>
      )}
     </div>

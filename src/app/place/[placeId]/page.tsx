@@ -3,7 +3,9 @@ import SmallScreenContent from "./SmallScreenContent";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
  const { placeId } = params;
- const placeJSON = await fetch(`http://localhost:3000/api/place/${placeId}`);
+ const placeJSON = await fetch(`http://localhost:3000/api/place/${placeId}`, {
+  cache: "no-cache",
+ });
  const place = await placeJSON.json();
  if (!place.id) {
   return (

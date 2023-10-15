@@ -35,6 +35,24 @@ export type Place = {
 const LargeScreenContent = async ({ place }: { place: Place }) => {
  const session = await getAuthSession();
  const user = session?.user;
+ if (!place.checkInTime.includes(" ")) {
+  const lastIndex = place.checkInTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
+  if (lastIndex !== -1) {
+   place.checkInTime =
+    place.checkInTime.slice(0, lastIndex + 1) +
+    " " +
+    place.checkInTime.slice(lastIndex + 1);
+  }
+ }
+ if (!place.checkOutTime.includes(" ")) {
+  const lastIndex = place.checkOutTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
+  if (lastIndex !== -1) {
+   place.checkOutTime =
+    place.checkOutTime.slice(0, lastIndex + 1) +
+    " " +
+    place.checkOutTime.slice(lastIndex + 1);
+  }
+ }
  return (
   <div className="hidden md:block max-w-6xl mx-auto pb-12 pt-28">
    {place && (
@@ -73,7 +91,7 @@ const LargeScreenContent = async ({ place }: { place: Place }) => {
        <LargeImageContent photos={place.photos} />
       )}
      </div>
-     <div className="relative">
+     <div className="relative flex">
       <div className="mt-10">
        <div className="max-w-sm lg:max-w-xl">
         <div className="text-xl flex justify-between">
@@ -193,9 +211,9 @@ const LargeScreenContent = async ({ place }: { place: Place }) => {
          <div className="mt-4 flex justify-between items-start">
           <div>
            <h4 className="font-semibold">House rules</h4>
-           <span className="block mt-4">Check-in: {place.checkInTime}</span>
+           <span className="block mt-4">Check in by: {place.checkInTime}</span>
            <span className="block mt-4">
-            Check out before {place.checkOutTime}
+            Check out before: {place.checkOutTime}
            </span>
            <span className="block mt-4">No parties or events</span>
            <span className="block mt-4"></span>

@@ -49,8 +49,20 @@ export const placeSchema = z.object({
    z.union([z.string(), z.object({ name: z.string(), placeId: z.string() })])
   )
   .optional(),
- checkInTime: z.string().nonempty({ message: "Check in time is required." }),
- checkOutTime: z.string().nonempty({ message: "Check out time is required." }),
+ checkInTime: z
+  .string()
+  .nonempty({ message: "Check in time is required." })
+  .regex(
+   /^\d+\s*(am|pm)$/i,
+   "Check in time must be a number followed by am or pm."
+  ),
+ checkOutTime: z
+  .string()
+  .nonempty({ message: "Check out time is required." })
+  .regex(
+   /^\d+\s*(am|pm)$/i,
+   "Check in time must be a number followed by am or pm."
+  ),
  price: z
   .string()
   .nonempty({ message: "Price is required." })

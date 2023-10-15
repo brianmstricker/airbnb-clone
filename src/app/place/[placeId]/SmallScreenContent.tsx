@@ -6,13 +6,31 @@ import { PiMedalMilitary } from "react-icons/pi";
 import { LuCalendarX } from "react-icons/lu";
 import Border from "./Border";
 import { FaChevronLeft } from "react-icons/fa";
-import { GoShare } from "react-icons/go";
 import Link from "next/link";
-import ReserveWidget from "./ReserveWidget";
 import ImageCarousel from "./ImageCarousel";
 import MobileReserveWidget from "./MobileReserveWidget";
+import Favorite from "@/components/Favorite";
+import Share from "@/components/Share";
 
 const SmallScreenContent = ({ place }: { place: Place }) => {
+ if (!place.checkInTime.includes(" ")) {
+  const lastIndex = place.checkInTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
+  if (lastIndex !== -1) {
+   place.checkInTime =
+    place.checkInTime.slice(0, lastIndex + 1) +
+    " " +
+    place.checkInTime.slice(lastIndex + 1);
+  }
+ }
+ if (!place.checkOutTime.includes(" ")) {
+  const lastIndex = place.checkOutTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
+  if (lastIndex !== -1) {
+   place.checkOutTime =
+    place.checkOutTime.slice(0, lastIndex + 1) +
+    " " +
+    place.checkOutTime.slice(lastIndex + 1);
+  }
+ }
  return (
   <div className="md:hidden mx-auto pb-20">
    {place && (
@@ -26,10 +44,10 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
       </Link>
       <div className="flex items-center pr-2 gap-4">
        <div className="bg-white p-2 rounded-full">
-        <GoShare size={20} />
+        <Share smallPlacePage />
        </div>
-       <div className="bg-white p-2 rounded-full">
-        <AiOutlineHeart size={20} />
+       <div className="bg-white p-1 rounded-full">
+        <Favorite placeId={place.id} placePage smallPlacePage />
        </div>
       </div>
      </div>
@@ -162,7 +180,7 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
           <Border small />
           <div className="text-gray-500 text-sm">
            <h4 className="font-semibold text-2xl text-black">House rules</h4>
-           <span className="block mt-2">Check-in: {place.checkInTime}</span>
+           <span className="block mt-2">Check-in by: {place.checkInTime}</span>
            <span className="block mt-2">
             Check out before {place.checkOutTime}
            </span>
