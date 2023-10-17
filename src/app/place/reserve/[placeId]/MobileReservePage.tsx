@@ -13,18 +13,20 @@ const MobileReservePage = ({
  nights,
  id,
  guests,
+ rating,
 }: {
  image: string;
  type: string;
  name: string;
  checkIn: string;
  checkOut: string;
- price: number;
+ price: string;
  nights: number;
  id: string;
  guests: number;
+ rating: number;
 }) => {
- const priceTimesNights = price * nights;
+ const priceTimesNights = parseInt(price) * nights;
  const serviceFee = priceTimesNights * 0.08;
  const total = priceTimesNights + 50 + serviceFee;
  return (
@@ -56,7 +58,7 @@ const MobileReservePage = ({
      </div>
      <div className="flex items-center text-[.75rem] mt-1 gap-[2px]">
       <AiFillStar />
-      <span>4.92</span>
+      <span>{rating.toFixed(2)}</span>
      </div>
     </div>
    </div>

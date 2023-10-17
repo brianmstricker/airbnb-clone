@@ -89,7 +89,7 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
       placeId: editedPlace.id,
      },
     });
-    console.log(placeData.perks);
+    // console.log(placeData.perks);
     if (placeData.perks && placeData.perks.length > 0) {
      const newPerks = placeData.perks.map((perkName) => {
       return {

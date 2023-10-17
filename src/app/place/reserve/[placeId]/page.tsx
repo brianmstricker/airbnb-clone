@@ -1,53 +1,75 @@
+import { compareAsc, format, intervalToDuration } from "date-fns";
 import LargeReservePage from "./LargeReservePage";
 import MobileReservePage from "./MobileReservePage";
 
-const ReservePage = ({
+const ReservePage = async ({
  searchParams,
 }: {
  searchParams: {
-  placeImg: string;
-  placeName: string;
-  placeType: string;
+  placeId: string;
   checkIn: string;
   checkOut: string;
-  placePrice: number;
-  nights: number;
-  placeId: string;
   guests: number;
  };
 }) => {
- const image = searchParams.placeImg;
- const type = searchParams.placeType;
- const name = searchParams.placeName;
- const checkIn = searchParams.checkIn;
- const checkOut = searchParams.checkOut;
- const price = searchParams.placePrice;
- const nights = searchParams.nights;
  const id = searchParams.placeId;
+ const placeFetch = await fetch(`http://localhost:3000/api/place/${id}`);
+ const place = await placeFetch.json();
+ if (!id || !place.id)
+  return (
+   <div className="!max-w-[1500px] contain pt-56 text-center">
+    <p>Cannot find place!</p>
+   </div>
+  );
+ const image = place.photos[0].url;
+ const name = place.name;
+ const checkInVal = searchParams.checkIn;
+ const checkOutVal = searchParams.checkOut;
  const guests = searchParams.guests;
+ const nights = intervalToDuration({
+  start: new Date(checkInVal),
+  end: new Date(checkOutVal),
+ }).days;
+ const type = place.type;
+ const price = place.price;
+ const rating = place.rating;
+ const checkInDate = format(new Date(checkInVal), "dd MMMM yyyy");
+ const currentDate = format(new Date(), "dd MMMM yyyy");
+ const dateErr =
+  compareAsc(new Date(checkInDate), new Date(currentDate)) === -1 ||
+  compareAsc(new Date(checkOutVal), new Date(checkInVal)) === -1;
+ if (dateErr) {
+  return (
+   <div className="!max-w-[1500px] contain pt-56 text-center">
+    <p>Error with check in or check out date! Change it to a later date.</p>
+   </div>
+  );
+ }
  return (
   <>
    <MobileReservePage
     image={image}
     type={type}
     name={name}
-    checkIn={checkIn}
-    checkOut={checkOut}
+    checkIn={checkInVal}
+    checkOut={checkOutVal}
     price={price}
-    nights={nights}
+    nights={nights as number}
     id={id}
     guests={guests}
+    rating={rating}
    />
    <LargeReservePage
     image={image}
     type={type}
     name={name}
-    checkIn={checkIn}
-    checkOut={checkOut}
+    checkIn={checkInVal}
+    checkOut={checkOutVal}
     price={price}
-    nights={nights}
+    nights={nights as number}
     id={id}
     guests={guests}
+    rating={rating}
    />
   </>
  );

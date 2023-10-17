@@ -1,9 +1,11 @@
+import { getAuthSession } from "@/utils/getAuthSession";
 import Image from "next/image";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
 import { FaChevronLeft } from "react-icons/fa";
+import ConfirmButton from "../ConfirmButton";
 
-const LargeReservePage = ({
+const LargeReservePage = async ({
  image,
  type,
  name,
@@ -13,6 +15,7 @@ const LargeReservePage = ({
  nights,
  id,
  guests,
+ rating,
 }: {
  image: string;
  type: string;
@@ -23,7 +26,9 @@ const LargeReservePage = ({
  nights: number;
  id: string;
  guests: number;
+ rating: number;
 }) => {
+ const session = await getAuthSession();
  const priceTimesNights = parseInt(price) * nights;
  const serviceFee = priceTimesNights * 0.08;
  const total = priceTimesNights + 50 + serviceFee;
@@ -84,9 +89,24 @@ const LargeReservePage = ({
      <span className="font-bold underline">charge my payment method</span> if
      I&apos;m responsible for damage.
     </p>
-    <button className="bg-primary mt-10 text-white px-6 py-4 rounded-lg">
-     Confirm and pay
-    </button>
+    <ConfirmButton
+     id={id}
+     checkIn={checkIn}
+     checkOut={checkOut}
+     guests={guests}
+     total={total}
+     user={session?.user}
+    />
+    {!session?.user && (
+     <div className="mt-3 text-black/75">
+      Please sign in to book this place.
+     </div>
+    )}
+    {guests < 1 && (
+     <div className="mt-3 text-black/75">
+      Invalid number of guests. Please try again.
+     </div>
+    )}
    </div>
    <div className="mt-[5.15rem] w-[130%] lg:w-full">
     <div className="border rounded-xl border-gray-300/80 sticky top-[150px] p-5">
@@ -109,7 +129,7 @@ const LargeReservePage = ({
        </div>
        <div className="flex items-center text-[.75rem] mt-1 gap-[2px]">
         <AiFillStar />
-        <span>4.92</span>
+        <span>{rating.toFixed(2)}</span>
        </div>
       </div>
      </div>
@@ -128,7 +148,7 @@ const LargeReservePage = ({
       </div>
       <div className="flex justify-between items-center">
        <span>Airbnb service fee</span>
-       <span>${total.toFixed(2)}</span>
+       <span>${serviceFee.toFixed(2)}</span>
       </div>
       <div className="bg-gray-300/80 w-full h-[1px]" />
       <div className="font-bold flex justify-between items-center">

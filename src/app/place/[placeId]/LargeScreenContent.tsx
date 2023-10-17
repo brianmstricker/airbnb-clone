@@ -9,6 +9,7 @@ import Favorite from "@/components/Favorite";
 import Share from "@/components/Share";
 import { getAuthSession } from "@/utils/getAuthSession";
 import Link from "next/link";
+import { AiFillStar } from "react-icons/ai";
 
 export type Place = {
  name: string;
@@ -21,6 +22,7 @@ export type Place = {
  beds: number;
  baths: number;
  guests: number;
+ rating: number;
  description: string;
  id: string;
  perks?: { name: string; id: string; placeId: string }[];
@@ -59,15 +61,24 @@ const LargeScreenContent = async ({ place }: { place: Place }) => {
     <div className="flex flex-col justify-center px-8 pb-8 relative">
      <h2 className="text-2xl font-semibold capitalize">{place.name}</h2>
      <div className="mt-2 text-sm flex justify-between items-center">
-      <a
-       href={`https://www.google.com/maps/place/${encodeURIComponent(
-        place.address
-       )}`}
-       target="_blank"
-       className="underline font-medium"
-      >
-       {place.address}
-      </a>
+      <div className="flex items-center">
+       <div className="flex items-center gap-1">
+        <AiFillStar size={16} />
+        <span className="font-medium">
+         {place.rating > 0 ? place.rating : "0.00"}
+        </span>
+       </div>
+       <div className="w-[2px] h-[2px] rounded-full bg-black mx-1" />
+       <a
+        href={`https://www.google.com/maps/place/${encodeURIComponent(
+         place.address
+        )}`}
+        target="_blank"
+        className="underline font-medium"
+       >
+        {place.address}
+       </a>
+      </div>
       <div className="flex gap-4">
        <Share />
        <Favorite placeId={place.id} placePage />
@@ -88,10 +99,10 @@ const LargeScreenContent = async ({ place }: { place: Place }) => {
        </div>
       )}
       {place.photos && place.photos.length >= 5 && (
-       <LargeImageContent photos={place.photos} />
+       <LargeImageContent photos={place.photos} placeId={place.id} />
       )}
      </div>
-     <div className="relative flex">
+     <div className="relative">
       <div className="mt-10">
        <div className="max-w-sm lg:max-w-xl">
         <div className="text-xl flex justify-between">
@@ -245,9 +256,7 @@ const LargeScreenContent = async ({ place }: { place: Place }) => {
       <ReserveWidget
        price={place.price}
        placeId={place.id}
-       placeName={place.name}
-       placeImg={place.photos[0].url}
-       placeType={place.type}
+       rating={place.rating}
       />
      </div>
     </div>

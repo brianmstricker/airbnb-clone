@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import Border from "./Border";
 import { format } from "date-fns";
 import Link from "next/link";
+import { AiFillStar } from "react-icons/ai";
 
 type ReserveWidgetForm = {
  checkIn: string;
@@ -14,15 +15,11 @@ type ReserveWidgetForm = {
 const ReserveWidget = ({
  price,
  placeId,
- placeName,
- placeImg,
- placeType,
+ rating,
 }: {
  price: string;
  placeId: string;
- placeName: string;
- placeImg: string;
- placeType: string;
+ rating: number;
 }) => {
  const inDate = new Date();
  const outDate = new Date();
@@ -57,7 +54,10 @@ const ReserveWidget = ({
      <p>
       <span className="font-bold text-2xl">${price}</span>&nbsp;night
      </p>
-     <p>reviews</p>
+     <span className="flex items-center gap-1 text-sm">
+      <AiFillStar />
+      {rating > 0 ? rating : "0.00"}
+     </span>
     </div>
     <div className="mt-4 border border-gray-400 rounded-lg text-xs lg:text-sm mx-1 text-gray-700 overflow-hidden">
      <div className="flex">
@@ -88,7 +88,7 @@ const ReserveWidget = ({
     </div>
     <div className="flex justify-between items-center mt-4 mx-1">
      <Link
-      href={`/place/reserve/${placeId}?placeId=${placeId}&checkIn=${checkInValue}&checkOut=${checkOutValue}&placeName=${placeName}&placeImg=${placeImg}&placeType=${placeType}&placePrice=${price}&nights=${amountNights}&guests=${reserve.getValues(
+      href={`/place/reserve/${placeId}?placeId=${placeId}&checkIn=${checkInValue}&checkOut=${checkOutValue}&guests=${reserve.getValues(
        "guests"
       )}`}
       className="bg-gradient-to-r from-rose-600 via-rose-500 to-primary text-white w-full rounded-lg py-3 font-medium text-center"

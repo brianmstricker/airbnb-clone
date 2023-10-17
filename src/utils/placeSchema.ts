@@ -53,18 +53,19 @@ export const placeSchema = z.object({
   .string()
   .nonempty({ message: "Check in time is required." })
   .regex(
-   /^\d+\s*(am|pm)$/i,
+   /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[APap][Mm]$/,
    "Check in time must be a number followed by am or pm."
   ),
  checkOutTime: z
   .string()
   .nonempty({ message: "Check out time is required." })
   .regex(
-   /^\d+\s*(am|pm)$/i,
+   /^(1[0-2]|0?[1-9])(:[0-5][0-9])?\s?[APap][Mm]$/,
    "Check in time must be a number followed by am or pm."
   ),
  price: z
   .string()
   .nonempty({ message: "Price is required." })
   .regex(/^\d+$/, "Price must be a number."),
+ rating: z.number().int().min(1).max(5).default(0).optional(),
 });

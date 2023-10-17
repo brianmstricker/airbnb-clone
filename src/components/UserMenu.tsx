@@ -62,18 +62,24 @@ const UserMenu = ({
          </>
         ) : (
          <>
-          <span className="font-medium w-fit cursor-pointer">Trips</span>
+          <Link
+           href={"/trips"}
+           onClick={closeUserModal}
+           className="w-fit cursor-pointer font-medium"
+          >
+           Trips
+          </Link>
           <Link
            href={"/account"}
            onClick={closeUserModal}
-           className="w-fit cursor-pointer"
+           className="w-fit cursor-pointer font-medium"
           >
            Account
           </Link>
           <Link
            href={"/account/wishlist"}
            onClick={closeUserModal}
-           className="w-fit cursor-pointer"
+           className="w-fit cursor-pointer font-medium"
           >
            Wishlist
           </Link>

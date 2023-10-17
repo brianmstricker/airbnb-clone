@@ -38,6 +38,7 @@ const Header = () => {
  const pathname = usePathname();
  if (!pathname) return null;
  const placePage = pathname.includes("/place/");
+ const tripsPage = pathname.includes("/trips");
  return (
   <>
    <nav
@@ -49,7 +50,8 @@ const Header = () => {
     <div
      className={
       "contain mx-auto flex justify-between items-center relative" +
-      (placePage ? " !max-w-6xl xxs:flex px-8" : "")
+      (placePage ? " !max-w-6xl xxs:flex px-8" : "") +
+      (tripsPage ? " !max-w-[1500px]" : "")
      }
     >
      <Link
@@ -62,11 +64,13 @@ const Header = () => {
       <Logo />
       <span className="text-2xl font-bold hidden lg:block">airbnb</span>
      </Link>
-     <LargeSearchBar
-      placePage={placePage}
-      showSearchMenu={showSearchMenu}
-      setShowSearchMenu={setShowSearchMenu}
-     />
+     {!tripsPage && (
+      <LargeSearchBar
+       placePage={placePage}
+       showSearchMenu={showSearchMenu}
+       setShowSearchMenu={setShowSearchMenu}
+      />
+     )}
      <div className={"flex gap-6 items-center"}>
       <Link href="/account/places/create" className="font-medium w-fit">
        Airbnb your home

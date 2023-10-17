@@ -1,5 +1,4 @@
 "use client";
-import Perks from "./Perks";
 import { placeSchema } from "@/utils/placeSchema";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -13,6 +12,7 @@ import Image from "next/image";
 import { v4 } from "uuid";
 import { PlaceEnum } from "@/utils/placeSchema";
 import { CircleLoader } from "react-spinners";
+import CreatePerks from "./CreatePerks";
 
 const Page = () => {
  const [selectedImages, setSelectedImages] = useState<File[]>([]);
@@ -44,8 +44,15 @@ const Page = () => {
  } = place;
  const { mutate: CreatePlace, isLoading } = useMutation({
   mutationFn: async (data: Form) => {
-   const res = await axios.post("/api/places/user", data);
-   return res.data;
+   try {
+    setLoading(true);
+    const res = await axios.post("/api/places/user", data);
+    setLoading(false);
+    return res.data;
+   } catch (error) {
+    console.log(error);
+    setLoading(false);
+   }
   },
  });
  useEffect(() => {
@@ -68,7 +75,9 @@ const Page = () => {
     onSuccess: () => {
      place.reset();
      router.push("/account/places");
-     setLoading(false);
+     setTimeout(() => {
+      setLoading(false);
+     }, 10000);
     },
    });
   } catch (error) {
@@ -298,7 +307,7 @@ const Page = () => {
     )}
     <h3 className="-mb-1">Perks</h3>
     <div className="border border-gray-300 px-4 py-2 rounded-md">
-     <Perks registerProp={register} />
+     <CreatePerks registerProp={register} />
     </div>
     <h4>Things To Know</h4>
     <div className="border border-gray-300 px-4 py-2 rounded-md">
@@ -359,6 +368,9 @@ const Page = () => {
      }
      type="submit"
      disabled={buttonDisabled() as boolean}
+     // onClick={() => {
+     //  console.log(errors);
+     // }}
     >
      Add place
     </button>

@@ -1,4 +1,6 @@
 "use client";
+import Favorite from "@/components/Favorite";
+import Share from "@/components/Share";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
@@ -7,8 +9,10 @@ import { BiChevronLeft, BiSolidGrid } from "react-icons/bi";
 
 const ShowPhotosButton = ({
  photos,
+ placeId,
 }: {
  photos: { id: string; url: string; placeId: string }[];
+ placeId: string;
 }) => {
  const pathname = usePathname();
  const router = useRouter();
@@ -60,8 +64,8 @@ const ShowPhotosButton = ({
        />
       </div>
       <div className="flex gap-3 pr-5">
-       <span>share</span>
-       <span>save</span>
+       <Share />
+       <Favorite placeId={placeId} placePage />
       </div>
      </div>
      <div className="overflow-y-scroll w-full pb-20">

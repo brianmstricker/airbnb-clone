@@ -1,12 +1,12 @@
 "use client";
-import "react-date-range/dist/styles.css";
-import "react-date-range/dist/theme/default.css";
+import { format, intervalToDuration } from "date-fns";
+import Link from "next/link";
 import { useState } from "react";
 import { DateRangePicker } from "react-date-range";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import { useForm } from "react-hook-form";
-import { format, intervalToDuration } from "date-fns";
 import { AiFillStar } from "react-icons/ai";
-import Link from "next/link";
 
 type ReserveWidgetForm = {
  checkIn: string;
@@ -17,15 +17,9 @@ type ReserveWidgetForm = {
 const MobileReserveWidget = ({
  price,
  placeId,
- placeName,
- placeImg,
- placeType,
 }: {
  price: string;
  placeId: string;
- placeName: string;
- placeImg: string;
- placeType: string;
 }) => {
  const [showCalendar, setShowCalendar] = useState(false);
  const inDate = new Date();
@@ -103,9 +97,9 @@ const MobileReserveWidget = ({
       </div>
      </div>
      <Link
-      href={`/place/reserve/${placeId}?placeId=${placeId}&checkIn=${checkInValue}&checkOut=${checkOutValue}&placeName=${placeName}&placeImg=${placeImg}&placeType=${placeType}&placePrice=${price}&nights=${
-       amountNights?.days
-      }&guests=${reserve.getValues("guests")}`}
+      href={`/place/reserve/${placeId}?placeId=${placeId}&checkIn=${checkInValue}&checkOut=${checkOutValue}&guests=${reserve.getValues(
+       "guests"
+      )}`}
       className="bg-gradient-to-r from-primary via-rose-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5"
      >
       Reserve

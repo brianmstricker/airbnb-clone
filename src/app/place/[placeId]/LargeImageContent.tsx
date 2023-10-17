@@ -3,8 +3,10 @@ import ShowPhotosButton from "./ShowPhotosButton";
 
 const LargeImageContent = ({
  photos,
+ placeId,
 }: {
  photos: { url: string; id: string; placeId: string }[];
+ placeId: string;
 }) => {
  if (!photos)
   return (
@@ -21,7 +23,7 @@ const LargeImageContent = ({
      </div>
      <div className="flex w-full relative">
       <div className="object-cover rounded-br-xl" />
-      <ShowPhotosButton photos={photos} />
+      <ShowPhotosButton photos={photos} placeId={placeId} />
      </div>
     </div>
    </div>
@@ -72,7 +74,7 @@ const LargeImageContent = ({
       placeholder="blur"
       blurDataURL="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mPMzc6uBwAEVAHE8s4tygAAAABJRU5ErkJggg=="
      />
-     <ShowPhotosButton photos={photos} />
+     <ShowPhotosButton photos={photos} placeId={placeId} />
     </div>
    </div>
   </div>
