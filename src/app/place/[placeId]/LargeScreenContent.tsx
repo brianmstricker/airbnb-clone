@@ -232,7 +232,14 @@ const LargeScreenContent = async ({
        <div>
         <div>
          <h3 className="font-bold text-2xl">Where you&apos;ll be</h3>
-         google maps here
+         <div className="mt-2">
+          <iframe
+           className="border-none w-full h-[50vh] lg:h-[65vh]"
+           src={`https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${encodeURIComponent(
+            place.address
+           )}+()&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+          ></iframe>
+         </div>
         </div>
         <Border />
         <div>
@@ -263,8 +270,8 @@ const LargeScreenContent = async ({
             Free cancellation before 4:00 PM on Sep 11.
            </span>
            <span className="block mt-4 max-w-[400px]">
-            Review the Host’s full cancellation policy which applies even if you
-            cancel for illness or disruptions caused by COVID-19.
+            Review the Host&apos;s full cancellation policy which applies even
+            if you cancel for illness or disruptions caused by COVID-19.
            </span>
           </div>
          </div>

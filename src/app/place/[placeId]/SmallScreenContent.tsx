@@ -166,7 +166,14 @@ const SmallScreenContent = ({
        <div>
         <div>
          <h3 className="font-bold text-2xl">Where you&apos;ll be</h3>
-         google maps here
+         <div className="mt-2">
+          <iframe
+           className="border-none w-full h-[50vh]"
+           src={`https://maps.google.com/maps?width=100%25&height=600&hl=en&q=${encodeURIComponent(
+            place.address
+           )}+()&t=&z=11&ie=UTF8&iwloc=B&output=embed`}
+          ></iframe>
+         </div>
         </div>
         <Border />
         <div>
