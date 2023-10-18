@@ -4,6 +4,7 @@
 -trending filter
 -icons when displaying perks
 -add filter functionality on search page
--reserve functionality
--ratings and add maps
+-ratings and maps
 -maybe add reviews
+-don't allow multiple people to reserve on same date
+-small screen reserve

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BsDoorClosed } from "react-icons/bs";
+import { BsCheckCircle, BsDoorClosed } from "react-icons/bs";
 import { PiMedalMilitary } from "react-icons/pi";
 import { LuCalendarX } from "react-icons/lu";
 import Border from "./Border";
@@ -34,7 +34,25 @@ export type Place = {
  omg: boolean;
 };
 
-const LargeScreenContent = async ({ place }: { place: Place }) => {
+export type Reserve = {
+ id: string;
+ placeId: string;
+ checkInDate: string;
+ checkOutDate: string;
+ guests: number;
+ userEmail: string;
+ price: string;
+ message?: string;
+ reserveStatus: string;
+};
+
+const LargeScreenContent = async ({
+ place,
+ reserve,
+}: {
+ place: Place;
+ reserve?: Reserve;
+}) => {
  const session = await getAuthSession();
  const user = session?.user;
  if (!place.checkInTime.includes(" ")) {
@@ -253,11 +271,42 @@ const LargeScreenContent = async ({ place }: { place: Place }) => {
         </div>
        </div>
       </div>
-      <ReserveWidget
-       price={place.price}
-       placeId={place.id}
-       rating={place.rating}
-      />
+      {reserve === undefined && (
+       <ReserveWidget
+        price={place.price}
+        placeId={place.id}
+        rating={place.rating}
+       />
+      )}
+      {reserve?.reserveStatus !== "reserved" && (
+       <ReserveWidget
+        price={place.price}
+        placeId={place.id}
+        rating={place.rating}
+       />
+      )}
+      {reserve && reserve.reserveStatus === "reserved" && (
+       <div className="border border-gray-300 rounded-lg mt-10 absolute top-0 right-0 w-[45%] lg:w-[35%]">
+        <div className="p-2 flex flex-col items-center">
+         <BsCheckCircle size={32} className="fill-green-600" />
+         <h2 className="font-bold">You currently have a reservation!</h2>
+         <div>
+          Booked from{" "}
+          {new Date(reserve.checkInDate)
+           .toUTCString()
+           .split(" ")
+           .slice(0, 3)
+           .join(" ")}{" "}
+          to{" "}
+          {new Date(reserve.checkOutDate)
+           .toUTCString()
+           .split(" ")
+           .slice(0, 3)
+           .join(" ")}
+         </div>
+        </div>
+       </div>
+      )}
      </div>
     </div>
    )}

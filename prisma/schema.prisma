@@ -120,15 +120,16 @@ model Favorite {
 }
 
 model Reserve {
-  id           String @id @default(cuid())
-  placeId      String
-  place        Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
-  userEmail    String
-  user         User   @relation(fields: [userEmail], references: [id], onDelete: Cascade)
-  guests       Int    @default(1)
-  checkInDate  String
-  checkOutDate String
-  price        String
+  id            String @id @default(cuid())
+  placeId       String
+  place         Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  userEmail     String
+  user          User   @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+  guests        Int    @default(1)
+  checkInDate   String
+  checkOutDate  String
+  price         String
+  reserveStatus String @default("reserved")
 
   @@unique([userEmail, placeId])
   @@index([placeId])

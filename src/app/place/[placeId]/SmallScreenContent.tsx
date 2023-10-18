@@ -1,7 +1,7 @@
-import { Place } from "./LargeScreenContent";
+import { Place, Reserve } from "./LargeScreenContent";
 import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
 import Image from "next/image";
-import { BsDoorClosed } from "react-icons/bs";
+import { BsCheckCircle, BsDoorClosed } from "react-icons/bs";
 import { PiMedalMilitary } from "react-icons/pi";
 import { LuCalendarX } from "react-icons/lu";
 import Border from "./Border";
@@ -12,7 +12,13 @@ import MobileReserveWidget from "./MobileReserveWidget";
 import Favorite from "@/components/Favorite";
 import Share from "@/components/Share";
 
-const SmallScreenContent = ({ place }: { place: Place }) => {
+const SmallScreenContent = ({
+ place,
+ reserve,
+}: {
+ place: Place;
+ reserve?: Reserve;
+}) => {
  if (!place.checkInTime.includes(" ")) {
   const lastIndex = place.checkInTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
   if (lastIndex !== -1) {
@@ -205,11 +211,42 @@ const SmallScreenContent = ({ place }: { place: Place }) => {
        </div>
       </div>
      </div>
-     <MobileReserveWidget
-      price={place.price}
-      placeId={place.id}
-      // placeRating={place.rating}
-     />
+     {reserve === undefined && (
+      <MobileReserveWidget
+       price={place.price}
+       placeId={place.id}
+       // placeRating={place.rating}
+      />
+     )}
+     {reserve?.reserveStatus !== "reserved" && (
+      <MobileReserveWidget
+       price={place.price}
+       placeId={place.id}
+       // placeRating={place.rating}
+      />
+     )}
+     {reserve && reserve.reserveStatus === "reserved" && (
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-50 px-6 py-4">
+       <div className="flex items-center gap-3 justify-center">
+        <h2 className="text-lg font-semibold">Currently Reserved</h2>{" "}
+        <BsCheckCircle size={24} className="fill-green-600" />
+       </div>
+       <div className="text-center">
+        From{" "}
+        {new Date(reserve.checkInDate)
+         .toUTCString()
+         .split(" ")
+         .slice(0, 3)
+         .join(" ")}{" "}
+        to{" "}
+        {new Date(reserve.checkOutDate)
+         .toUTCString()
+         .split(" ")
+         .slice(0, 3)
+         .join(" ")}
+       </div>
+      </div>
+     )}
     </div>
    )}
   </div>

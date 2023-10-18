@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/utils/getAuthSession";
 import LargeScreenContent from "./LargeScreenContent";
 import SmallScreenContent from "./SmallScreenContent";
 
@@ -14,11 +15,25 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
    </div>
   );
  }
- return (
-  <div>
-   <LargeScreenContent place={place} />
-   <SmallScreenContent place={place} />
-  </div>
- );
+ const session = await getAuthSession();
+ if (!session?.user)
+  return (
+   <div>
+    <LargeScreenContent place={place} />
+    <SmallScreenContent place={place} />
+   </div>
+  );
+ if (session?.user) {
+  const reserveFetch = await fetch(
+   `http://localhost:3000/api/place/reserve/${place.id}?email=${session.user.email}`
+  );
+  const reserve = await reserveFetch.json();
+  return (
+   <div>
+    <LargeScreenContent place={place} reserve={reserve} />
+    <SmallScreenContent place={place} reserve={reserve} />
+   </div>
+  );
+ }
 };
 export default PlacePage;
