@@ -1,4 +1,5 @@
 "use client";
+import ContentFooter from "@/components/Footer/ContentFooter";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
@@ -111,6 +112,7 @@ const TripPage = () => {
     </div>
    )}
    {reserves.length === 0 && <Border className="mt-11" />}
+   <ContentFooter />
   </div>
  );
 };

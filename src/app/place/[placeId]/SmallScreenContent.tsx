@@ -1,5 +1,5 @@
 import { Place, Reserve } from "./LargeScreenContent";
-import { AiFillStar, AiOutlineHeart } from "react-icons/ai";
+import { AiFillStar } from "react-icons/ai";
 import Image from "next/image";
 import { BsCheckCircle, BsDoorClosed } from "react-icons/bs";
 import { PiMedalMilitary } from "react-icons/pi";
@@ -11,6 +11,7 @@ import ImageCarousel from "./ImageCarousel";
 import MobileReserveWidget from "./MobileReserveWidget";
 import Favorite from "@/components/Favorite";
 import Share from "@/components/Share";
+import ContentFooter from "@/components/Footer/ContentFooter";
 
 const SmallScreenContent = ({
  place,
@@ -213,6 +214,8 @@ const SmallScreenContent = ({
             Nearby lake, river, other body of water
            </span>
           </div>
+          <Border small />
+          <ContentFooter />
          </div>
         </div>
        </div>
@@ -233,7 +236,7 @@ const SmallScreenContent = ({
       />
      )}
      {reserve && reserve.reserveStatus === "reserved" && (
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-50 px-6 py-4">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-[101] px-6 py-4">
        <div className="flex items-center gap-3 justify-center">
         <h2 className="text-lg font-semibold">Currently Reserved</h2>{" "}
         <BsCheckCircle size={24} className="fill-green-600" />

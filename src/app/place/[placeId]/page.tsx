@@ -29,10 +29,10 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   );
   const reserve = await reserveFetch.json();
   return (
-   <div>
+   <>
     <LargeScreenContent place={place} reserve={reserve} />
     <SmallScreenContent place={place} reserve={reserve} />
-   </div>
+   </>
   );
  }
 };

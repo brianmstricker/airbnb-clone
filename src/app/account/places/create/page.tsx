@@ -77,7 +77,7 @@ const Page = () => {
      router.push("/account/places");
      setTimeout(() => {
       setLoading(false);
-     }, 10000);
+     }, 50000);
     },
    });
   } catch (error) {
@@ -117,6 +117,7 @@ const Page = () => {
     <div className="fixed w-screen h-screen bg-white z-[101] inset-0">
      <div className="flex w-full h-full justify-center items-center">
       <CircleLoader size={80} color="#ff385c" />
+      <span className="text-xl mt-4">Creating place!</span>
      </div>
     </div>
    )}
@@ -161,11 +162,13 @@ const Page = () => {
        {...register("type")}
       >
        <option disabled>Select a type</option>
-       {Object.entries(PlaceEnum).map(([key, value]) => (
-        <option key={key} value={value}>
-         {value}
-        </option>
-       ))}
+       {Object.entries(PlaceEnum)
+        .sort((a, b) => a[1].localeCompare(b[1]))
+        .map(([key, value]) => (
+         <option key={key} value={value}>
+          {value}
+         </option>
+        ))}
       </select>
       {errors.type && (
        <span className="text-red-500 absolute -bottom-14 xxs:-bottom-10 lg:-bottom-8">

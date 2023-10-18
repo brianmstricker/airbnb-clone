@@ -4,6 +4,7 @@ import { AiFillStar } from "react-icons/ai";
 import PlaceFilter from "@/components/placefilter/PlaceFilter";
 import HomeImageComponent from "@/components/HomeImageComponent";
 import HomePriceComponent from "@/components/HomePriceComponent";
+import HomeFooter from "@/components/Footer/HomeFooter";
 
 type Place = {
  id: string;
@@ -63,6 +64,7 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
      ))}
     </div>
    </div>
+   <HomeFooter />
   </main>
  );
 }

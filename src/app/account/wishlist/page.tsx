@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Card from "./Card";
 import axios from "axios";
 import { CircleLoader } from "react-spinners";
+import ContentFooter from "@/components/Footer/ContentFooter";
 
 interface FavoriteInterface {
  id: string;
@@ -38,20 +39,23 @@ const Wishlist = () => {
   );
  if (!loading)
   return (
-   <div className="mt-6 pb-24">
-    {favorites.length > 0 && !loading && (
-     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
-      {favorites.map((favorite: FavoriteInterface) => (
-       <Card favorite={favorite} key={favorite.id} />
-      ))}
-     </div>
-    )}
-    {!loading && favorites && favorites.length === 0 && (
-     <div className="text-center mt-36 text-4xl text-gray-600">
-      No favorites yet :(
-     </div>
-    )}
-   </div>
+   <>
+    <div className="mt-6 pb-24 min-h-screen">
+     {favorites.length > 0 && !loading && (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
+       {favorites.map((favorite: FavoriteInterface) => (
+        <Card favorite={favorite} key={favorite.id} />
+       ))}
+      </div>
+     )}
+     {!loading && favorites && favorites.length === 0 && (
+      <div className="text-center mt-36 text-4xl text-gray-600">
+       No favorites yet :(
+      </div>
+     )}
+    </div>
+    <ContentFooter />
+   </>
   );
 };
 export default Wishlist;

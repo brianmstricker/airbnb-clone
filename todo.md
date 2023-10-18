@@ -6,4 +6,6 @@
 -add filter functionality on search page
 -maybe add reviews
 -don't allow multiple people to reserve on same date
+-loading state when searching
+-fix "airbnb your home" when not signed in
 -ratings
