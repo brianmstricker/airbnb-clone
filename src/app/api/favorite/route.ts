@@ -81,6 +81,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
        id: true,
        address: true,
        photos: true,
+       rating: true,
       },
      },
     },

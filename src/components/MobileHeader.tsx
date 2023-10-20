@@ -15,7 +15,7 @@ const items = [
   href: "/account/wishlist",
   icon: <AiOutlineHeart size={26} />,
  },
- { text: "Trips", href: "/account/trips", icon: <FaAirbnb size={26} /> },
+ { text: "Trips", href: "/trips", icon: <FaAirbnb size={26} /> },
  { text: "Inbox", href: "/inbox", icon: <BiMessage size={26} /> },
  { text: "Profile", href: "/account", icon: <PiUserCircle size={28} /> },
 ];

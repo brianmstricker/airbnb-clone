@@ -53,7 +53,7 @@ const TripPage = () => {
    <h1 className="text-3xl font-semibold">Trips</h1>
    <Border />
    {reserves.length === 0 ? (
-    <div>
+    <div className="min-h-screen">
      <h2 className="text-2xl font-medium">No trips booked...yet!</h2>
      <p className="mt-1 font-light">
       Time to dust off your bags and start planning your next adventure
@@ -64,6 +64,7 @@ const TripPage = () => {
      >
       Start searching
      </Link>
+     <Border className="mt-11" />
     </div>
    ) : (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 pb-20">
@@ -111,7 +112,6 @@ const TripPage = () => {
      ))}
     </div>
    )}
-   {reserves.length === 0 && <Border className="mt-11" />}
    <ContentFooter />
   </div>
  );

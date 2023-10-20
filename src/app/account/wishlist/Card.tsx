@@ -9,6 +9,8 @@ type FavoriteType = {
   id: string;
   address: string;
   photos: { url: string }[];
+  name: string;
+  rating: number;
  };
 };
 
@@ -31,14 +33,14 @@ const Card = ({ favorite }: { favorite: FavoriteType }) => {
      </div>
     </div>
     <div>
-     <div className="flex justify-between">
+     <div className="flex justify-between px-1">
       <p className="capitalize font-semibold">
        Home in{" "}
        {favorite.place.address.includes(",")
         ? favorite.place.address.split(",")[1]
         : favorite.place.address}
       </p>
-      <p className="font-light">4.82</p>
+      <p className="font-light">{favorite.place.rating.toFixed(2)}</p>
      </div>
     </div>
    </Link>
