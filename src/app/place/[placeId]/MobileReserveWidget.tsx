@@ -17,9 +17,18 @@ type ReserveWidgetForm = {
 const MobileReserveWidget = ({
  price,
  placeId,
+ rating,
 }: {
  price: string;
  placeId: string;
+ rating:
+  | {
+     userEmail: string;
+     placeId: string;
+     rating: number;
+     id: string;
+    }[]
+  | [];
 }) => {
  const [showCalendar, setShowCalendar] = useState(false);
  const inDate = new Date();
@@ -50,7 +59,7 @@ const MobileReserveWidget = ({
   endDate: new Date(checkOutValue),
   key: "selection",
  };
- const handleSelect = (ranges) => {
+ const handleSelect = (ranges: any) => {
   reserve.setValue(
    "checkIn",
    ranges.selection.startDate.toLocaleDateString("en-US")
@@ -64,6 +73,7 @@ const MobileReserveWidget = ({
   start: new Date(checkInValue),
   end: new Date(checkOutValue),
  });
+ console.log(rating);
  return (
   <>
    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-50 px-6 py-4">
@@ -156,7 +166,12 @@ const MobileReserveWidget = ({
        </div>
        <div className="flex items-center text-xs font-medium gap-1">
         <AiFillStar />
-        4.92
+        {rating.length === 0
+         ? "0.00"
+         : (
+            rating.map((r) => r.rating).reduce((t, c) => t + c, 0) /
+            rating.length
+           ).toFixed(2)}
        </div>
       </div>
       <button

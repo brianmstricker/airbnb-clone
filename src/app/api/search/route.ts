@@ -20,7 +20,10 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
     },
    },
    include: {
-    photos: true,
+    photos: {
+     select: { id: true, url: true, placeId: true, index: true },
+     orderBy: { index: "asc" },
+    },
     perks: true,
    },
    orderBy: {

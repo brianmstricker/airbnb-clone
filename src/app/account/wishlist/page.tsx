@@ -13,7 +13,14 @@ interface FavoriteInterface {
   address: string;
   photos: { url: string }[];
   name: string;
-  rating: number;
+  rating:
+   | {
+      userEmail: string;
+      placeId: string;
+      rating: number;
+      id: string;
+     }[]
+   | [];
  };
 }
 

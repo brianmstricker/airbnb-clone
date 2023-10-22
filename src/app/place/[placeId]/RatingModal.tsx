@@ -1,58 +1,63 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AiFillStar, AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import { ClipLoader } from "react-spinners";
 
-const RatingModal = ({
- // rating,
- name,
- placeId,
-}: {
- // rating:
- //  | {
- //     userEmail: string;
- //     placeId: string;
- //     rating: number;
- //     id: string;
- //    }[]
- //  | [];
- name: string;
- placeId: string;
-}) => {
+const RatingModal = ({ name, placeId }: { name: string; placeId: string }) => {
  const [rating, setRating] = useState<null | string | number>(null);
  const [userRating, setUserRating] = useState<null | string | number>(null);
  const session = useSession();
- useEffect(() => {
-  getRating();
-  getUserRating();
- }, []);
- const [loading, setLoading] = useState(false);
+ const [loading, setLoading] = useState(true);
  const [ratingModal, setRatingModal] = useState(false);
  const [currentRating, setCurrentRating] = useState<null | number>(null);
  const [hoverRating, setHoverRating] = useState<null | number>(null);
- async function getRating() {
-  const placeRatingInfo = await axios.get(`/api/place/${placeId}/rate`);
-  if (placeRatingInfo) {
-   const data = placeRatingInfo.data;
-   const ratingMap = data.map((r: any) => r.rating);
-   const avgRating =
-    ratingMap.reduce((t: any, c: any) => t + c, 0) / ratingMap.length;
-   setRating(avgRating.toFixed(2));
+ const getRating = useCallback(async () => {
+  try {
+   const placeRatingInfo = await axios.get(`/api/place/${placeId}/rate`);
+   if (placeRatingInfo) {
+    const data = placeRatingInfo.data;
+    const ratingMap = data.map((r: any) => r.rating);
+    const avgRating =
+     ratingMap.reduce((t: any, c: any) => t + c, 0) / ratingMap.length;
+    setRating(avgRating.toFixed(2));
+    setLoading(false);
+   }
+   if (!placeRatingInfo.data.length) {
+    setLoading(false);
+    setRating("0.00");
+   }
+  } catch (error) {
+   console.log(error);
+   setLoading(false);
   }
-  if (!placeRatingInfo.data.length) {
-   setRating("0.00");
+ }, [placeId]);
+ const getUserRating = useCallback(async () => {
+  try {
+   if (!session?.data?.user) return;
+   const userRatingInfo = await axios.get(`/api/place/${placeId}/user/rate`);
+   if (userRatingInfo.data) {
+    setUserRating(userRatingInfo.data.rating);
+    setLoading(false);
+   }
+   if (!userRatingInfo.data) {
+    setUserRating(null);
+    setLoading(false);
+   }
+  } catch (error) {
+   console.log(error);
+   setLoading(false);
   }
- }
- async function getUserRating() {
-  const userRatingInfo = await axios.get(`/api/place/${placeId}/user/rate`);
-  if (userRatingInfo.data) {
-   setUserRating(userRatingInfo.data.rating);
+ }, [placeId, session?.data?.user]);
+ useEffect(() => {
+  async function getRatings() {
+   await Promise.all([getRating(), getUserRating()]);
   }
- }
+  getRatings();
+ }, [getRating, getUserRating]);
  function addRating(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
   e.preventDefault();
-  setLoading(true);
   axios
    .post(`/api/place/${placeId}/user/rate`, {
     rating: currentRating,
@@ -92,7 +97,14 @@ const RatingModal = ({
     className="flex items-center gap-1 cursor-pointer"
    >
     <AiFillStar size={16} />
-    <div>{rating && <span className="font-medium">{rating}</span>}</div>
+    <div className="flex items-center gap-1">
+     {rating && !loading && <span className="font-medium">{rating}</span>}
+     {loading && (
+      <span className="font-medium">
+       <ClipLoader color="#ff385c" size={12} />
+      </span>
+     )}
+    </div>
    </div>
    {ratingModal && (
     <div
@@ -104,7 +116,7 @@ const RatingModal = ({
     >
      <div
       onClick={(e) => e.stopPropagation()}
-      className="bg-white z-[101] px-20 pb-6 pt-4 rounded-md text-center relative"
+      className="bg-white z-[101] px-6 sm:px-20 pb-6 pt-4 rounded-md text-center relative mx-6 sm:mx-0"
      >
       <div
        onClick={() => {

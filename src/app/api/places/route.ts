@@ -7,7 +7,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const typeFilter = req.nextUrl.searchParams.get("search_type");
   if (typeFilter === "all places" || typeFilter === "undefined") {
    const places = await prisma.place.findMany({
-    include: { photos: true, rating: true },
+    include: {
+     photos: {
+      select: { id: true, url: true, placeId: true, index: true },
+      orderBy: { index: "asc" },
+     },
+     rating: true,
+    },
    });
    return NextResponse.json(places);
   }
@@ -21,7 +27,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
        contains: newFilter as string,
       },
      },
-     include: { photos: true, rating: true },
+     include: {
+      photos: {
+       select: { id: true, url: true, placeId: true, index: true },
+       orderBy: { index: "asc" },
+      },
+      rating: true,
+     },
     });
     return NextResponse.json(places);
    }
@@ -31,7 +43,13 @@ export async function GET(req: NextRequest, res: NextResponse) {
       contains: typeFilter as string,
      },
     },
-    include: { photos: true, rating: true },
+    include: {
+     photos: {
+      select: { id: true, url: true, placeId: true, index: true },
+      orderBy: { index: "asc" },
+     },
+     rating: true,
+    },
    });
    return NextResponse.json(places);
   }

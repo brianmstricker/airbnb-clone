@@ -24,7 +24,14 @@ const MobileReservePage = ({
  nights: number;
  id: string;
  guests: number;
- rating: number;
+ rating:
+  | {
+     userEmail: string;
+     placeId: string;
+     rating: number;
+     id: string;
+    }[]
+  | [];
 }) => {
  const priceTimesNights = parseInt(price) * nights;
  const serviceFee = priceTimesNights * 0.08;
@@ -58,7 +65,14 @@ const MobileReservePage = ({
      </div>
      <div className="flex items-center text-[.75rem] mt-1 gap-[2px]">
       <AiFillStar />
-      <span>{rating.toFixed(2)}</span>
+      <span>
+       {rating.length === 0
+        ? "0.00"
+        : (
+           rating.map((r) => r.rating).reduce((t, c) => t + c, 0) /
+           rating.length
+          ).toFixed(2)}
+      </span>
      </div>
     </div>
    </div>

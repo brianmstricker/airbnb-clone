@@ -89,11 +89,7 @@ const LargeScreenContent = async ({
       <h2 className="text-2xl font-semibold capitalize">{place.name}</h2>
       <div className="mt-2 text-sm flex justify-between items-center">
        <div className="flex items-center">
-        <RatingModal
-         //  rating={place.rating}
-         name={place.name}
-         placeId={place.id}
-        />
+        <RatingModal name={place.name} placeId={place.id} />
         <div className="w-[2px] h-[2px] rounded-full bg-black mx-1" />
         <a
          href={`https://www.google.com/maps/place/${encodeURIComponent(

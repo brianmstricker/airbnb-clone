@@ -12,6 +12,7 @@ import MobileReserveWidget from "./MobileReserveWidget";
 import Favorite from "@/components/Favorite";
 import Share from "@/components/Share";
 import ContentFooter from "@/components/Footer/ContentFooter";
+import RatingModal from "./RatingModal";
 
 const SmallScreenContent = ({
  place,
@@ -86,8 +87,9 @@ const SmallScreenContent = ({
        </ol>
        <div className="flex gap-4 items-center text-sm mt-1">
         <div className="flex items-center gap-1 relative">
-         <AiFillStar size={16} />
-         <span className="font-bold">4.90</span>
+         <span className="font-bold">
+          <RatingModal name={place.name} placeId={place.id} />
+         </span>
          <div className="absolute w-[2px] h-[2px] bg-black -right-[10px] rounded-full" />
         </div>
         <span className="underline font-medium tracking-tight">
@@ -225,14 +227,14 @@ const SmallScreenContent = ({
       <MobileReserveWidget
        price={place.price}
        placeId={place.id}
-       // placeRating={place.rating}
+       rating={place.rating}
       />
      )}
      {reserve?.reserveStatus !== "reserved" && (
       <MobileReserveWidget
        price={place.price}
        placeId={place.id}
-       // placeRating={place.rating}
+       rating={place.rating}
       />
      )}
      {reserve && reserve.reserveStatus === "reserved" && (

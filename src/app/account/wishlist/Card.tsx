@@ -1,6 +1,7 @@
 import Favorite from "@/components/Favorite";
 import Image from "next/image";
 import Link from "next/link";
+import { AiFillStar } from "react-icons/ai";
 
 type FavoriteType = {
  id: string;
@@ -10,7 +11,14 @@ type FavoriteType = {
   address: string;
   photos: { url: string }[];
   name: string;
-  rating: number;
+  rating:
+   | {
+      userEmail: string;
+      placeId: string;
+      rating: number;
+      id: string;
+     }[]
+   | [];
  };
 };
 
@@ -40,7 +48,20 @@ const Card = ({ favorite }: { favorite: FavoriteType }) => {
         ? favorite.place.address.split(",")[1]
         : favorite.place.address}
       </p>
-      <p className="font-light">{favorite.place.rating.toFixed(2)}</p>
+      <div className="flex items-center gap-1">
+       <AiFillStar />
+       {favorite.place.rating.length === 0 ? (
+        <div className="font-light">0.00</div>
+       ) : (
+        <div className="font-light">
+         {(
+          favorite.place.rating
+           .map((r) => r.rating)
+           .reduce((t, c) => t + c, 0) / favorite.place.rating.length
+         ).toFixed(2)}
+        </div>
+       )}
+      </div>
      </div>
     </div>
    </Link>
