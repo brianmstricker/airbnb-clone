@@ -9,8 +9,8 @@ import Favorite from "@/components/Favorite";
 import Share from "@/components/Share";
 import { getAuthSession } from "@/utils/getAuthSession";
 import Link from "next/link";
-import { AiFillStar } from "react-icons/ai";
 import ContentFooter from "@/components/Footer/ContentFooter";
+import RatingModal from "./RatingModal";
 
 export type Place = {
  name: string;
@@ -23,7 +23,14 @@ export type Place = {
  beds: number;
  baths: number;
  guests: number;
- rating: number;
+ rating:
+  | {
+     userEmail: string;
+     placeId: string;
+     rating: number;
+     id: string;
+    }[]
+  | [];
  description: string;
  id: string;
  perks?: { name: string; id: string; placeId: string }[];
@@ -82,12 +89,11 @@ const LargeScreenContent = async ({
       <h2 className="text-2xl font-semibold capitalize">{place.name}</h2>
       <div className="mt-2 text-sm flex justify-between items-center">
        <div className="flex items-center">
-        <div className="flex items-center gap-1">
-         <AiFillStar size={16} />
-         <span className="font-medium">
-          {place.rating > 0 ? place.rating : "0.00"}
-         </span>
-        </div>
+        <RatingModal
+         //  rating={place.rating}
+         name={place.name}
+         placeId={place.id}
+        />
         <div className="w-[2px] h-[2px] rounded-full bg-black mx-1" />
         <a
          href={`https://www.google.com/maps/place/${encodeURIComponent(

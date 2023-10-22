@@ -19,7 +19,14 @@ const ReserveWidget = ({
 }: {
  price: string;
  placeId: string;
- rating: number;
+ rating:
+  | {
+     userEmail: string;
+     placeId: string;
+     rating: number;
+     id: string;
+    }[]
+  | [];
 }) => {
  const inDate = new Date();
  const outDate = new Date();
@@ -47,6 +54,7 @@ const ReserveWidget = ({
  const amountNights =
   Number(checkOutValue.split("-").join("")) -
   Number(checkInValue.split("-").join(""));
+ // console.log(rating);
  return (
   <div className="border border-gray-300 rounded-lg mt-10 absolute top-0 right-0 w-[45%] lg:w-[35%]">
    <div className="rounded-lg shadow-lg py-6 px-4">
@@ -56,7 +64,7 @@ const ReserveWidget = ({
      </p>
      <span className="flex items-center gap-1 text-sm">
       <AiFillStar />
-      {rating > 0 ? rating : "0.00"}
+      {rating.length === 0 ? "0.00" : rating.map((r) => r.rating)}
      </span>
     </div>
     <div className="mt-4 border border-gray-400 rounded-lg text-xs lg:text-sm mx-1 text-gray-700 overflow-hidden">

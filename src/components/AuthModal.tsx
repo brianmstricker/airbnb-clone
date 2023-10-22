@@ -28,7 +28,7 @@ const AuthModal = ({ closeAuthModal }: AuthModalProps) => {
     </header>
     <div className="px-6 pt-8">
      <h4 className="text-2xl font-medium">Welcome to Airbnb</h4>
-     <div className="mt-5 w-full border border-gray-400 rounded-md relative group min-h-[56px]">
+     {/* <div className="mt-5 w-full border border-gray-400 rounded-md relative group min-h-[56px]">
       <label htmlFor="email" className="absolute inset-0 group">
        <input
         type="text"
@@ -60,9 +60,12 @@ const AuthModal = ({ closeAuthModal }: AuthModalProps) => {
       <div className="flex items-center justify-center w-full mx-auto h-[1.5px] bg-gray-300">
        <span className="text-xs bg-white z-10 px-4">or</span>
       </div>
-     </div>
+     </div> */}
      <div className="mt-8 text-center">
-      <button className="bg-white w-full rounded-md p-3 text-black border border-black text-sm font-medium flex items-center justify-center relative">
+      <button
+       className="bg-white w-full rounded-md p-3 text-black border border-black text-sm font-medium flex items-center justify-center relative"
+       onClick={() => signIn("google", { redirect: false })}
+      >
        <FcGoogle className="absolute left-3" size={22} />
        Continue with Google
       </button>

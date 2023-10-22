@@ -7,7 +7,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
   const typeFilter = req.nextUrl.searchParams.get("search_type");
   if (typeFilter === "all places" || typeFilter === "undefined") {
    const places = await prisma.place.findMany({
-    include: { photos: true },
+    include: { photos: true, rating: true },
    });
    return NextResponse.json(places);
   }
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
        contains: newFilter as string,
       },
      },
-     include: { photos: true },
+     include: { photos: true, rating: true },
     });
     return NextResponse.json(places);
    }
@@ -31,7 +31,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       contains: typeFilter as string,
      },
     },
-    include: { photos: true },
+    include: { photos: true, rating: true },
    });
    return NextResponse.json(places);
   }

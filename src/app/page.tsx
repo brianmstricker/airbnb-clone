@@ -19,8 +19,15 @@ type Place = {
  checkInTime: string;
  checkOutTime: string;
  price: string;
- rating: number;
  favorites: { placeId: string; userEmail: string }[];
+ rating:
+  | {
+     userEmail: string;
+     placeId: string;
+     rating: number;
+     id: string;
+    }[]
+  | [];
 };
 
 export default async function Home({ searchParams }: { searchParams?: any }) {
@@ -52,9 +59,16 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
           </div>
           <div className="flex items-center gap-1">
            <AiFillStar size={14} />
-           <span className="font-light">
-            {place.rating > 0 ? place.rating : "0.00"}
-           </span>
+           {place.rating.length === 0 ? (
+            <span className="font-medium">0.00</span>
+           ) : (
+            <div>
+             {(
+              place.rating.map((r) => r.rating).reduce((t, c) => t + c, 0) /
+              place.rating.length
+             ).toFixed(2)}
+            </div>
+           )}
           </div>
          </div>
          <HomePriceComponent price={place.price} />

@@ -19,6 +19,7 @@ export async function GET(
     user: {
      select: { name: true, image: true, email: true },
     },
+    rating: true,
    },
   });
   if (!place) {

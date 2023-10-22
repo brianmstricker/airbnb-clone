@@ -52,6 +52,7 @@ model User {
   places        Place[]
   favorites     Favorite[]
   reserves      Reserve[]
+  rating        Rating[]
 }
 
 model VerificationToken {
@@ -80,7 +81,7 @@ model Place {
   favorites    Favorite[]
   reserves     Reserve[]
   userId       String
-  rating       Float      @default(0)
+  rating       Rating[]
   trending     Boolean    @default(true)
   view         Boolean    @default(false)
   omg          Boolean    @default(false)
@@ -130,6 +131,18 @@ model Reserve {
   checkOutDate  String
   price         String
   reserveStatus String @default("reserved")
+
+  @@unique([userEmail, placeId])
+  @@index([placeId])
+}
+
+model Rating {
+  id        String @id @default(cuid())
+  placeId   String
+  place     Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+  userEmail String
+  user      User   @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+  rating    Float  @default(0)
 
   @@unique([userEmail, placeId])
   @@index([placeId])
