@@ -75,10 +75,7 @@ const LargeSearchBar = ({
       <span>Search</span>
       <div className="w-full h-[2px] bg-black rounded-full" />
      </div>
-     <form
-      onSubmit={() => {}}
-      className="flex items-center border border-gray-300 rounded-full absolute top-14 left-0 right-[5.5rem] w-fit mx-auto bg-gray-200/60"
-     >
+     <form className="flex items-center border border-gray-300 rounded-full absolute top-14 left-0 right-[5.5rem] w-fit mx-auto bg-gray-200/60">
       <label
        className="flex flex-col w-full h-full py-3 pl-8 pr-4 hover:bg-gray-300/50 rounded-full"
        htmlFor="location"
@@ -93,7 +90,7 @@ const LargeSearchBar = ({
       >
        <span className="font-semibold text-xs">Where</span>
        <input
-        className="text-sm outline-none border-none bg-transparent placeholder:text-black/60 capitalize"
+        className="text-sm outline-none border-none bg-transparent placeholder:text-black/60 capitalize [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         type="text"
         placeholder="Search destinations"
         id="location"
