@@ -115,6 +115,12 @@ const EditPage = () => {
       setLoading(false);
      }, 10000);
     },
+    onError: () => {
+     router.push(`/place/${getPlaceId}`);
+     setTimeout(() => {
+      setLoading(false);
+     }, 10000);
+    },
    });
   } catch (error) {
    console.log(error);

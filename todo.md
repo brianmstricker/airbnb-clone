@@ -7,3 +7,5 @@
 -add filter functionality on search page
 -don't allow multiple people to reserve on same date
 -inbox link (mobile as well) - maybe send message when a place is reserved
+-trips delete/cancel
+-pagination

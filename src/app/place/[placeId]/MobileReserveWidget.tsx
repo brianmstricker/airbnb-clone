@@ -73,7 +73,6 @@ const MobileReserveWidget = ({
   start: new Date(checkInValue),
   end: new Date(checkOutValue),
  });
- console.log(rating);
  return (
   <>
    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-t-gray-300 w-screen z-50 px-6 py-4">
@@ -136,7 +135,7 @@ const MobileReserveWidget = ({
         Reset dates
        </span>
       </div>
-      <div className="my-6 flex flex-col gap-2">
+      <div className="mt-4 flex flex-col gap-2">
        <div className="text-2xl font-medium">
         {(amountNights?.years as number) > 0 && (
          <span>{amountNights.years} year(s)</span>

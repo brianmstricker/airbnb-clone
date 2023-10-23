@@ -35,7 +35,7 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
  const fetchPlaces = await fetch(
   `http://localhost:3000/api/places?search_type=${searchFilter}`,
   {
-   cache: "no-cache",
+   next: { revalidate: 60 },
   }
  );
  const getPlaces = await fetchPlaces.json();

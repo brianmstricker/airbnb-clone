@@ -89,17 +89,26 @@ export const PUT = async (req: NextRequest, res: NextResponse) => {
       placeId: editedPlace.id,
      },
     });
-    // console.log(placeData.perks);
-    if (placeData.perks && placeData.perks.length > 0) {
-     const newPerks = placeData.perks.map((perkName) => {
+    if (perks && perks.length > 0) {
+     const newPerks = perks.map((perk) => {
+      if (typeof perk === "object") {
+       return {
+        name: perk.name,
+       };
+      }
       return {
-       name: perkName,
+       name: perk,
        placeId: editedPlace.id,
       };
      });
      if (newPerks.length > 0) {
       await prisma.perk.createMany({
-       data: newPerks,
+       data: newPerks.map((perk) => {
+        return {
+         name: perk.name,
+         placeId: editedPlace.id,
+        };
+       }),
       });
      }
     }
