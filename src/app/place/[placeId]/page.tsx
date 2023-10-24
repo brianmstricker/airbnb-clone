@@ -1,3 +1,5 @@
+export const dynamicParams = true;
+
 import { getAuthSession } from "@/utils/getAuthSession";
 import LargeScreenContent from "./LargeScreenContent";
 import SmallScreenContent from "./SmallScreenContent";
