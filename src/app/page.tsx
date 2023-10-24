@@ -33,7 +33,7 @@ type Place = {
 export default async function Home({ searchParams }: { searchParams?: any }) {
  const searchFilter = searchParams?.search_type;
  const fetchPlaces = await fetch(
-  `http://localhost:3000/api/places?search_type=${searchFilter}`,
+  `${process.env.NEXT_PUBLIC_SITE_URL}/api/places?search_type=${searchFilter}`,
   {
    next: { revalidate: 60 },
   }

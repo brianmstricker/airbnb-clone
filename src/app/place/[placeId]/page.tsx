@@ -4,7 +4,9 @@ import SmallScreenContent from "./SmallScreenContent";
 
 const PlacePage = async ({ params }: { params: { placeId: string } }) => {
  const { placeId } = params;
- const placeJSON = await fetch(`http://localhost:3000/api/place/${placeId}`);
+ const placeJSON = await fetch(
+  `${process.env.NEXT_PUBLIC_SITE_URL}/api/place/${placeId}`
+ );
  const place = await placeJSON.json();
  if (!place.id) {
   return (
@@ -23,7 +25,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   );
  if (session?.user) {
   const reserveFetch = await fetch(
-   `http://localhost:3000/api/place/reserve/${place.id}?email=${session.user.email}`
+   `${process.env.NEXT_PUBLIC_SITE_URL}/api/place/reserve/${place.id}?email=${session.user.email}`
   );
   const reserve = await reserveFetch.json();
   return (

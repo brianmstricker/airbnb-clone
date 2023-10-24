@@ -13,7 +13,9 @@ const ReservePage = async ({
  };
 }) => {
  const id = searchParams.placeId;
- const placeFetch = await fetch(`http://localhost:3000/api/place/${id}`);
+ const placeFetch = await fetch(
+  `${process.env.NEXT_PUBLIC_SITE_URL}/api/place/${id}`
+ );
  const place = await placeFetch.json();
  if (!id || !place.id)
   return (

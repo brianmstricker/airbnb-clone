@@ -25,7 +25,7 @@ const Search = async ({ searchParams }: { searchParams?: any }) => {
  const location = searchParams.location;
  const guests = searchParams.guests;
  const fetchSearch = await fetch(
-  `http://localhost:3000/api/search?location=${location}&guests=${guests}`
+  `${process.env.NEXT_PUBLIC_SITE_URL}/api/search?location=${location}&guests=${guests}`
  );
  const getSearch = await fetchSearch.json();
  const searchResults = getSearch.filter(

@@ -23,7 +23,7 @@ const FilterItem = ({ icon, text }: FilterItemProps) => {
     (text.toLowerCase() === "your search" &&
      getSearchType === null &&
      searchPage)
-     ? " cursor-default"
+     ? " cursor-default pointer-events-none"
      : " cursor-pointer")
    }
    href={
