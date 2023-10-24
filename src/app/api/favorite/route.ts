@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/auth";
 import { getAuthSession } from "@/utils/getAuthSession";
+import client from "@/app/lib/auth";
 
 export const POST = async (req: NextRequest, res: NextResponse) => {
  try {
+  client.$connect();
   const session = await getAuthSession();
   if (!session?.user) {
    return NextResponse.json(
