@@ -1,3 +1,6 @@
+export const dynamic = "auto";
+export const dynamicParams = true;
+
 import Favorite from "@/components/Favorite";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
