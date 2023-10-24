@@ -1,3 +1,4 @@
+export const dynamicParams = true;
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/auth";
 
