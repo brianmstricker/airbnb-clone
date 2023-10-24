@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/app/lib/auth";
-import client from "@/app/lib/auth";
 
 export async function GET(
  req: NextRequest,
@@ -8,7 +7,6 @@ export async function GET(
  res: NextResponse
 ) {
  try {
-  client.$connect();
   const placeId = params.placeId;
   const place = await prisma.place.findUnique({
    where: { id: placeId as string },

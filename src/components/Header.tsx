@@ -39,6 +39,7 @@ const Header = () => {
  if (!pathname) return null;
  const placePage = pathname.includes("/place/");
  const tripsPage = pathname.includes("/trips");
+ const loginPage = pathname.includes("/login");
  return (
   <>
    <nav
@@ -64,7 +65,7 @@ const Header = () => {
       <Logo />
       <span className="text-2xl font-bold hidden lg:block">airbnb</span>
      </Link>
-     {!tripsPage && (
+     {!tripsPage && !loginPage && (
       <LargeSearchBar
        placePage={placePage}
        showSearchMenu={showSearchMenu}

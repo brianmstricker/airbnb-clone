@@ -1,6 +1,5 @@
-export const dynamic = "force-dynamic";
-export const dynamicParams = true;
-
+// export const dynamic = "force-dynamic";
+// export const dynamicParams = true;
 import Favorite from "@/components/Favorite";
 import Link from "next/link";
 import { AiFillStar } from "react-icons/ai";
@@ -38,7 +37,7 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
  const fetchPlaces = await fetch(
   `${process.env.NEXT_PUBLIC_SITE_URL}/api/places?search_type=${searchFilter}`,
   {
-   next: { revalidate: 60 },
+   cache: "no-cache",
   }
  );
  const getPlaces = await fetchPlaces.json();

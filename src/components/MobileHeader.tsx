@@ -7,8 +7,14 @@ import { PiUserCircle } from "react-icons/pi";
 import { FaAirbnb } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
-const items = [
+const nonUserItems = [
+ { text: "Explore", href: "/", icon: <FiSearch size={26} /> },
+ { text: "Login", href: "/login", icon: <PiUserCircle size={28} /> },
+];
+
+const userItems = [
  { text: "Explore", href: "/", icon: <FiSearch size={26} /> },
  {
   text: "Wishlist",
@@ -21,6 +27,7 @@ const items = [
 ];
 
 const MobileHeader = () => {
+ const { data } = useSession();
  const pathname = usePathname();
  if (!pathname) return null;
  const placePage = pathname.includes("/place/");
@@ -28,16 +35,28 @@ const MobileHeader = () => {
  return (
   <nav className="fixed bottom-0 left-0 py-3 w-full bg-white z-20 md:hidden flex items-center text-[0.65rem]">
    <ul className="flex flex-[1_0_auto] items-center w-full justify-center max-w-[560px] mx-auto">
-    {items.map((item) => (
-     <Link
-      href={item.href}
-      key={item.text}
-      className="flex flex-col flex-[1_1_0px] items-center max-w-[20%] px-[2px] gap-[2px]"
-     >
-      <span className="text-gray-400">{item.icon}</span>
-      <span className="font-semibold text-gray-600">{item.text}</span>
-     </Link>
-    ))}
+    {data?.user &&
+     userItems.map((item) => (
+      <Link
+       href={item.href}
+       key={item.text}
+       className="flex flex-col flex-[1_1_0px] items-center max-w-[20%] px-[2px] gap-[2px]"
+      >
+       <span className="text-gray-400">{item.icon}</span>
+       <span className="font-semibold text-gray-600">{item.text}</span>
+      </Link>
+     ))}
+    {!data?.user &&
+     nonUserItems.map((item) => (
+      <Link
+       href={item.href}
+       key={item.text}
+       className="flex flex-col flex-[1_1_0px] items-center max-w-[20%] px-[2px] gap-[2px]"
+      >
+       <span className="text-gray-400">{item.icon}</span>
+       <span className="font-semibold text-gray-600">{item.text}</span>
+      </Link>
+     ))}
    </ul>
   </nav>
  );

@@ -21,6 +21,8 @@ const MobileSearch = () => {
  if (!pathname) return null;
  const placePage = pathname.includes("/place/");
  if (placePage) return null;
+ const loginPage = pathname.includes("/login");
+ if (loginPage) return null;
  return (
   <>
    <div className="w-full flex justify-between md:hidden fixed top-0 left-0 z-30 px-6 pt-3 pb-4 bg-white items-center gap-2">
