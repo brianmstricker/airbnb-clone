@@ -34,13 +34,11 @@ type Place = {
 
 export default async function Home({ searchParams }: { searchParams?: any }) {
  const searchFilter = searchParams?.search_type;
- const fetchPlaces = await fetch(
-  `${process.env.NEXT_PUBLIC_SITE_URL}/api/places?search_type=${searchFilter}`,
-  {
-   cache: "no-cache",
-  }
- );
+ const fetchPlaces = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/places?search_type=${searchFilter}`, {
+  cache: "no-cache",
+ });
  const getPlaces = await fetchPlaces.json();
+ if (JSON.stringify(getPlaces) === "{}") return <div className="text-center">No places found</div>;
  const places = getPlaces.filter((place: Place) => place.photos.length > 0);
  return (
   <main className="pt-20 md:pt-0 pb-52">
@@ -56,20 +54,13 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
         <HomeImageComponent photos={place.photos} />
         <div className="mt-2 text-[.95rem] px-2">
          <div className="flex justify-between items-center">
-          <div className="capitalize font-semibold ">
-           {place.address.split(",", 2).join(",")}
-          </div>
+          <div className="capitalize font-semibold ">{place.address.split(",", 2).join(",")}</div>
           <div className="flex items-center gap-1">
            <AiFillStar size={14} />
            {place.rating.length === 0 ? (
             <span className="font-medium">0.00</span>
            ) : (
-            <div>
-             {(
-              place.rating.map((r) => r.rating).reduce((t, c) => t + c, 0) /
-              place.rating.length
-             ).toFixed(2)}
-            </div>
+            <div>{(place.rating.map((r) => r.rating).reduce((t, c) => t + c, 0) / place.rating.length).toFixed(2)}</div>
            )}
           </div>
          </div>

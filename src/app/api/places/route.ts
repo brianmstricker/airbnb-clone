@@ -5,7 +5,12 @@ import prisma from "@/app/lib/auth";
 export async function GET(req: NextRequest, res: NextResponse) {
  try {
   const typeFilter = req.nextUrl.searchParams.get("search_type");
-  if (typeFilter === "all places" || typeFilter === "undefined") {
+  if (
+   typeFilter === "all places" ||
+   typeFilter === "undefined" ||
+   typeFilter === "" ||
+   !typeFilter
+  ) {
    const places = await prisma.place.findMany({
     include: {
      photos: {
@@ -15,6 +20,9 @@ export async function GET(req: NextRequest, res: NextResponse) {
      rating: true,
     },
    });
+   if (places.length === 0 || !places) {
+    return NextResponse.json({});
+   }
    return NextResponse.json(places);
   }
   if (typeFilter) {
@@ -35,6 +43,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
       rating: true,
      },
     });
+    if (!places) return NextResponse.json({ message: "No places found.", status: 404 });
     return NextResponse.json(places);
    }
    const places = await prisma.place.findMany({
@@ -51,13 +60,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
      rating: true,
     },
    });
+   if (!places) return NextResponse.json({ message: "No places found." });
+   if (places.length === 0 || !places) {
+    return NextResponse.json({});
+   }
    return NextResponse.json(places);
   }
  } catch (error) {
   console.log(error);
-  return NextResponse.json(
-   { message: "Something went wrong." },
-   { status: 500 }
-  );
+  return NextResponse.json({ message: "Something went wrong." }, { status: 500 });
  }
 }
