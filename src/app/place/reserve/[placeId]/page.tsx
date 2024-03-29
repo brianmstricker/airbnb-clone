@@ -3,19 +3,18 @@ import LargeReservePage from "./LargeReservePage";
 import MobileReservePage from "./MobileReservePage";
 
 const ReservePage = async ({
+ params: { placeId },
  searchParams,
 }: {
+ params: { placeId: string };
  searchParams: {
-  placeId: string;
   checkIn: string;
   checkOut: string;
   guests: number;
  };
 }) => {
- const id = searchParams.placeId;
- const placeFetch = await fetch(
-  `${process.env.NEXT_PUBLIC_SITE_URL}/api/place/${id}`
- );
+ const id = placeId;
+ const placeFetch = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/place/${id}`);
  const place = await placeFetch.json();
  if (!id || !place.id)
   return (
@@ -38,8 +37,7 @@ const ReservePage = async ({
  const checkInDate = format(new Date(checkInVal), "dd MMMM yyyy");
  const currentDate = format(new Date(), "dd MMMM yyyy");
  const dateErr =
-  compareAsc(new Date(checkInDate), new Date(currentDate)) === -1 ||
-  compareAsc(new Date(checkOutVal), new Date(checkInVal)) === -1;
+  compareAsc(new Date(checkInDate), new Date(currentDate)) === -1 || compareAsc(new Date(checkOutVal), new Date(checkInVal)) === -1;
  if (dateErr) {
   return (
    <div className="!max-w-[1500px] contain pt-56 text-center">

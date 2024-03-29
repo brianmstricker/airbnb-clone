@@ -5,12 +5,7 @@ import prisma from "@/app/lib/auth";
 export async function GET(req: NextRequest, res: NextResponse) {
  try {
   const typeFilter = req.nextUrl.searchParams.get("search_type");
-  if (
-   typeFilter === "all places" ||
-   typeFilter === "undefined" ||
-   typeFilter === "" ||
-   !typeFilter
-  ) {
+  if (typeFilter === "all places" || typeFilter === "undefined" || typeFilter === "" || !typeFilter) {
    const places = await prisma.place.findMany({
     include: {
      photos: {
