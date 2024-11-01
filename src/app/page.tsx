@@ -38,7 +38,8 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
   cache: "no-cache",
  });
  const getPlaces = await fetchPlaces.json();
- if (JSON.stringify(getPlaces) === "{}") return <div className="text-center mt-8">No places found :(</div>;
+ if (JSON.stringify(getPlaces) === "{}" || ("message" in getPlaces && getPlaces.message === "Something went wrong."))
+  return <div className="text-center mt-8">No places found :(</div>;
  const places = getPlaces.filter((place: Place) => place.photos.length > 0);
  return (
   <main className="pt-20 md:pt-0 pb-52">

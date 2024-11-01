@@ -1,5 +1,10 @@
 # todo
 
+(important)
+-remove airbnb branding, rename
+-update checkInDate/checkOutDate to be datetime
+
+(misc)
 -update favorite component, (favoriteFetch so it's one request, then render favorite component)? maybe not
 -reviews?
 -trending filter

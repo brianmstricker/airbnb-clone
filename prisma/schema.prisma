@@ -69,6 +69,7 @@ model Place {
  name         String
  address      String
  createdAt    DateTime   @default(now())
+ updatedAt    DateTime   @updatedAt
  type         String
  photos       Photo[]
  beds         Int
@@ -111,27 +112,28 @@ model Perk {
 }
 
 model Favorite {
- id        String @id @default(cuid())
+ id        String   @id @default(cuid())
  userEmail String
  placeId   String
- user      User   @relation(fields: [userEmail], references: [id], onDelete: Cascade)
- place     Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+ createdAt DateTime @default(now())
+ user      User     @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+ place     Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
 
  @@unique([userEmail, placeId])
  @@index([placeId])
 }
 
 model Reserve {
- id            String @id @default(cuid())
+ id            String   @id @default(cuid())
  placeId       String
- place         Place  @relation(fields: [placeId], references: [id], onDelete: Cascade)
+ place         Place    @relation(fields: [placeId], references: [id], onDelete: Cascade)
  userEmail     String
- user          User   @relation(fields: [userEmail], references: [id], onDelete: Cascade)
- guests        Int    @default(1)
- checkInDate   String
- checkOutDate  String
+ user          User     @relation(fields: [userEmail], references: [id], onDelete: Cascade)
+ guests        Int      @default(1)
+ checkInDate   DateTime
+ checkOutDate  DateTime
  price         String
- reserveStatus String @default("reserved")
+ reserveStatus String   @default("reserved")
 
  @@unique([userEmail, placeId])
  @@index([placeId])
