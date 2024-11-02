@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LargeSearchBar from "./HeaderComponents/LargeSearchBar";
+import { FaAd } from "react-icons/fa";
+import { FiNavigation2 } from "react-icons/fi";
 
 const Header = () => {
  const [showUserMenu, setShowUserMenu] = useState(false);
@@ -44,8 +46,7 @@ const Header = () => {
   <>
    <nav
     className={
-     "md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white z-[100] hidden md:block" +
-     (showSearchMenu ? " min-h-[170px]" : "")
+     "md:border-b border-b-gray-200 pt-4 pb-5 fixed w-full bg-white z-[100] hidden md:block" + (showSearchMenu ? " min-h-[170px]" : "")
     }
    >
     <div
@@ -55,32 +56,22 @@ const Header = () => {
       (tripsPage ? " !max-w-[1500px]" : "")
      }
     >
-     <Link
-      href={"/"}
-      className={
-       "flex gap-2 text-primary" +
-       (placePage ? " relative -left-2 lg:-left-3 3xl:-left-5" : "")
-      }
-     >
-      <Logo />
-      <span className="text-2xl font-bold hidden lg:block">airbnb</span>
+     <Link href={"/"} className={"flex gap-1 items-center text-primary" + (placePage ? " relative -left-2 lg:-left-3 3xl:-left-5" : "")}>
+      <FiNavigation2 size={24} />
+      <span className="text-2xl font-bold hidden lg:block">barebnb</span>
      </Link>
      {!tripsPage && !loginPage && (
-      <LargeSearchBar
-       placePage={placePage}
-       showSearchMenu={showSearchMenu}
-       setShowSearchMenu={setShowSearchMenu}
-      />
+      <LargeSearchBar placePage={placePage} showSearchMenu={showSearchMenu} setShowSearchMenu={setShowSearchMenu} />
      )}
      <div className={"flex gap-6 items-center"}>
       {session?.data?.user && (
        <Link href="/account/places/create" className="font-medium w-fit">
-        Airbnb your home
+        barebnb your home
        </Link>
       )}
       {!session?.data?.user && (
        <button onClick={openAuthModal} className="font-medium w-fit">
-        Airbnb your home
+        barebnb your home
        </button>
       )}
       <button
@@ -89,21 +80,10 @@ const Header = () => {
       >
        <HiMenu size={18} />
        <div className="bg-gray-500 text-white rounded-full p-[2px] overflow-hidden">
-        {session?.status === "loading" && (
-         <div className="animate-pulse bg-white w-8 h-8 rounded-full" />
-        )}
-        {session?.status !== "authenticated" &&
-         session?.status !== "loading" && (
-          <AiOutlineUser size={26} className="relative top-[2px]" />
-         )}
+        {session?.status === "loading" && <div className="animate-pulse bg-white w-8 h-8 rounded-full" />}
+        {session?.status !== "authenticated" && session?.status !== "loading" && <AiOutlineUser size={26} className="relative top-[2px]" />}
         {session?.status === "authenticated" && (
-         <Image
-          src={session?.data?.user?.image as string}
-          alt="user"
-          width={32}
-          height={32}
-          className="rounded-full"
-         />
+         <Image src={session?.data?.user?.image as string} alt="user" width={32} height={32} className="rounded-full" />
         )}
        </div>
       </button>
@@ -111,18 +91,9 @@ const Header = () => {
     </div>
    </nav>
    {showSearchMenu && (
-    <div
-     onClick={() => setShowSearchMenu(false)}
-     className="hidden md:block bg-black/25 inset-0 w-screen h-screen fixed z-[99]"
-    />
+    <div onClick={() => setShowSearchMenu(false)} className="hidden md:block bg-black/25 inset-0 w-screen h-screen fixed z-[99]" />
    )}
-   {showUserMenu && (
-    <UserMenu
-     closeUserModal={closeUserModal}
-     openAuthModal={openAuthModal}
-     placePage={placePage}
-    />
-   )}
+   {showUserMenu && <UserMenu closeUserModal={closeUserModal} openAuthModal={openAuthModal} placePage={placePage} />}
    {showAuthModal && <AuthModal closeAuthModal={closeAuthModal} />}
   </>
  );

@@ -66,18 +66,13 @@ const LargeReservePage = async ({
     <div className="bg-gray-300/80 w-full h-[1px] mt-10 mb-9" />
     <div>
      <h2 className="text-2xl font-semibold">Cancellation policy</h2>
-     <p className="mt-5">
-      Free cancellation before Dec 7. Cancel before Dec 30 for a partial refund.
-     </p>
+     <p className="mt-5">Free cancellation before Dec 7. Cancel before Dec 30 for a partial refund.</p>
     </div>
     <div className="bg-gray-300/80 w-full h-[1px] mt-10 mb-9" />
     <div>
      <h2 className="text-2xl font-semibold">Ground rules</h2>
      <div className="mt-5">
-      <p>
-       We ask every guest to remember a few simple things about what makes a
-       great guest.
-      </p>
+      <p>We ask every guest to remember a few simple things about what makes a great guest.</p>
       <ul className="list-disc mt-5 ml-5">
        <li>Follow the house rules</li>
        <li>Treat your Host&apos;s home like your own</li>
@@ -86,34 +81,14 @@ const LargeReservePage = async ({
     </div>
     <div className="bg-gray-300/80 w-full h-[1px] mt-10 mb-9" />
     <p className="text-xs text-gray-800">
-     By selecting the button below, I agree to the{" "}
-     <span className="font-bold underline">Host&apos;s House Rules</span>,
+     By selecting the button below, I agree to the <span className="font-bold underline">Host&apos;s House Rules</span>,
      <span className="font-bold underline">Ground rules for guests</span>,{" "}
-     <span className="font-bold underline">
-      Airbnb&apos;s Rebooking and Refund Policy
-     </span>
-     , and that Airbnb can{" "}
-     <span className="font-bold underline">charge my payment method</span> if
-     I&apos;m responsible for damage.
+     <span className="font-bold underline">barebnb&apos;s Rebooking and Refund Policy</span>, and that barebnb can{" "}
+     <span className="font-bold underline">charge my payment method</span> if I&apos;m responsible for damage.
     </p>
-    <ConfirmButton
-     id={id}
-     checkIn={checkIn}
-     checkOut={checkOut}
-     guests={guests}
-     total={total}
-     user={session?.user}
-    />
-    {!session?.user && (
-     <div className="mt-3 text-black/75">
-      Please sign in to book this place.
-     </div>
-    )}
-    {guests < 1 && (
-     <div className="mt-3 text-black/75">
-      Invalid number of guests. Please try again.
-     </div>
-    )}
+    <ConfirmButton id={id} checkIn={checkIn} checkOut={checkOut} guests={guests} total={total} user={session?.user} />
+    {!session?.user && <div className="mt-3 text-black/75">Please sign in to book this place.</div>}
+    {guests < 1 && <div className="mt-3 text-black/75">Invalid number of guests. Please try again.</div>}
    </div>
    <div className="mt-[5.15rem] w-[130%] lg:w-full">
     <div className="border rounded-xl border-gray-300/80 sticky top-[150px] p-5">
@@ -136,14 +111,7 @@ const LargeReservePage = async ({
        </div>
        <div className="flex items-center text-[.75rem] mt-1 gap-[2px]">
         <AiFillStar />
-        <span>
-         {rating.length === 0
-          ? "0.00"
-          : (
-             rating.map((r) => r.rating).reduce((t, c) => t + c, 0) /
-             rating.length
-            ).toFixed(2)}
-        </span>
+        <span>{rating.length === 0 ? "0.00" : (rating.map((r) => r.rating).reduce((t, c) => t + c, 0) / rating.length).toFixed(2)}</span>
        </div>
       </div>
      </div>
@@ -161,7 +129,7 @@ const LargeReservePage = async ({
        <span>$50</span>
       </div>
       <div className="flex justify-between items-center">
-       <span>Airbnb service fee</span>
+       <span>barebnb service fee</span>
        <span>${serviceFee.toFixed(2)}</span>
       </div>
       <div className="bg-gray-300/80 w-full h-[1px]" />

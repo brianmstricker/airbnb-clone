@@ -42,9 +42,7 @@ const MobileReservePage = ({
     <Link href={`/place/${id}`}>
      <FaChevronLeft />
     </Link>
-    <h2 className="absolute right-1/2 left-1/2 w-max translate-x-[-50%] font-bold">
-     Confirm and pay
-    </h2>
+    <h2 className="absolute right-1/2 left-1/2 w-max translate-x-[-50%] font-bold">Confirm and pay</h2>
    </div>
    <div className="pt-10 flex gap-3 flex-col contain [@media(min-width:375px)]:flex-row">
     <div className="relative h-full aspect-[16/13] w-[126px] shrink-0">
@@ -65,14 +63,7 @@ const MobileReservePage = ({
      </div>
      <div className="flex items-center text-[.75rem] mt-1 gap-[2px]">
       <AiFillStar />
-      <span>
-       {rating.length === 0
-        ? "0.00"
-        : (
-           rating.map((r) => r.rating).reduce((t, c) => t + c, 0) /
-           rating.length
-          ).toFixed(2)}
-      </span>
+      <span>{rating.length === 0 ? "0.00" : (rating.map((r) => r.rating).reduce((t, c) => t + c, 0) / rating.length).toFixed(2)}</span>
      </div>
     </div>
    </div>
@@ -109,7 +100,7 @@ const MobileReservePage = ({
       <span>$50</span>
      </div>
      <div className="flex items-center justify-between">
-      <span>Airbnb service fee</span>
+      <span>barebnb service fee</span>
       <span>${serviceFee.toFixed(2)}</span>
      </div>
      <div className="flex items-center justify-between border-t border-t-gray-300 pt-3">
@@ -121,9 +112,7 @@ const MobileReservePage = ({
     </div>
    </div>
    <div className="flex items-center justify-center mt-6">
-    <button className="w-fit bg-primary py-4 px-6 text-white">
-     Confirm and pay
-    </button>
+    <button className="w-fit bg-primary py-4 px-6 text-white">Confirm and pay</button>
    </div>
   </main>
  );

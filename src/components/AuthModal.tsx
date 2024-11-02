@@ -16,10 +16,7 @@ const AuthModal = ({ closeAuthModal, loginPage }: AuthModalProps) => {
  return (
   <>
    {!loginPage ? (
-    <div
-     className="z-[101] fixed inset-0 bg-black/50 w-full h-full"
-     onClick={closeAuthModal}
-    >
+    <div className="z-[101] fixed inset-0 bg-black/50 w-full h-full" onClick={closeAuthModal}>
      <div
       className="z-50 relative top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-white max-w-[568px] min-h-[682px] rounded-xl"
       onClick={(e) => e.stopPropagation()}
@@ -31,7 +28,7 @@ const AuthModal = ({ closeAuthModal, loginPage }: AuthModalProps) => {
        <h3 className="text-lg font-semibold mx-auto">Log in or Sign up</h3>
       </header>
       <div className="px-6 pt-8">
-       <h4 className="text-2xl font-medium">Welcome to Airbnb</h4>
+       <h4 className="text-2xl font-medium">Welcome to barebnb</h4>
        {/* <div className="mt-5 w-full border border-gray-400 rounded-md relative group min-h-[56px]">
       <label htmlFor="email" className="absolute inset-0 group">
        <input
@@ -92,7 +89,7 @@ const AuthModal = ({ closeAuthModal, loginPage }: AuthModalProps) => {
       </header>
       <div className="w-[106.2%] -left-4 my-4 relative bg-gray-200/90 h-[1px]" />
       <div className="px-6 pt-8">
-       <h4 className="text-xl sm:text-2xl font-medium">Welcome to Airbnb</h4>
+       <h4 className="text-xl sm:text-2xl font-medium">Welcome to barebnb</h4>
        {/* <div className="mt-5 w-full border border-gray-400 rounded-md relative group min-h-[56px]">
       <label htmlFor="email" className="absolute inset-0 group">
        <input

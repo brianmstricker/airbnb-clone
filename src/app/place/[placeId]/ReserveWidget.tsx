@@ -111,7 +111,7 @@ const ReserveWidget = ({
      )}
      <p className="text-gray-700 mt-4 underline underline-offset-2">Cleaning fee</p>
      <p className="text-gray-700 mt-4 text-right">$50</p>
-     <p className="text-gray-700 mt-4 underline underline-offset-2">Airbnb service fee</p>
+     <p className="text-gray-700 mt-4 underline underline-offset-2">barebnb service fee</p>
      {isDirty ? (
       <p className="text-gray-700 mt-4 text-right">${(Number(price) * amountNights * 0.08).toFixed(2)}</p>
      ) : (

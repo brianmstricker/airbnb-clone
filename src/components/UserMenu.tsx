@@ -8,23 +8,16 @@ type UserMenuProps = {
  placePage?: boolean;
 };
 
-const UserMenu = ({
- closeUserModal,
- openAuthModal,
- placePage,
-}: UserMenuProps) => {
+const UserMenu = ({ closeUserModal, openAuthModal, placePage }: UserMenuProps) => {
  const session = useSession();
  return (
   <>
-   <div
-    className="w-full h-full bg-transparent inset-0 fixed z-[101]"
-    onClick={closeUserModal}
-   >
+   <div className="w-full h-full bg-transparent inset-0 fixed z-[101]" onClick={closeUserModal}>
     <div className="bg-transparent" onClick={(e) => e.stopPropagation()}>
      <div className="max-w-6xl mx-auto relative">
       <div
        className={
-        "fixed shadow-sm shadow-gray-300 bg-[#F3F3F3] min-w-[240px] top-[4.4rem] rounded-xl z-50 border" +
+        "fixed shadow-sm shadow-gray-300 bg-white min-w-[240px] top-[4.4rem] rounded-xl z-50 border" +
         (placePage ? " right-0 absolute" : " right-16")
        }
       >
@@ -50,46 +43,30 @@ const UserMenu = ({
            Sign up
           </span>
           <span
-           className="mt-4 w-fit"
+           className="mt-4 w-fit cursor-pointer"
            onClick={() => {
             closeUserModal();
             openAuthModal();
            }}
           >
-           Airbnb your home
+           barebnb your home
           </span>
           <div className="w-full h-[1px] bg-gray-300 absolute left-0 bottom-12" />
          </>
         ) : (
          <>
-          <Link
-           href={"/trips"}
-           onClick={closeUserModal}
-           className="w-fit cursor-pointer font-medium"
-          >
+          <Link href={"/trips"} onClick={closeUserModal} className="w-fit cursor-pointer font-medium">
            Trips
           </Link>
-          <Link
-           href={"/account"}
-           onClick={closeUserModal}
-           className="w-fit cursor-pointer font-medium"
-          >
+          <Link href={"/account"} onClick={closeUserModal} className="w-fit cursor-pointer font-medium">
            Account
           </Link>
-          <Link
-           href={"/account/wishlist"}
-           onClick={closeUserModal}
-           className="w-fit cursor-pointer font-medium"
-          >
+          <Link href={"/account/wishlist"} onClick={closeUserModal} className="w-fit cursor-pointer font-medium">
            Wishlist
           </Link>
           <div className="w-full h-[1px] bg-gray-300 absolute left-0 bottom-[5.5rem]" />
-          <Link
-           href={"/account/places/create"}
-           className="mt-3 w-fit cursor-pointer"
-           onClick={closeUserModal}
-          >
-           Airbnb your home
+          <Link href={"/account/places/create"} className="mt-3 w-fit cursor-pointer" onClick={closeUserModal}>
+           barebnb your home
           </Link>
           <button onClick={() => signOut()} className="w-fit">
            Logout

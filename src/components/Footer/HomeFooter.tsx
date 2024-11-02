@@ -5,7 +5,7 @@ const HomeFooter = () => {
   <div className="hidden md:block fixed bottom-0 border-t border-t-gray-300 w-full text-sm text-black/90 z-[49] bg-white">
    <div className="contain py-3.5 flex items-center justify-between">
     <div className="flex gap-2 items-center">
-     <span>© 2023 Airbnb, Inc.</span>
+     <span>© 2024 barebnb, Inc.</span>
      <div className="w-[2px] h-[2px] bg-black/90 rounded-full" />
      <span>Terms</span>
      <div className="w-[2px] h-[2px] bg-black/90 rounded-full" />
