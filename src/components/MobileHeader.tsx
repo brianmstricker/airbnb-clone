@@ -1,11 +1,12 @@
 "use client";
 import { AiOutlineHeart } from "react-icons/ai";
-import { FiNavigation2, FiSearch } from "react-icons/fi";
+import { FiSearch } from "react-icons/fi";
 import { BiMessage } from "react-icons/bi";
 import { PiUserCircle } from "react-icons/pi";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { MdNavigation } from "react-icons/md";
 
 const nonUserItems = [
  { text: "Explore", href: "/", icon: <FiSearch size={26} /> },
@@ -19,7 +20,7 @@ const userItems = [
   href: "/account/wishlist",
   icon: <AiOutlineHeart size={26} />,
  },
- { text: "Trips", href: "/trips", icon: <FiNavigation2 size={26} /> },
+ { text: "Trips", href: "/trips", icon: <MdNavigation size={26} /> },
  { text: "Inbox", href: "/inbox", icon: <BiMessage size={26} /> },
  { text: "Profile", href: "/account", icon: <PiUserCircle size={28} /> },
 ];

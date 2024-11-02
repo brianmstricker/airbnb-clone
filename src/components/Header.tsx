@@ -1,5 +1,4 @@
 "use client";
-import { Logo } from "@/assets/Logo";
 import { AiOutlineUser } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
 import { useState, useEffect } from "react";
@@ -10,8 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import LargeSearchBar from "./HeaderComponents/LargeSearchBar";
-import { FaAd } from "react-icons/fa";
-import { FiNavigation2 } from "react-icons/fi";
+import { MdNavigation } from "react-icons/md";
 
 const Header = () => {
  const [showUserMenu, setShowUserMenu] = useState(false);
@@ -57,7 +55,7 @@ const Header = () => {
      }
     >
      <Link href={"/"} className={"flex gap-1 items-center text-primary" + (placePage ? " relative -left-2 lg:-left-3 3xl:-left-5" : "")}>
-      <FiNavigation2 size={24} />
+      <MdNavigation size={24} />
       <span className="text-2xl font-bold hidden lg:block">barebnb</span>
      </Link>
      {!tripsPage && !loginPage && (
