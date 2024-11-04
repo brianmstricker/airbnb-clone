@@ -92,15 +92,20 @@ const EditPage = () => {
   },
  });
  useEffect(() => {
-  if (selectedImages.length < 5 && selectedImages.length > 0) {
-   setImagesError(true);
-  } else {
+  if (selectedImages.length >= 5) {
    setImagesError(false);
   }
  }, [selectedImages]);
  const formSubmit = async (data: Form) => {
   try {
    setLoading(true);
+   if (!selectedImages || selectedImages.length < 5) {
+    setImagesError(true);
+    setLoading(false);
+    return;
+   } else {
+    setImagesError(false);
+   }
    const formData = new FormData();
    const newImages = selectedImages.filter((image) => !image.url);
    newImages.forEach((file) => {
@@ -139,7 +144,6 @@ const EditPage = () => {
  }
  function buttonDisabled() {
   return (
-   selectedImages.length < 5 ||
    errors.name ||
    errors.address ||
    errors.type ||
@@ -344,7 +348,7 @@ const EditPage = () => {
         </>
        )}
       </div>
-      {imagesError && <span className="text-red-500">You need at least 3 photos.</span>}
+      {imagesError && <span className="text-red-500">You need at least 5 photos.</span>}
       <h3 className="-mb-1">Perks</h3>
       <div className="border border-gray-300 px-4 py-2 rounded-md">
        <Perks registerProp={register} selected={selectedPerks.map((p: any) => p.name)} />
@@ -397,7 +401,7 @@ const EditPage = () => {
       </div>
       <button
        className={
-        "bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400" + (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
+        "bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90" + (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
        }
        type="submit"
        disabled={buttonDisabled() as boolean}

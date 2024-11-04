@@ -5,15 +5,12 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
  try {
   const location = req.nextUrl.searchParams.get("location");
   const guests = req.nextUrl.searchParams.get("guests");
-  if (!location)
-   return NextResponse.json(
-    { message: "Location is required" },
-    { status: 400 }
-   );
+  if (!location) return NextResponse.json({ message: "Location is required" }, { status: 400 });
   const places = await prisma.place.findMany({
    where: {
     address: {
      contains: location as string,
+     mode: "insensitive",
     },
     guests: {
      gte: parseInt(guests || 1),
@@ -33,10 +30,7 @@ export const GET = async (req: NextRequest, res: NextResponse) => {
   return NextResponse.json(places, { status: 200 });
  } catch (error) {
   console.log(error);
-  return NextResponse.json(
-   { message: "Something went wrong" },
-   { status: 500 }
-  );
+  return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
  }
 };
 // export const POST = async (req: NextRequest, res: NextResponse) => {

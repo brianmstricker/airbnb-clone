@@ -18,7 +18,6 @@ const Page = () => {
  const [selectedImages, setSelectedImages] = useState<File[]>([]);
  const [imagesError, setImagesError] = useState(false);
  const [loading, setLoading] = useState(false);
- const mounted = useRef(false);
  const router = useRouter();
  type Form = z.infer<typeof placeSchema>;
  const place = useForm<Form>({
@@ -57,16 +56,20 @@ const Page = () => {
   },
  });
  useEffect(() => {
-  mounted.current = true;
-  if (selectedImages.length < 5 && mounted.current) {
-   setImagesError(true);
-  } else {
+  if (selectedImages.length >= 5) {
    setImagesError(false);
   }
  }, [selectedImages]);
  const formSubmit = async (data: Form) => {
   try {
    setLoading(true);
+   if (!selectedImages || selectedImages.length < 5) {
+    setImagesError(true);
+    setLoading(false);
+    return;
+   } else {
+    setImagesError(false);
+   }
    const formData = new FormData();
    selectedImages.forEach((file) => {
     formData.append("image", file);
@@ -280,7 +283,7 @@ const Page = () => {
       </>
      )}
     </div>
-    {imagesError && <span className="text-red-500">You need at least 3 photos.</span>}
+    {imagesError && <span className="text-red-500">You need at least 5 photos.</span>}
     <h3 className="-mb-1">Perks</h3>
     <div className="border border-gray-300 px-4 py-2 rounded-md">
      <CreatePerks registerProp={register} />
@@ -332,12 +335,11 @@ const Page = () => {
      {errors.price && <span className="text-red-500">{errors.price.message}</span>}
     </div>
     <button
-     className={"bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400" + (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")}
+     className={
+      "bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/90" + (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
+     }
      type="submit"
      disabled={buttonDisabled() as boolean}
-     // onClick={() => {
-     //  console.log(errors);
-     // }}
     >
      Add place
     </button>

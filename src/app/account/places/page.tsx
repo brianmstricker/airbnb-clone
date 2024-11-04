@@ -49,7 +49,7 @@ const PlacesPage = () => {
  }
  return (
   <main className="pb-32">
-   <Link href="/account/places/create" className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-6 hover:bg-rose-400">
+   <Link href="/account/places/create" className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-6 hover:bg-primary/90">
     Add A Place
    </Link>
    <div className="mt-8 flex flex-col gap-4">
