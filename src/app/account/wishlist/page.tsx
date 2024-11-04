@@ -43,7 +43,7 @@ const Wishlist = () => {
  if (loading)
   return (
    <div className="flex justify-center mt-36">
-    <CircleLoader size={80} color="#ff385c" />
+    <CircleLoader size={80} color="#2a3da8" />
    </div>
   );
  if (!loading)
@@ -58,9 +58,7 @@ const Wishlist = () => {
       </div>
      )}
      {!loading && favorites && favorites.length === 0 && (
-      <div className="text-center mt-36 text-4xl text-gray-600">
-       No favorites yet :(
-      </div>
+      <div className="text-center mt-36 text-4xl text-gray-600">No favorites yet :(</div>
      )}
     </div>
     <ContentFooter />

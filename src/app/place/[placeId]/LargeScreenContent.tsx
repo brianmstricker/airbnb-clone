@@ -54,31 +54,19 @@ export type Reserve = {
  reserveStatus: string;
 };
 
-const LargeScreenContent = async ({
- place,
- reserve,
-}: {
- place: Place;
- reserve?: Reserve;
-}) => {
+const LargeScreenContent = async ({ place, reserve }: { place: Place; reserve?: Reserve }) => {
  const session = await getAuthSession();
  const user = session?.user;
  if (!place.checkInTime.includes(" ")) {
   const lastIndex = place.checkInTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
   if (lastIndex !== -1) {
-   place.checkInTime =
-    place.checkInTime.slice(0, lastIndex + 1) +
-    " " +
-    place.checkInTime.slice(lastIndex + 1);
+   place.checkInTime = place.checkInTime.slice(0, lastIndex + 1) + " " + place.checkInTime.slice(lastIndex + 1);
   }
  }
  if (!place.checkOutTime.includes(" ")) {
   const lastIndex = place.checkOutTime.search(/\d(?![\d:]|\d{2}\s*(am|pm))/);
   if (lastIndex !== -1) {
-   place.checkOutTime =
-    place.checkOutTime.slice(0, lastIndex + 1) +
-    " " +
-    place.checkOutTime.slice(lastIndex + 1);
+   place.checkOutTime = place.checkOutTime.slice(0, lastIndex + 1) + " " + place.checkOutTime.slice(lastIndex + 1);
   }
  }
  return (
@@ -92,9 +80,7 @@ const LargeScreenContent = async ({
         <RatingModal name={place.name} placeId={place.id} />
         <div className="w-[2px] h-[2px] rounded-full bg-black mx-1" />
         <a
-         href={`https://www.google.com/maps/place/${encodeURIComponent(
-          place.address
-         )}`}
+         href={`https://www.google.com/maps/place/${encodeURIComponent(place.address)}`}
          target="_blank"
          className="underline font-medium"
         >
@@ -120,9 +106,7 @@ const LargeScreenContent = async ({
          />
         </div>
        )}
-       {place.photos && place.photos.length >= 5 && (
-        <LargeImageContent photos={place.photos} placeId={place.id} />
-       )}
+       {place.photos && place.photos.length >= 5 && <LargeImageContent photos={place.photos} placeId={place.id} />}
       </div>
       <div className="relative">
        <div className="mt-10">
@@ -130,8 +114,7 @@ const LargeScreenContent = async ({
          <div className="text-xl flex justify-between">
           <div>
            <p className="font-medium">
-            Entire <span className="capitalize">{place.type}</span> hosted by{" "}
-            {place.user.name}
+            Entire <span className="capitalize">{place.type}</span> hosted by {place.user.name}
            </p>
            <ol className="text-base mt-2 text-gray-800 flex gap-6 items-center">
             <li>
@@ -154,23 +137,14 @@ const LargeScreenContent = async ({
            </ol>
            {user && user.email === place.user.email && (
             <div className="mt-8">
-             <Link
-              href={`/place/edit?placeId=${place.id}`}
-              className="mt-8 bg-gray-300 px-4 py-2 rounded-lg text-gray-800 font-medium"
-             >
+             <Link href={`/place/edit?placeId=${place.id}`} className="mt-8 bg-gray-300 px-4 py-2 rounded-lg text-gray-800 font-medium">
               Edit
              </Link>
             </div>
            )}
           </div>
           <div>
-           <Image
-            src={place.user.image as string}
-            alt="user"
-            width={60}
-            height={60}
-            className="rounded-full"
-           />
+           <Image src={place.user.image as string} alt="user" width={60} height={60} className="rounded-full" />
           </div>
          </div>
          <Border />
@@ -179,30 +153,23 @@ const LargeScreenContent = async ({
           <p>
            <span className="font-semibold">Self check-in</span>
            <br />
-           <span className="text-sm text-gray-500">
-            Check yourself in with the keypad.
-           </span>
+           <span className="text-sm text-gray-500">Check yourself in with the keypad.</span>
           </p>
          </div>
          <div className="mt-6 flex gap-4">
           <PiMedalMilitary size={28} />
           <p>
-           <span className="font-semibold">
-            {place.user.name} is a Superhost
-           </span>
+           <span className="font-semibold">{place.user.name} is a Superhost</span>
            <br />
            <span className="text-sm text-gray-500">
-            Superhosts are experienced, highly rated hosts who are committed to
-            providing great stays for guests.
+            Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.
            </span>
           </p>
          </div>
          <div className="mt-6 flex items-center gap-4">
           <LuCalendarX size={28} />
           <p>
-           <span className="font-semibold">
-            Free cancellation before Oct 20.
-           </span>
+           <span className="font-semibold">Free cancellation before Oct 20.</span>
           </p>
          </div>
          <Border />
@@ -216,10 +183,7 @@ const LargeScreenContent = async ({
             <h3 className="font-bold text-2xl">What this place offers</h3>
             <div className="mt-4 grid grid-cols-2">
              {place.perks.map((perk) => (
-              <ul
-               key={perk.name}
-               className="text-gray-600 capitalize list-disc ml-4"
-              >
+              <ul key={perk.name} className="text-gray-600 capitalize list-disc ml-4">
                <li className="mt-2">{perk.name}</li>
               </ul>
              ))}
@@ -228,11 +192,7 @@ const LargeScreenContent = async ({
           </>
          )}
         </div>
-        {place.perks && place.perks.length > 0 ? (
-         <Border />
-        ) : (
-         <div className="w-full h-[1px] bg-gray-300 mt-32 mb-10" />
-        )}
+        {place.perks && place.perks.length > 0 ? <Border /> : <div className="w-full h-[1px] bg-gray-300 mt-32 mb-10" />}
         <div>
          <div>
           <h3 className="font-bold text-2xl">Where you&apos;ll be</h3>
@@ -252,68 +212,37 @@ const LargeScreenContent = async ({
            <div>
             <h4 className="font-semibold">House rules</h4>
             <span className="block mt-4">Check in by: {place.checkInTime}</span>
-            <span className="block mt-4">
-             Check out before: {place.checkOutTime}
-            </span>
+            <span className="block mt-4">Check out before: {place.checkOutTime}</span>
             <span className="block mt-4">No parties or events</span>
             <span className="block mt-4"></span>
            </div>
            <div>
             <h4 className="font-semibold">Safety & Property</h4>
             <span className="block mt-4">Security camera/recording device</span>
-            <span className="block mt-4">
-             Pool/hot tub without a gate or lock
-            </span>
-            <span className="block mt-4">
-             Nearby lake, river, other body of water
-            </span>
+            <span className="block mt-4">Pool/hot tub without a gate or lock</span>
+            <span className="block mt-4">Nearby lake, river, other body of water</span>
            </div>
            <div>
             <h4 className="font-semibold">Cancellation policy</h4>
-            <span className="block mt-4">
-             Free cancellation before 4:00 PM on Sep 11.
-            </span>
+            <span className="block mt-4">Free cancellation before 4:00 PM on Sep 11.</span>
             <span className="block mt-4 max-w-[400px]">
-             Review the Host&apos;s full cancellation policy which applies even
-             if you cancel for illness or disruptions caused by COVID-19.
+             Review the Host&apos;s full cancellation policy which applies even if you cancel for illness or disruptions caused by COVID-19.
             </span>
            </div>
           </div>
          </div>
         </div>
        </div>
-       {reserve === undefined && (
-        <ReserveWidget
-         price={place.price}
-         placeId={place.id}
-         rating={place.rating}
-        />
-       )}
-       {reserve?.reserveStatus !== "reserved" && (
-        <ReserveWidget
-         price={place.price}
-         placeId={place.id}
-         rating={place.rating}
-        />
-       )}
+       {reserve === undefined && <ReserveWidget price={place.price} placeId={place.id} rating={place.rating} />}
+       {reserve?.reserveStatus !== "reserved" && <ReserveWidget price={place.price} placeId={place.id} rating={place.rating} />}
        {reserve && reserve.reserveStatus === "reserved" && (
         <div className="border border-gray-300 rounded-lg mt-10 absolute top-0 right-0 w-[40%] lg:w-[35%]">
          <div className="p-2 flex flex-col items-center text-sm lg:text-base">
           <BsCheckCircle size={32} className="fill-green-600" />
           <h2 className="font-bold">You currently have a reservation!</h2>
           <div>
-           Booked from{" "}
-           {new Date(reserve.checkInDate)
-            .toUTCString()
-            .split(" ")
-            .slice(0, 3)
-            .join(" ")}{" "}
-           to{" "}
-           {new Date(reserve.checkOutDate)
-            .toUTCString()
-            .split(" ")
-            .slice(0, 3)
-            .join(" ")}
+           Booked from {new Date(reserve.checkInDate).toUTCString().split(" ").slice(0, 3).join(" ")} to{" "}
+           {new Date(reserve.checkOutDate).toUTCString().split(" ").slice(0, 3).join(" ")}
           </div>
          </div>
         </div>

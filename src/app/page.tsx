@@ -38,39 +38,41 @@ export default async function Home({ searchParams }: { searchParams?: any }) {
   cache: "no-cache",
  });
  const getPlaces = await fetchPlaces.json();
- if (JSON.stringify(getPlaces) === "{}" || ("message" in getPlaces && getPlaces.message === "Something went wrong."))
-  return <div className="text-center mt-8">No places found :(</div>;
- const places = getPlaces.filter((place: Place) => place.photos.length > 0);
+ const places = Array.isArray(getPlaces) ? getPlaces.filter((place: Place) => place.photos.length > 0) : [];
  return (
   <main className="pt-20 md:pt-0 pb-52">
    <div className="contain-filter">
     <PlaceFilter />
    </div>
    <div className="contain">
-    <div className="grid grid-cols-1 xxxs:grid-cols-2  mdlg:grid-cols-3 lg:grid-cols-4 3xl:grid-cols-6 gap-y-24 gap-x-6">
-     {places.map((place: Place) => (
-      <div key={place.id} className="relative">
-       <Favorite placeId={place.id} />
-       <Link href={`/place/${place.id}`} className="mx-auto w-full h-full">
-        <HomeImageComponent photos={place.photos} />
-        <div className="mt-2 text-[.95rem] px-2">
-         <div className="flex justify-between items-center">
-          <div className="capitalize font-semibold ">{place.address.split(",", 2).join(",")}</div>
-          <div className="flex items-center gap-1">
-           <AiFillStar size={14} />
-           {place.rating.length === 0 ? (
-            <span className="font-medium">0.00</span>
-           ) : (
-            <div>{(place.rating.map((r) => r.rating).reduce((t, c) => t + c, 0) / place.rating.length).toFixed(2)}</div>
-           )}
+    {places && Array.isArray(places) && places.length > 0 ? (
+     <div className="grid grid-cols-1 xxxs:grid-cols-2  mdlg:grid-cols-3 lg:grid-cols-4 3xl:grid-cols-6 gap-y-24 gap-x-6">
+      {places.map((place: Place) => (
+       <div key={place.id} className="relative">
+        <Favorite placeId={place.id} />
+        <Link href={`/place/${place.id}`} className="mx-auto w-full h-full">
+         <HomeImageComponent photos={place.photos} />
+         <div className="mt-2 text-[.95rem] px-2">
+          <div className="flex justify-between items-center">
+           <div className="capitalize font-semibold ">{place.address.split(",", 2).join(",")}</div>
+           <div className="flex items-center gap-1">
+            <AiFillStar size={14} />
+            {place.rating.length === 0 ? (
+             <span className="font-medium">0.00</span>
+            ) : (
+             <div>{(place.rating.map((r) => r.rating).reduce((t, c) => t + c, 0) / place.rating.length).toFixed(2)}</div>
+            )}
+           </div>
           </div>
+          <HomePriceComponent price={place.price} />
          </div>
-         <HomePriceComponent price={place.price} />
-        </div>
-       </Link>
-      </div>
-     ))}
-    </div>
+        </Link>
+       </div>
+      ))}
+     </div>
+    ) : (
+     <div className="text-center text-xl">No places found :(</div>
+    )}
    </div>
    <HomeFooter />
   </main>

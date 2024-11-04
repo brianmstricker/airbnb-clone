@@ -16,7 +16,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     },
    });
    if (places.length === 0 || !places) {
-    return NextResponse.json({});
+    return NextResponse.json({ message: "No places found." });
    }
    return NextResponse.json(places);
   }
@@ -28,6 +28,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
      where: {
       type: {
        contains: newFilter as string,
+       mode: "insensitive",
       },
      },
      include: {
@@ -38,13 +39,14 @@ export async function GET(req: NextRequest, res: NextResponse) {
       rating: true,
      },
     });
-    if (!places) return NextResponse.json({ message: "No places found.", status: 404 });
+    if (!places || places.length === 0) return NextResponse.json({ message: "No places found.", status: 404 });
     return NextResponse.json(places);
    }
    const places = await prisma.place.findMany({
     where: {
      type: {
       contains: typeFilter as string,
+      mode: "insensitive",
      },
     },
     include: {

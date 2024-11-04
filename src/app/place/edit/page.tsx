@@ -108,6 +108,7 @@ const EditPage = () => {
    });
    const res = await axios.post("/api/upload", formData);
    data.photos = [...res.data, ...selectedImages.filter((image) => image.url)];
+   data.perks = selectedPerks;
    EditPlace(data, {
     onSuccess: () => {
      router.push(`/place/${getPlaceId}`);
@@ -163,21 +164,18 @@ const EditPage = () => {
   );
  }
  return (
-  <form
-   className="max-w-4xl mx-auto pb-16 mt-36"
-   onSubmit={handleSubmit(formSubmit)}
-  >
+  <form className="max-w-4xl mx-auto pb-16 mt-36" onSubmit={handleSubmit(formSubmit)}>
    {placeInfoLoading && (
     <div className="fixed w-screen h-screen bg-white z-[101] inset-0 overflow-y-hidden">
      <div className="flex w-full h-full justify-center items-center">
-      <CircleLoader size={80} color="#ff385c" />
+      <CircleLoader size={80} color="#2a3da8" />
      </div>
     </div>
    )}
    {loading && (
     <div className="fixed w-screen h-screen bg-white z-[101] inset-0 overflow-y-hidden">
      <div className="flex w-full h-full justify-center items-center">
-      <CircleLoader size={80} color="#ff385c" />
+      <CircleLoader size={80} color="#2a3da8" />
      </div>
     </div>
    )}
@@ -202,9 +200,7 @@ const EditPage = () => {
         {...register("name")}
        />
       </div>
-      {errors.name && (
-       <span className="text-red-500">{errors.name.message}</span>
-      )}
+      {errors.name && <span className="text-red-500">{errors.name.message}</span>}
       <div className="flex gap-4 items-center justify-between">
        <label htmlFor="address" className="min-w-[85px]">
         Address
@@ -217,9 +213,7 @@ const EditPage = () => {
         {...register("address")}
        />
       </div>
-      {errors.address && (
-       <span className="text-red-500">{errors.address.message}</span>
-      )}
+      {errors.address && <span className="text-red-500">{errors.address.message}</span>}
       <div className="lg:grid lg:grid-cols-2">
        <div className="flex items-center justify-between lg:justify-normal gap-4 relative">
         <label htmlFor="type" className="min-w-[85px] lg:min-w-fit">
@@ -237,15 +231,9 @@ const EditPage = () => {
           </option>
          ))}
         </select>
-        {errors.type && (
-         <span className="text-red-500 absolute -bottom-14 xxs:-bottom-10 lg:-bottom-8">
-          {errors.type.message}
-         </span>
-        )}
+        {errors.type && <span className="text-red-500 absolute -bottom-14 xxs:-bottom-10 lg:-bottom-8">{errors.type.message}</span>}
        </div>
-       <div
-        className={"flex items-center justify-between lg:justify-normal gap-4"}
-       >
+       <div className={"flex items-center justify-between lg:justify-normal gap-4"}>
         <label htmlFor="guests" className="min-w-[85px] lg:min-w-fit lg:ml-2">
          Guests
         </label>
@@ -257,9 +245,7 @@ const EditPage = () => {
          {...register("guests", { valueAsNumber: true })}
         />
        </div>
-       <div
-        className={"flex items-center justify-between lg:justify-normal gap-4"}
-       >
+       <div className={"flex items-center justify-between lg:justify-normal gap-4"}>
         <label htmlFor="beds" className="min-w-[85px] lg:min-w-fit">
          Beds
         </label>
@@ -285,21 +271,9 @@ const EditPage = () => {
        </div>
       </div>
       <div className="flex flex-col">
-       {errors.guests && (
-        <span className="text-red-500">
-         Guests: {errors.guests.message?.split(",")[0]}
-        </span>
-       )}
-       {errors.beds && (
-        <span className="text-red-500">
-         Beds: {errors.beds.message?.split(",")[0]}
-        </span>
-       )}
-       {errors.baths && (
-        <span className="text-red-500">
-         Baths: {errors.baths.message?.split(",")[0]}
-        </span>
-       )}
+       {errors.guests && <span className="text-red-500">Guests: {errors.guests.message?.split(",")[0]}</span>}
+       {errors.beds && <span className="text-red-500">Beds: {errors.beds.message?.split(",")[0]}</span>}
+       {errors.baths && <span className="text-red-500">Baths: {errors.baths.message?.split(",")[0]}</span>}
       </div>
       <label htmlFor="description">Description</label>
       <textarea
@@ -309,9 +283,7 @@ const EditPage = () => {
        rows={5}
        {...register("description")}
       />
-      {errors.description && (
-       <span className="text-red-500">{errors.description.message}</span>
-      )}
+      {errors.description && <span className="text-red-500">{errors.description.message}</span>}
       <h4>Photos</h4>
       <div className="border border-gray-300 p-4 rounded-md min-h-[250px] grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
        <div className="h-[230px] w-full aspect-square flex">
@@ -372,24 +344,16 @@ const EditPage = () => {
         </>
        )}
       </div>
-      {imagesError && (
-       <span className="text-red-500">You need at least 5 photos.</span>
-      )}
+      {imagesError && <span className="text-red-500">You need at least 3 photos.</span>}
       <h3 className="-mb-1">Perks</h3>
       <div className="border border-gray-300 px-4 py-2 rounded-md">
-       <Perks
-        registerProp={register}
-        selected={selectedPerks.map((p: any) => p.name)}
-       />
+       <Perks registerProp={register} selected={selectedPerks.map((p: any) => p.name)} />
       </div>
       <h4>Things To Know</h4>
       <div className="border border-gray-300 px-4 py-2 rounded-md">
        <div className="xxs:grid xxs:grid-cols-2 gap-4">
         <div className="flex items-center justify-between lg:justify-normal gap-2">
-         <label
-          htmlFor="checkIn"
-          className="min-w-[122px] lg:min-w-fit lg:ml-2"
-         >
+         <label htmlFor="checkIn" className="min-w-[122px] lg:min-w-fit lg:ml-2">
           Check in time
          </label>
          <input
@@ -401,10 +365,7 @@ const EditPage = () => {
          />
         </div>
         <div className="flex items-center justify-between lg:justify-normal gap-2">
-         <label
-          htmlFor="checkOut"
-          className="min-w-[122px] lg:min-w-fit lg:ml-2"
-         >
+         <label htmlFor="checkOut" className="min-w-[122px] lg:min-w-fit lg:ml-2">
           Check out time
          </label>
          <input
@@ -424,26 +385,19 @@ const EditPage = () => {
          type="text"
          id="price"
          className="border border-gray-300 rounded-md p-2 outline-none focus:ring-2 focus:ring-primary mt-2 flex-grow min-w-[50px]"
-         placeholder="$100, $200, etc."
+         placeholder="100, 200, etc."
          {...register("price")}
         />
        </div>
       </div>
       <div className="flex flex-col gap-2">
-       {errors.checkInTime && (
-        <span className="text-red-500">{errors.checkInTime.message}</span>
-       )}
-       {errors.checkOutTime && (
-        <span className="text-red-500">{errors.checkOutTime.message}</span>
-       )}
-       {errors.price && (
-        <span className="text-red-500">{errors.price.message}</span>
-       )}
+       {errors.checkInTime && <span className="text-red-500">{errors.checkInTime.message}</span>}
+       {errors.checkOutTime && <span className="text-red-500">{errors.checkOutTime.message}</span>}
+       {errors.price && <span className="text-red-500">{errors.price.message}</span>}
       </div>
       <button
        className={
-        "bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400" +
-        (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
+        "bg-primary text-white px-4 py-2 rounded-md hover:bg-rose-400" + (buttonDisabled() ? " opacity-50 cursor-not-allowed" : "")
        }
        type="submit"
        disabled={buttonDisabled() as boolean}

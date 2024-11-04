@@ -49,33 +49,23 @@ const PlacesPage = () => {
  }
  return (
   <main className="pb-32">
-   <Link
-    href="/account/places/create"
-    className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-6 hover:bg-rose-400"
-   >
+   <Link href="/account/places/create" className="block w-fit mx-auto px-4 py-2 bg-primary text-white rounded-md mt-6 hover:bg-rose-400">
     Add A Place
    </Link>
    <div className="mt-8 flex flex-col gap-4">
     {isLoading ? (
      <div className="flex items-center w-full justify-center relative top-48">
-      <CircleLoader size={80} color="#ff385c" />
+      <CircleLoader size={80} color="#2a3da8" />
      </div>
     ) : error ? (
      <span>Something went wrong.</span>
     ) : (
      places?.map((place: PlaceType) => (
       <div key={place.id} className="relative">
-       <button
-        className="absolute -top-2 -right-2 hover:scale-110 duration-150"
-        onClick={() => confirmDelete(place.id, place.name)}
-       >
+       <button className="absolute -top-2 -right-2 hover:scale-110 duration-150" onClick={() => confirmDelete(place.id, place.name)}>
         <BsTrash size={24} className="fill-gray-600" />
        </button>
-       <Link
-        href={`/place/${place.id}`}
-        key={place.id}
-        className="border-2 rounded-md p-4 flex flex-col md:flex-row gap-3 items-center"
-       >
+       <Link href={`/place/${place.id}`} key={place.id} className="border-2 rounded-md p-4 flex flex-col md:flex-row gap-3 items-center">
         {place.photos && place.photos[0]?.url && (
          <div className="relative md:w-[300px] w-full shrink-0 mx-auto xxs:mx-0 aspect-square h-full max-h-[230px] lg:max-h-[200px]">
           <Image
@@ -99,14 +89,10 @@ const PlacesPage = () => {
          </div>
          <div className="overflow-hidden">
           <p className="text-gray-500 hidden md:block">
-           {place.description.length > 250
-            ? place.description.substring(0, 250) + "..."
-            : place.description}
+           {place.description.length > 250 ? place.description.substring(0, 250) + "..." : place.description}
           </p>
           <p className="text-gray-500 md:hidden block">
-           {place.description.length > 100
-            ? place.description.substring(0, 100) + "..."
-            : place.description}
+           {place.description.length > 100 ? place.description.substring(0, 100) + "..." : place.description}
           </p>
          </div>
         </div>

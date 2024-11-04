@@ -1,11 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
- content: [
-  "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-  "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-  "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
- ],
+ content: ["./src/pages/**/*.{js,ts,jsx,tsx,mdx}", "./src/components/**/*.{js,ts,jsx,tsx,mdx}", "./src/app/**/*.{js,ts,jsx,tsx,mdx}"],
  theme: {
   extend: {
    container: {
@@ -13,7 +9,7 @@ const config: Config = {
     padding: ".5rem",
    },
    colors: {
-    primary: "#ff385c",
+    primary: "#2a3da8",
    },
    screens: {
     xxxs: "550px",

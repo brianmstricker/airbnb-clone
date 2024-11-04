@@ -97,7 +97,7 @@ const MobileReserveWidget = ({
      </div>
      <Link
       href={`/place/reserve/${placeId}?checkIn=${checkInValue}&checkOut=${checkOutValue}&guests=${reserve.getValues("guests")}`}
-      className="bg-gradient-to-r from-primary via-rose-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5"
+      className="bg-gradient-to-r from-primary via-blue-600 to-primary/70 text-white w-fit rounded-lg py-3 font-medium px-5"
      >
       Reserve
      </Link>

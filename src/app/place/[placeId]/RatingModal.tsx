@@ -19,8 +19,7 @@ const RatingModal = ({ name, placeId }: { name: string; placeId: string }) => {
    if (placeRatingInfo) {
     const data = placeRatingInfo.data;
     const ratingMap = data.map((r: any) => r.rating);
-    const avgRating =
-     ratingMap.reduce((t: any, c: any) => t + c, 0) / ratingMap.length;
+    const avgRating = ratingMap.reduce((t: any, c: any) => t + c, 0) / ratingMap.length;
     setRating(avgRating.toFixed(2));
     setLoading(false);
    }
@@ -92,16 +91,13 @@ const RatingModal = ({ name, placeId }: { name: string; placeId: string }) => {
  }
  return (
   <>
-   <div
-    onClick={() => setRatingModal(true)}
-    className="flex items-center gap-1 cursor-pointer"
-   >
+   <div onClick={() => setRatingModal(true)} className="flex items-center gap-1 cursor-pointer">
     <AiFillStar size={16} />
     <div className="flex items-center gap-1">
      {rating && !loading && <span className="font-medium">{rating}</span>}
      {loading && (
       <span className="font-medium">
-       <ClipLoader color="#ff385c" size={12} />
+       <ClipLoader color="#2a3da8" size={12} />
       </span>
      )}
     </div>
@@ -130,47 +126,24 @@ const RatingModal = ({ name, placeId }: { name: string; placeId: string }) => {
       <h2 className="font-bold text-xl lg:text-3xl">{name}</h2>
       {!userRating ? (
        <>
-        <span
-         className={
-          "text-gray-500 text-sm lg:text-base block mt-8" +
-          (currentRating ? " opacity-0" : "")
-         }
-        >
-         Leave a rating...
-        </span>
+        <span className={"text-gray-500 text-sm lg:text-base block mt-8" + (currentRating ? " opacity-0" : "")}>Leave a rating...</span>
         <div className="flex justify-center items-center mt-2">
          {[...Array(5)].map((_, i) => {
           const ratingValue = i + 1;
           return (
            <div className="relative flex flex-col items-center" key={i}>
-            <label
-             className="cursor-pointer"
-             onMouseEnter={() => setHoverRating(ratingValue)}
-             onMouseLeave={() => setHoverRating(null)}
-            >
-             <input
-              type="radio"
-              name="rating"
-              value={ratingValue}
-              className="hidden"
-              onClick={() => setCurrentRating(ratingValue)}
-             />
+            <label className="cursor-pointer" onMouseEnter={() => setHoverRating(ratingValue)} onMouseLeave={() => setHoverRating(null)}>
+             <input type="radio" name="rating" value={ratingValue} className="hidden" onClick={() => setCurrentRating(ratingValue)} />
              <AiFillStar
               size={36}
               className={
                "transition-all duration-200 ease-in" +
-               (ratingValue <= (currentRating as number)
-                ? " fill-yellow-500"
-                : "") +
-               (ratingValue <= (hoverRating as number)
-                ? " fill-yellow-500"
-                : " fill-gray-400")
+               (ratingValue <= (currentRating as number) ? " fill-yellow-500" : "") +
+               (ratingValue <= (hoverRating as number) ? " fill-yellow-500" : " fill-gray-400")
               }
              />
             </label>
-            <div className="absolute top-9 lg:text-lg">
-             {ratingValue === currentRating ? ratingValue : null}
-            </div>
+            <div className="absolute top-9 lg:text-lg">{ratingValue === currentRating ? ratingValue : null}</div>
            </div>
           );
          })}
@@ -179,14 +152,9 @@ const RatingModal = ({ name, placeId }: { name: string; placeId: string }) => {
       ) : (
        <div className="flex flex-col justify-center items-center mt-2">
         <div className="text-base mt-6">
-         You&apos;ve already left a rating of{" "}
-         <span className="font-bold">{userRating}</span>
+         You&apos;ve already left a rating of <span className="font-bold">{userRating}</span>
         </div>
-        <button
-         onClick={removeRating}
-         className="mt-6 px-4 py-2 bg-primary text-white w-fit mx-auto text-lg rounded-lg"
-         disabled={loading}
-        >
+        <button onClick={removeRating} className="mt-6 px-4 py-2 bg-primary text-white w-fit mx-auto text-lg rounded-lg" disabled={loading}>
          Remove Rating
         </button>
        </div>
@@ -194,17 +162,11 @@ const RatingModal = ({ name, placeId }: { name: string; placeId: string }) => {
       {currentRating && (
        <>
         {session?.data?.user ? (
-         <button
-          onClick={addRating}
-          className="mt-14 px-4 py-2 bg-primary text-white w-1/2 mx-auto text-lg rounded-lg"
-          disabled={loading}
-         >
+         <button onClick={addRating} className="mt-14 px-4 py-2 bg-primary text-white w-1/2 mx-auto text-lg rounded-lg" disabled={loading}>
           Add rating
          </button>
         ) : (
-         <span className="mt-14 px-4 py-2 bg-primary text-white mx-auto text-lg block w-fit rounded-lg">
-          Login to add rating
-         </span>
+         <span className="mt-14 px-4 py-2 bg-primary text-white mx-auto text-lg block w-fit rounded-lg">Login to add rating</span>
         )}
        </>
       )}

@@ -89,7 +89,7 @@ const ReserveWidget = ({
     <div className="flex justify-between items-center mt-4 mx-1">
      <Link
       href={`/place/reserve/${placeId}?checkIn=${checkInValue}&checkOut=${checkOutValue}&guests=${reserve.getValues("guests")}`}
-      className="bg-gradient-to-r from-rose-600 via-rose-500 to-primary text-white w-full rounded-lg py-3 font-medium text-center"
+      className="bg-gradient-to-r from-blue-600 via-blue-500 to-primary text-white w-full rounded-lg py-3 font-medium text-center"
      >
       Reserve
      </Link>
