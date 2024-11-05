@@ -18,7 +18,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   return (
    <div>
     <LargeScreenContent place={place} />
-    <SmallScreenContent place={place} />
+    <SmallScreenContent place={place} isUser={false} />
    </div>
   );
  if (session?.user) {
@@ -27,7 +27,7 @@ const PlacePage = async ({ params }: { params: { placeId: string } }) => {
   return (
    <>
     <LargeScreenContent place={place} reserve={reserve} />
-    <SmallScreenContent place={place} reserve={reserve} />
+    <SmallScreenContent place={place} reserve={reserve} isUser={true} />
    </>
   );
  }
