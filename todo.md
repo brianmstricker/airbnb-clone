@@ -4,6 +4,7 @@
 -fix reserving
 -update checkInDate/checkOutDate to be datetime
 -nsfw checker for images
+-update google/github login for production
 
 (misc)
 -update favorite component, (favoriteFetch so it's one request, then render favorite component)? maybe not
