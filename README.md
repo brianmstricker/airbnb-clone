@@ -1,6 +1,6 @@
 # Airbnb-clone
 
-The site can be found at: https://brian-airbnb-clone.vercel.app/
+The site can be found at: https://barebnb.vercel.app
 
 **This project was made using React, Next.js, Tailwind, Prisma, and Typescript.**
 
